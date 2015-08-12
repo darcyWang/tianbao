@@ -1,0 +1,130 @@
+@import "reset.css";
+/*居中的loader*/
+.centerloader {
+  background: url(../images/loader.png) center top no-repeat;
+  text-align: center;
+  padding-top: 82px;
+  background-size: 65%;
+  position: fixed;
+  font-size: 1.4em;
+  width: 120px;
+  top: 45%;
+  left: 50%;
+  color: #b7bcc0;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+a:link,
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  color: #6f696c;
+}
+a,
+a:link,
+a:visited,
+div:link,
+div:visited {
+  color: #6f696c;
+}
+/*页面body背景色、默认字体色*/
+body {
+  background: #f1f1f1;
+  color: #6f696c;
+  min-height: 100%;
+  font-size: 62.5%;
+}
+.ban_text_select {
+  -moz-user-select: none;
+}
+/*位置属性*/
+.inline_block {
+  display: inline-block;
+}
+.positionDiv {
+  position: relative;
+}
+/*清除浮动*/
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.download {
+  border-top: 1px solid #ededed;
+  background: #fff;
+  width: 100%;
+  padding: 5px 0px;
+}
+.download .logo {
+  width: 50px;
+  height: 50px;
+  background: #fff url(../images/yct.png) center center no-repeat;
+  background-size: 100%;
+  text-indent: -9999px;
+}
+.download em,
+.download div {
+  float: left;
+  text-align: left;
+}
+.download em {
+  margin-left: 15px;
+}
+.download a {
+  float: right;
+  background: #cb4287;
+  color: #fff;
+  margin: 4px 15px 4px 0;
+  padding: 7px 10px;
+  font-size: 1.5em;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.download div {
+  padding-left: 6px;
+}
+.download h1 {
+  margin: 2px 0 4px;
+  font-size: 2.2em;
+  line-height: 28px;
+  color: #c2488c;
+}
+.download h2 {
+  font-size: 1.2em;
+  line-height: 14px;
+  font-weight: normal;
+  color: #bcbcbc;
+}
+@media screen and (max-device-height: 480px) {
+  .download a {
+    margin: 4px 4px 4px 0;
+    padding: 7px 10px;
+  }
+  .download em {
+    margin-left: 5px;
+  }
+  .download div {
+    padding-left: 2px;
+  }
+}
+@media screen and (min-device-height: 481px) and (max-device-height: 568px) {
+  .download a {
+    margin: 4px 10px 4px 0;
+    padding: 7px 10px;
+  }
+  .download em {
+    margin-left: 8px;
+  }
+  .download div {
+    padding-left: 2px;
+  }
+}
+/*# sourceMappingURL=common.css.map */
