@@ -1,26 +1,36 @@
-.. first doc documentation master file, created by
-   sphinx-quickstart on Sun Feb 28 15:51:03 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+DarcyWang's Docs
+=====================
 
-不知道能不能用中文来写啊!
-=====================================
+`darcywang's <https://twitter.com/wangtianbao2014>`_ personal web development and system administration
+documentation. You can view the docs on `Read the Docs <https://tianbao.readthedocs.org/en/latest/>`_ or view the source on `Github
+<https://github.com/darcyWang>`_. Please feel free to submit
+issues or make pull requests.
 
-Contents:
+
+Part one
+--------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :glob:
 
-   intro
-   maincontent
-   about
-
+   partone/*
 
 
-Indices and tables
-==================
+Part two
+--------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :maxdepth: 1
+   :glob:
 
+   hello/*
+
+
+Part three
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   baby/*
