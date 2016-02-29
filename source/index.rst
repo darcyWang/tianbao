@@ -7,30 +7,30 @@ documentation. You can view the docs on `Read the Docs <https://tianbao.readthed
 issues or make pull requests.
 
 
-Part one
---------
+Part Django
+-----------
 
 .. toctree::
    :maxdepth: 1
    :glob:
 
-   partone/*
+   django/*
 
 
-Part two
---------
+Part Python
+-----------
 
 .. toctree::
    :maxdepth: 1
    :glob:
 
-   hello/*
+   python/*
 
 
-Part three
-----------
+Reference Material
+------------------
 
 .. toctree::
    :maxdepth: 1
 
-   baby/*
+   material/*
