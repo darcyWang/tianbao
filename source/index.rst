@@ -45,15 +45,16 @@ Reference Material
    material/*
 
 toefl and gre prepara
-------------------
+---------------------
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
    toefl/*
 
 the road to awesome
-------------------
+-------------------
 
 .. toctree::
    :maxdepth: 1

@@ -1,5 +1,5 @@
-Django学习部分
-=============
+Django Learning Part 
+====================
 
 Installation and Setup
 ----------------------

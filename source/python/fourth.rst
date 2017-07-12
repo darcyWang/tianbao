@@ -1,5 +1,5 @@
-Python学习部分
-=============
+Python Learning Part
+====================
 
 Installation and Setup
 ----------------------
