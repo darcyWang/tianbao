@@ -11,52 +11,11 @@ Part Python
 -----------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
 
-   python/*
+   python/index.rst
+   gre/words.rst
+   leecode/index.rst
 
 
-Part Django
------------
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   django/*
-
-Part GRE
---------
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   gre/*
-
-
-Reference Material
-------------------
-
-.. toctree::
-   :maxdepth: 1
-
-   material/*
-
-toefl and gre prepara
----------------------
-
-.. toctree::
-   :maxdepth: 1
-   :glob:
-
-   toefl/*
-
-the road to awesome
--------------------
-
-.. toctree::
-   :maxdepth: 1
-
-   full-stack/*
