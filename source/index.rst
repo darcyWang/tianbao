@@ -15,7 +15,7 @@ Part Python
    :glob:
 
    python/index.rst
-   gre/words.rst
+   gre/index.rst
    leecode/index.rst
 
 

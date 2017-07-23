@@ -6,5 +6,5 @@ Leecode 刷题记录
 .. toctree::
    :maxdepth: 2
 
-   one.rst
-   two.rst
+   string.rst
+   array.rst
