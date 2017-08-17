@@ -1587,6 +1587,515 @@ https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/165md.
 
 
 
+161. One Edit Distance
+----------------------
+
+
+
+
+Given two strings S and T, determine if they are both one edit distance apart.
+
+
+
+
+https://nb4799.neu.edu/wordpress/?p=2217
+
+https://tonycao.gitbooks.io/leetcode-locked/content/LeetCode%20Locked/c1.9.html
+
+
+
+
+
+544. Output Contest Matches
+---------------------------
+
+
+During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, you need to output their final contest matches in the form of a string.
+
+The n teams are given in the form of positive integers from 1 to n, which represents their initial rank. (Rank 1 is the strongest team and Rank n is the weakest team.) We'll use parentheses('(', ')') and commas(',') to represent the contest team pairing - parentheses('(' , ')') for pairing and commas(',') for partition. During the pairing process in each round, you always need to follow the strategy of making the rather strong one pair with the rather weak one.
+
+Example 1:
+
+Input: 2
+Output: (1,2)
+Explanation: 
+Initially, we have the team 1 and the team 2, placed like: 1,2.
+Then we pair the team (1,2) together with '(', ')' and ',', which is the final answer.
+ 
+
+Example 2:
+
+Input: 4
+Output: ((1,4),(2,3))
+Explanation: 
+In the first round, we pair the team 1 and 4, the team 2 and 3 together, as we need to make the strong team and weak team together.
+And we got (1,4),(2,3).
+In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner, so you need to add the paratheses outside them.
+And we got the final answer ((1,4),(2,3)).
+ 
+
+Example 3:
+
+Input: 8
+Output: (((1,8),(4,5)),((2,7),(3,6)))
+Explanation: 
+First round: (1,8),(2,7),(3,6),(4,5)
+Second round: ((1,8),(4,5)),((2,7),(3,6))
+Third round: (((1,8),(4,5)),((2,7),(3,6)))
+Since the third round will generate the final winner, you need to output the answer (((1,8),(4,5)),((2,7),(3,6))).
+ 
+
+Note:
+
+The n is in range [2, 212].
+We ensure that the input n can be converted into the form 2k, where k is a positive integer.
+
+
+这道题讲的是NBA的季后赛对战顺序，对于一个看了十几年NBA的老粉来说，再熟悉不过了。这种对战顺序是为了避免强强之间过早对决，从而失去比赛的公平性，跟欧冠欧联那种八强就开始随机抽签匹配有本质上的区别。NBA的这种比赛机制基本弱队很难翻身，假如你是拿到最后一张季后赛门票进的，那么一上来就干联盟第一，肯定凶多吉少，很有可能就被横扫了。但是偶尔也会出现黑八的情况，但都是极其少见的，毕竟像勇士这么叼的球队毕竟不多。好了，不闲扯了，来做题吧。我们就拿NBA这种八个球队的情况来分析吧，八只球队的排名是按常规赛胜率来排的：
+
+1 2 3 4 5 6 7 8
+
+因为是最强和最弱来对决，其次是次强与次弱对决，以此类推可得到：
+
+1-8  2-7  3-6  4-5
+
+那么接下来呢，还是最强与最弱，次强与次弱这种关系：
+
+(1-8  4-5)  (2-7  3-6)
+
+最后胜者争夺冠军
+
+((1-8  4-5)  (2-7  3-6))
+
+这样一分析是不是就清楚了呢，由于n限定了是2的次方数，那么就是可以一直对半分的，比如开始有n队，第一拆分为n/2对匹配，然后再对半拆，就是n/2/2，直到拆到n为1停止，而且每次都是首与末配对，次首与次末配对，这样搞清楚了规律，代码应该就不难写了吧，参见代码如下：
+
+https://wormtooth.com/20170318-leetcode-contest24/
+
+
+
+609. Find Duplicate File in System
+----------------------------------
+
+
+
+Given a list of directory info including directory path, and all the files with contents in this directory, you need to find out all the groups of duplicate files in the file system in terms of their paths.
+
+A group of duplicate files consists of at least two files that have exactly the same content.
+
+A single directory info string in the input list has the following format:
+
+"root/d1/d2/.../dm f1.txt(f1_content) f2.txt(f2_content) ... fn.txt(fn_content)"
+
+It means there are n files (f1.txt, f2.txt ... fn.txt with content f1_content, f2_content ... fn_content, respectively) in directory root/d1/d2/.../dm. Note that n >= 1 and m >= 0. If m = 0, it means the directory is just the root directory.
+
+The output is a list of group of duplicate file paths. For each group, it contains all the file paths of the files that have the same content. A file path is a string that has the following format:
+
+"directory_path/file_name.txt"
+
+Example 1:
+Input:
+["root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"]
+Output:  
+[["root/a/2.txt","root/c/d/4.txt","root/4.txt"],["root/a/1.txt","root/c/3.txt"]]
+Note:
+No order is required for the final output.
+You may assume the directory name, file name and file content only has letters and digits, and the length of file content is in the range of [1,50].
+The number of files given is in the range of [1,20000].
+You may assume no files or directories share the same name in the same directory.
+You may assume each given directory info represents a unique directory. Directory path and file info are separated by a single blank space.
+Follow-up beyond contest:
+Imagine you are given a real file system, how will you search files? DFS or BFS?
+If the file content is very large (GB level), how will you modify your solution?
+If you can only read the file by 1kb each time, how will you modify your solution?
+What is the time complexity of your modified solution? What is the most time-consuming part and memory consuming part of it? How to optimize?
+How to make sure the duplicated files you find are not false positive?
+
+
+
+http://pythoncentral.io/finding-duplicate-files-with-python/
+
+
+
+给定一组文件信息，包含目录路径，以及目录下包含的文件。将所有内容重复的文件分组输出。
+
+
+把路径，文件名，和文件内容解析出来，对文件内容建立map，最后扫一遍map中list的大小即可，有重复的list必然大于1。
+
+题目看着有点长，其实主要意思就一句话：查找并输出内容相同的文件的目录。比如：[“root/a 1.txt(abcd) 2.txt(efgh)”, “root/c 3.txt(abcd)”, “root/c/d 4.txt(efgh)”, “root 4.txt(efgh)”]，内容为efgh的文件有三个，内容为abcd的文件有两个，所以efgh和abcd均为重复文件，结果就是输出重复文件的目录。我们要做的工作可以分为三步：一、通过字符串操作把所有的文件目录和内容按照标准的格式一一对应分割好，存为path和content； 二、把一一对应的数据存入字典dict中，content为主键，content相同的path全部存放在content为主键对应的list中；三、找到重复文件（len(dict[content])>1），并输出结果。
+
+https://hellokenlee.github.io/2017/06/11/leetcode-609/
+
+
+
+ 
+539. Minimum Time Difference
+----------------------------
+
+
+Given a list of 24-hour clock time points in "Hour:Minutes" format, find the minimum minutes difference between any two time points in the list.
+
+Example 1:
+Input: ["23:59","00:00"]
+Output: 1
+Note:
+The number of time points in the given list is at least 2 and won't exceed 20000.
+The input time is legal and ranges from 00:00 to 23:59.
+
+
+
+给定一组24小时制的时间，格式为“小时：分钟”，求任意两组时间中分钟数间隔的最小值。
+
+
+
+
+http://blog.jerkybible.com/2017/03/18/LeetCode-539-Minimum-Time-Difference/
+
+
+
+151. Reverse Words in a String
+------------------------------
+
+
+
+Given an input string, reverse the string word by word.
+
+For example,
+Given s = "the sky is blue",
+return "blue is sky the".
+
+Update (2015-02-12):
+For C programmers: Try to solve it in-place in O(1) space.
+
+click to show clarification.
+
+
+537. Complex Number Multiplication
+----------------------------------
+
+
+
+Given two strings representing two complex numbers.
+
+You need to return a string representing their multiplication. Note i的2次方 = -1 according to the definition.
+
+Example 1:
+Input: "1+1i", "1+1i"
+Output: "0+2i"
+Explanation: (1 + i) * (1 + i) = 1 + i2 + 2 * i = 2i, and you need convert it to the form of 0+2i.
+Example 2:
+Input: "1+-1i", "1+-1i"
+Output: "0+-2i"
+Explanation: (1 - i) * (1 - i) = 1 + i2 - 2 * i = -2i, and you need convert it to the form of 0+-2i.
+Note:
+
+The input strings will not have extra blank.
+The input strings will be given in the form of a+bi, where the integer a and b will both belong to the range of [-100, 100]. And the output should be also in this form.
+
+
+
+
+关于complex numbers的解释
+
+https://www.khanacademy.org/math/algebra2/introduction-to-complex-numbers-algebra-2/multiplying-complex-numbers-algebra-2/a/multiplying-complex-numbers
+
+
+https://github.com/demonSong/leetcode/issues/8
+
+
+71. Simplify Path
+-----------------
+
+
+
+
+Given an absolute path for a file (Unix-style), simplify it.
+
+For example,
+path = "/home/", => "/home"
+path = "/a/./b/../../c/", => "/c"
+click to show corner cases.
+
+Corner Cases:
+Did you consider the case where path = "/../"?
+In this case, you should return "/".
+Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
+In this case, you should ignore redundant slashes and return "/home/foo".
+
+
+
+
+[解题思路]
+利用栈的特性，如果sub string element
+1. 等于“/”，跳过，直接开始寻找下一个element
+2. 等于“.”，什么都不需要干，直接开始寻找下一个element
+3. 等于“..”，弹出栈顶元素，寻找下一个element
+4. 等于其他，插入当前elemnt为新的栈顶，寻找下一个element
+
+最后，再根据栈的内容，重新拼path。这样可以避免处理连续多个“/”的问题。
+
+
+
+
+https://www.hrwhisper.me/leetcode-simplify-path/
+
+
+536. Construct Binary Tree from String
+--------------------------------------
+You need to construct a binary tree from a string consisting of parenthesis and integers.
+
+The whole input represents a binary tree. It contains an integer followed by zero, one or two pairs of parenthesis. The integer represents the root's value and a pair of parenthesis contains a child binary tree with the same structure.
+
+You always start to construct the left child node of the parent first if it exists.
+
+Example:
+
+Input: "4(2(3)(1))(6(5))"
+Output: return the tree root node representing the following tree:
+
+       4
+     /   \
+    2     6
+   / \   / 
+  3   1 5   
+Note:
+
+There will only be '(', ')', '-' and '0' ~ '9' in the input string.
+
+题目大意：
+根据字符串重构二叉树。
+
+输入包含数字和括号，数字代表根节点，括号内的子串代表左、右孩子。
+
+注意：
+
+输入字符串只包含'(', ')，'-'和数字'0'-'9'
+
+解题思路：
+递归+字符串处理
+
+通过括号匹配将字符串拆解成root, (left), (right)三部分，递归创建二叉树
+
+
+
+
+
+http://bookshadow.com/weblog/2017/03/12/leetcode-construct-binary-tree-from-string/
+
+
+http://www.jianshu.com/p/9df545283b21
+
+
+5. Longest Palindromic Substring
+--------------------------------
+
+
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+Example:
+
+Input: "babad"
+
+Output: "bab"
+
+Note: "aba" is also a valid answer.
+Example:
+
+Input: "cbbd"
+
+Output: "bb"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
