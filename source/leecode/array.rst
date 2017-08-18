@@ -4,9 +4,7 @@
 每个模块的都是按照从easy到hard，第一遍把所有的easy和medium都过一遍，
 第二遍的时候开始把部分的hard看看
 
-.. important::
 
-        不在于刷了多少题目，一定要理解每一次刷的题目
 
 624. Maximum Distance in Arrays
 -------------------------------
@@ -362,7 +360,7 @@ Note:
 
 
 
-
+.. include:: string.txt
 
 
 
