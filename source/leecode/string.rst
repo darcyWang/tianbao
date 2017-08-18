@@ -1885,6 +1885,23 @@ http://bookshadow.com/weblog/2017/03/12/leetcode-construct-binary-tree-from-stri
 http://www.jianshu.com/p/9df545283b21
 
 
+
+
+
+3. Longest Substring Without Repeating Characters 
+-------------------------------------------------
+
+Given a string, find the length of the longest substring without repeating characters.
+
+Examples:
+
+Given "abcabcbb", the answer is "abc", which the length is 3.
+
+Given "bbbbb", the answer is "b", with the length of 1.
+
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+
 5. Longest Palindromic Substring
 --------------------------------
 
@@ -1905,10 +1922,20 @@ Input: "cbbd"
 Output: "bb"
 
 
+17. Letter Combinations of a Phone Number 
+-----------------------------------------
 
+Given a digit string, return all possible letter combinations that the number could represent.
 
+A mapping of digit to letters (just like on the telephone buttons) is given below.
 
+https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png
 
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+Note:
+Although the above answer is in lexicographical order, your answer could be in any order you want. 
 
 
 
