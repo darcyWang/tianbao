@@ -16,6 +16,6 @@ Part Python
 
    python/index.rst
    gre/index.rst
-   leecode/index.rst
+   leetcode/index.rst
 
 
