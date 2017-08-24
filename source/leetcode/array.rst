@@ -12,33 +12,62 @@
 
 Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
 
-
-::      
-
-        Example 1:
+Example 1:
+::
         Input: [3, 2, 1]
 
         Output: 1
 
         Explanation: The third maximum is 1.
-
-        Example 2:
-
+Example 2:
+::
         Input: [1, 2]
 
         Output: 2
 
-Explanation: The third maximum does not exist, so the maximum (2) is returned instead.
-
+        Explanation: The third maximum does not exist, so the maximum (2) is returned instead.
 Example 3:
+::
+        Input: [2, 2, 3, 1]
 
-Input: [2, 2, 3, 1]
+        Output: 1
 
-Output: 1
+        Explanation: Note that the third maximum here means the third maximum distinct number.
+        Both numbers with value 2 are both considered as second maximum.
 
-Explanation: Note that the third maximum here means the third maximum distinct number.
-Both numbers with value 2 are both considered as second maximum.
+.. hint::
 
+        给定一个整数数组，返回数组中第3大的数，如果不存在，则返回最大的数字。时间复杂度应该是O(n)或者更少。
+
+        这道题让我们求数组中第三大的数，如果不存在的话那么就返回最大的数，题目中说明了这里的第三大不能和第二大相同，必须是严格的小于，而并非小于等于。这道题并不是很难，如果知道怎么求第二大的数，那么求第三大的数的思路都是一样的。那么我们用三个变量first, second, third来分别保存第一大，第二大，和第三大的数，然后我们遍历数组，如果遍历到的数字大于当前第一大的数first，那么三个变量各自错位赋值，如果当前数字大于second，小于first，那么就更新second和third，如果当前数字大于third，小于second，那就只更新third，注意这里有个坑，就是初始化要用长整型long的最小值，否则当数组中有INT_MIN存在时，程序就不知道该返回INT_MIN还是最大值first了
+
+
+
+        思路：
+
+        #. 先通过归并排序把数组有序化，然后除去数组中重复的元素，最后拿到第三大的元素。
+        #. Python中有个collections模块，它提供了个类Counter，用来跟踪值出现了多少次。注意key的出现顺序是根据计数的从大到小。它的一个方法most_common(n)返回一个list, list中包含Counter对象中出现最多前n个元素。
+        #. heapq模块有两个函数：nlargest() 和 nsmallest() 可以从一个集合中获取最大或最小的N个元素列表。heapq.nlargest (n, heap) #查询堆中的最大元素，n表示查询元素个数
+.. code-block:: javascript
+
+        var thirdMax = function(nums) {
+                var count = 0, max=mid=small=-2147483648;
+                for (var i in nums) {
+                    if (count > 0 && nums[i] == max || count > 1 && nums[i] == mid) continue;
+                    count++;
+                    if (nums[i] > max) {
+                        small = mid;
+                        mid = max;
+                        max = nums[i];
+                    } else if (nums[i] > mid) {
+                        small = mid;
+                        mid = nums[i];
+                    } else if (nums[i] > small) {
+                        small = nums[i];
+                    }
+                }
+                return count < 3 ? max : small;
+        };
 
 
 219. Contains Duplicate II 
