@@ -245,131 +245,241 @@ Could you do it without using any loop / recursion?
 Credits:
 Special thanks to @dietpepsi for adding this problem and creating all test cases.
 
+268. Missing Number 
+-------------------
 
 
-453. Minimum Moves to Equal Array Elements 
-------------------------------------------
+ Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
 
+For example,
+Given nums = [0, 1, 3] return 2.
 
-Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal, where a move is incrementing n - 1 elements by 1.
+Note:
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
 
-Example:
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
-Input:
-[1,2,3]
 
-Output:
-3
+263. Ugly Number
+----------------
 
-Explanation:
-Only three moves are needed (remember each move increments two elements):
+ Write a program to check whether a given number is an ugly number.
 
-[1,2,3]  =>  [2,3,3]  =>  [3,4,3]  =>  [4,4,4]
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
 
+Note that 1 is typically treated as an ugly number.
 
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
 
+258. Add Digits
+---------------
 
 
+ Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
 
+For example:
 
+Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
 
+Follow up:
+Could you do it without any loop/recursion in O(1) runtime? 
 
 
 
+246. Strobogrammatic Number
+---------------------------
 
+ A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 
+Write a function to determine if a number is strobogrammatic. The number is represented as a string.
 
+For example, the numbers "69", "88", and "818" are all strobogrammatic.
 
+注意到0-9中有五个数字满足这种“镜像对称”，所以我们将它们放在一个哈希表中，然后遍历num中的前一半字符（包括最中间的字符），一旦发现某字符不在哈希表中，或者虽然是，但是在后面的对应位置上的字符不是它的“镜像对称”字符，就返回false。如果检查完所有的字符都没有问题，则返回true。
 
+https://tonycao.gitbooks.io/leetcode-locked/content/LeetCode%20Locked/c1.5.html
 
 
+http://www.bo-song.com/leetcode-strobogrammatic-number-ii-iii/
 
 
+231. Power of Two
+-----------------
 
+ Given an integer, write a function to determine if it is a power of two.
 
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
+204. Count Primes 
+-----------------
 
 
+Count the number of prime numbers less than a non-negative number, n.
 
+Credits:
+Special thanks to @mithmatt for adding this problem and creating all test cases.
 
 
 
 
+202. Happy Number 
+-----------------
 
+Write an algorithm to determine if a number is "happy".
 
+A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
 
+Example: 19 is a happy number
 
+    12 + 92 = 82
+    82 + 22 = 68
+    62 + 82 = 100
+    12 + 02 + 02 = 1
 
+Credits:
+Special thanks to @mithmatt and @ts for adding this problem and creating all test cases.
 
 
 
 
+172. Factorial Trailing Zeroes 
+------------------------------
 
 
+Given an integer n, return the number of trailing zeroes in n!.
 
+Note: Your solution should be in logarithmic time complexity.
 
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
+168. Excel Sheet Column Title 
+-----------------------------
 
+Given a positive integer, return its corresponding column title as appear in an Excel sheet.
 
+For example:
 
+    1 -> A
+    2 -> B
+    3 -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB 
 
+Credits:
+Special thanks to @ifanchu for adding this problem and creating all test cases.
 
 
+171. Excel Sheet Column Number 
+------------------------------
 
+Related to question Excel Sheet Column Title
 
+Given a column title as appear in an Excel sheet, return its corresponding column number.
 
+For example:
 
+    A -> 1
+    B -> 2
+    C -> 3
+    ...
+    Z -> 26
+    AA -> 27
+    AB -> 28 
 
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
 
+69. Sqrt(x) 
+-----------
 
+Implement int sqrt(int x).
 
+Compute and return the square root of x.
 
 
 
+67. Add Binary 
+--------------
 
+ Given two binary strings, return their sum (also a binary string).
 
+For example,
+a = "11"
+b = "1"
+Return "100". 
 
 
+66. Plus One 
+------------
 
 
 
+Given a non-negative integer represented as a non-empty array of digits, plus one to the integer.
 
+You may assume the integer do not contain any leading zero, except the number 0 itself.
 
+The digits are stored such that the most significant digit is at the head of the list.
 
 
+13. Roman to Integer 
+--------------------
+Given a roman numeral, convert it to an integer.
 
+Input is guaranteed to be within the range from 1 to 3999.
 
 
+9. Palindrome Number 
+--------------------
 
+Determine whether an integer is a palindrome. Do this without extra space.
 
+click to show spoilers.
+Some hints:
 
+Could negative integers be palindromes? (ie, -1)
 
+If you are thinking of converting the integer to string, note the restriction of using extra space.
 
+You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", you know that the reversed integer might overflow. How would you handle such case?
 
+There is a more generic way of solving this problem.
 
 
 
+7. Reverse Integer 
+------------------
 
 
+Reverse digits of an integer.
 
+Example1: x = 123, return 321
+Example2: x = -123, return -321
 
+click to show spoilers.
+Have you thought about this?
 
+Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
 
+If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
 
+Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
 
+For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
 
-
-
-
-
-
-
+Note:
+The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows. 
 
 
 
