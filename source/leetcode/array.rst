@@ -47,7 +47,8 @@ Example 3:
 
         #. 先通过归并排序把数组有序化，然后除去数组中重复的元素，最后拿到第三大的元素。
         #. Python中有个collections模块，它提供了个类Counter，用来跟踪值出现了多少次。注意key的出现顺序是根据计数的从大到小。它的一个方法most_common(n)返回一个list, list中包含Counter对象中出现最多前n个元素。
-        #. heapq模块有两个函数：nlargest() 和 nsmallest() 可以从一个集合中获取最大或最小的N个元素列表。heapq.nlargest (n, heap) #查询堆中的最大元素，n表示查询元素个数
+        #. heapq模块有两个函数：nlargest() 和 nsmallest() 可以从一个集合中获取最大或最小的N个元素列表。heapq.nlargest (n, heap) 查询堆中的最大元素，n表示查询元素个数
+        
 .. code-block:: javascript
 
         var thirdMax = function(nums) {
@@ -70,25 +71,11 @@ Example 3:
         };
 
 
-219. Contains Duplicate II 
---------------------------
+.. caution::
+        
+        看到这道题目的第一个思路是 对整个数组进行排序，判断数组的长度，然后去重，选出数组的第三个数字。
+        但是这样是没有什么时间复杂度和空间复杂度之类的，看了别人的答案是命名3个变量，然后赋最小值，通过循环来把值替换
 
-Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
-
-
-283. Move Zeroes 
-----------------
- Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
-
-For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
-
-Note:
-
-    You must do this in-place without making a copy of the array.
-    Minimize the total number of operations.
-
-Credits:
-Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
 
 217. Contains Duplicate 
@@ -96,6 +83,93 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 
 
 Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct. 
+
+
+判断数组里面是否有重复的元素
+
+
+.. code-block:: javascript
+
+        function hasDuplicates(array) {
+            return (new Set(array)).size !== array.length;
+        }
+
+        function hasDuplicates(array) {
+            var valuesSoFar = Object.create(null);
+            for (var i = 0; i < array.length; ++i) {
+                var value = array[i];
+                if (value in valuesSoFar) {
+                    return true;
+                }
+                valuesSoFar[value] = true;
+            }
+            return false;
+        }
+
+        function hasDuplicates(array) {
+            var valuesSoFar = [];
+            for (var i = 0; i < array.length; ++i) {
+                var value = array[i];
+                if (valuesSoFar.indexOf(value) !== -1) {
+                    return true;
+                }
+                valuesSoFar.push(value);
+            }
+            return false;
+        }
+
+        def containsDuplicate(baby):
+            return len(baby) != len(set(baby))
+
+        def newDuplicate(baby):
+            numSet = set()
+            for num in baby:
+                if num in numSet:
+                    return True
+                numSet.add(num)
+            return False
+
+判断了有重复的元素，怎么去重
+.. code-block:: javascript
+
+        var arr = [9, 9, 111, 2, 3, 4, 4, 5, 7];
+        var sorted_arr = arr.slice().sort(); // You can define the comparing function here. 
+                                             // JS by default uses a crappy string compare.
+                                             // (we use slice to clone the array so the
+                                             // original array won't be modified)
+        var results = [];
+        for (var i = 0; i < arr.length - 1; i++) {
+            if (sorted_arr[i + 1] == sorted_arr[i]) {
+                results.push(sorted_arr[i]);
+            }
+        }
+
+console.log(results);
+
+219. Contains Duplicate II 
+--------------------------
+
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
+
+
+
+
+283. Move Zeroes 
+----------------
+
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+
+Note:
+
+#. You must do this in-place without making a copy of the array.
+#. Minimize the total number of operations.
+
+Credits:
+Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+
+
 
 
 
@@ -107,18 +181,18 @@ Say you have an array for which the ith element is the price of a given stock on
 If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
 
 Example 1:
+::
+        Input: [7, 1, 5, 3, 6, 4]
+        Output: 5
 
-Input: [7, 1, 5, 3, 6, 4]
-Output: 5
-
-max. difference = 6-1 = 5 (not 7-1 = 6, as selling price needs to be larger than buying price)
+        max. difference = 6-1 = 5 (not 7-1 = 6, as selling price needs to be larger than buying price)
 
 Example 2:
+::
+        Input: [7, 6, 4, 3, 1]
+        Output: 0
 
-Input: [7, 6, 4, 3, 1]
-Output: 0
-
-In this case, no transaction is done, i.e. max profit = 0.
+        In this case, no transaction is done, i.e. max profit = 0.
 
 122. Best Time to Buy and Sell Stock II 
 ---------------------------------------
