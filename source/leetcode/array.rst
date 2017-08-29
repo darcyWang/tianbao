@@ -227,6 +227,61 @@ Example 2:
 
         In this case, no transaction is done, i.e. max profit = 0.
 
+这是卖股票的第一个题目，根据题意我们知道只能进行一次交易，但需要获得最大的利润，所以我们需要在最低价买入，最高价卖出，当然买入一定要在卖出之前。
+
+对于这一题，还是比较简单的，我们只需要遍历一次数组，通过一个变量记录当前最低价格，同时算出此次交易利润，并与当前最大值比较就可以了。
+
+.. caution::
+        
+        这道题目一共有四个，然后从最简单的开始。可以参考下面两个链接
+
+        #. http://www.forz.site/2017/06/24/Best-Time-to-Buy-and-Sell-Stock/
+        #. https://segmentfault.com/a/1190000003483697
+
+.. code-block:: javascript
+
+        /**
+         * @param {number[]} prices
+         * @return {number}
+         * More like greedy. Reserve the partial optimal and replace it when
+         * a better result is found.
+         * With complextity of O(n)
+         */
+        var maxProfit = function (prices) {
+            var length = prices.length,
+                min = Infinity,
+                res = -Infinity;
+
+            for (var i = 0; i <= length - 1; i++) {
+                if (prices[i] < min) {
+                    min = prices[i];
+                } else if (prices[i] > min && prices[i] - min > res) {
+                    res = prices[i] - min;
+                }
+            }
+
+            if (isFinite(res)) {
+                return res;
+            } else {
+                return 0;
+            }
+        };
+
+.. code-block:: Python
+
+        def maxProfit(self, prices):
+            if prices is None or len(prices) <= 1:
+                return 0
+
+            profit = 0
+            cur_price_min = 2**31 - 1
+            for price in prices:
+                profit = max(profit, price - cur_price_min)
+                cur_price_min = min(cur_price_min, price)
+
+            return profit
+
+
 122. Best Time to Buy and Sell Stock II 
 ---------------------------------------
 
@@ -234,10 +289,55 @@ Say you have an array for which the ith element is the price of a given stock on
 
 Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 
+
+
+
+123. Best Time to Buy and Sell Stock III
+----------------------------------------
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note: You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+
+
+188. Best Time to Buy and Sell Stock IV
+---------------------------------------
+
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most k transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+.. code-block:: Python
+
+       def maxProfit(self, k, prices):
+            n = len(prices)
+            if k >= (n>>1):return self.maxProfit2(prices)
+            dp =[[0 for j in xrange(n)]for i in xrange(k+1)]
+     
+            for i in xrange(1,k+1):
+                maxTemp=-prices[0]
+                for j in xrange(1,n):
+                    dp[i][j]=max(dp[i][j-1],prices[j] + maxTemp)
+                    maxTemp =max(maxTemp,dp[i-1][j-1] - prices[j])
+            return dp[k][n-1]
+     
+        def maxProfit2(self,prices):
+            ans = 0
+            for i in xrange(1,len(prices)):
+                if prices[i]>prices[i-1]:
+                    ans +=prices[i]-prices[i-1]
+            return ans
+
 53. Maximum Subarray 
 --------------------
 
- Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
