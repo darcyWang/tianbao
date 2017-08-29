@@ -130,6 +130,7 @@ Given an array of integers, find if the array contains any duplicates. Your func
             return False
 
 判断了有重复的元素，怎么去重
+
 .. code-block:: javascript
 
         var arr = [9, 9, 111, 2, 3, 4, 4, 5, 7];
@@ -144,14 +145,20 @@ Given an array of integers, find if the array contains any duplicates. Your func
             }
         }
 
-console.log(results);
+        console.log(results);
 
 219. Contains Duplicate II 
 --------------------------
 
 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
 
+https://github.com/jzhangnu/Leetcode-JS-Solutions/issues/43
 
+
+.. caution::
+        
+        这道题目还是有些没搞明白，从一个数组里面判断重复的元素相间隔的距离，
+        如果数组里面有很多重复的元素，该怎么搞
 
 
 283. Move Zeroes 
@@ -170,6 +177,32 @@ Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
 
+复杂度
+时间 O(N) 空间 O(1)
+
+实际上就是将所有的非0数向前尽可能的压缩，最后把没压缩的那部分全置0就行了。比如103040，先压缩成134，剩余的3为全置为0。过程中需要一个指针记录压缩到的位置。
+
+
+.. code-block:: javascript
+
+        var numbers = [0,0,0,0,0,0,0,0,1,2,3,5,0,6,6,0,3,4,5,6,6,7,8,9,9,0,6,55,5,5,4,33,31,2,423,5,7,657,8,679,564,345,0,231,2,3,3,32,3,3,3,4,5,6,6,7,8,9,96,5,4,4,4,3,3,3,5,6,7,8,9,9];
+
+        var moveZeros = function (arr) {
+          for(var i = arr.length; i--;) {
+              if(arr[i] === 0) {
+                  arr.splice(i, 1);
+                  arr.push(0);
+              }
+          }
+          return arr;
+        }
+
+
+        var moveZeros = function (arr) {
+          return arr.filter(function(x) {return x !== 0}).concat(arr.filter(function(x) {return x === 0;}));
+        }
+
+还是没有看到Python的写法
 
 
 
@@ -233,8 +266,7 @@ Try to come up as many solutions as you can, there are at least 3 different ways
 
 Related problem: Reverse Words in a String II
 
-Credits:
-Special thanks to @Freezen for adding this problem and creating all test cases.
+
 
 532. K-diff Pairs in an Array 
 -----------------------------

@@ -52,6 +52,77 @@ https://www.youtube.com/watch?v=GTJr8OvyEVQ
 
 
 
+151. Reverse Words in a String
+------------------------------
+
+
+
+Given an input string, reverse the string word by word.
+
+For example,
+::
+
+        Given s = "the sky is blue",
+        return "blue is sky the".
+
+
+
+For C programmers: Try to solve it in-place in O(1) space.
+
+Clarification:
+
+    # What constitutes a word?
+    A sequence of non-space characters constitutes a word.
+    # Could the input string contain leading or trailing spaces?
+    Yes. However, your reversed string should not contain leading or trailing spaces.
+    # How about multiple spaces between two words?
+    Reduce them to a single space in the reversed string.
+
+
+
+
+186. Reverse Words in a String II
+---------------------------------
+
+
+Given an input string, reverse the string word by word.
+A word is defined as a sequence of non-space characters.
+
+The input string does not contain leading or trailing spaces
+and the words are always separated by a single space.
+
+For example,
+::
+
+        Given s = "the sky is blue",
+        return "blue is sky the".
+
+Could you do it in-place without allocating extra space?
+
+
+Hints:
+Two-pass:
+1. reverse all strings:
+"the sky is blue" -> "eulb si yks eht"
+
+2. reverse one word:
+"eulb si yks eht" -> "blue is sky the"
+
+
+.. code-block:: python
+
+        def reverseWords(s):
+            return ' '.join(reversed(s.split()))
+
+        def reverseWords2(s):
+            print " ".join(s.split()[::-1])
+
+.. code-block:: javascript
+
+        var hello = 'the sky is blue'.split(' ').reverse().join(' ');
+        console.log(hello)
+
+
 557. Reverse Words in a String III
 ----------------------------------
 
@@ -64,9 +135,10 @@ Example 1:
 Note: In the string, each word is separated by single space and there will not be any extra space in the string.
 
 
-这道题目的理解还是非常简单
 
-JavaScript答案 ::
+JavaScript答案
+
+.. code-block:: javascript
 
         var hello = "Let's take LeetCode contest".split(' ').map(s => s.split().reverse().join()).join(' ')
         console.log(hello)
@@ -76,10 +148,12 @@ JavaScript答案 ::
 --------------------------------
 
 You are given a string representing an attendance record for a student. The record only contains the following three characters:
+
 ::
         'A' : Absent.
         'L' : Late.
         'P' : Present.
+
 A student could be rewarded if his attendance record doesn't contain more than one 'A' (absent) or more than two continuous 'L' (late).
 
 You need to return whether the student could be rewarded according to his attendance record.
@@ -697,34 +771,6 @@ For the purpose of this problem, we define empty string as valid palindrome.
 
 接下来以这一块就是medium类型了
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-186. Reverse Words in a String II
----------------------------------
-
-
-Given an input string, reverse the string word by word.
-A word is defined as a sequence of non-space characters.
-
-The input string does not contain leading or trailing spaces
-and the words are always separated by a single space.
-
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
-
-Could you do it in-place without allocating extra space?
-
-
-这道题让我们翻转一个字符串中的单词，跟之前那题Reverse Words in a String没有区别，由于之前那道题我们就是用in-place的方法做的，而这道题反而更简化了题目，因为不考虑首尾空格了和单词之间的多空格了，方法还是很简单，先把每个单词翻转一遍，再把整个字符串翻转一遍，或者也可以调换个顺序，先翻转整个字符串，再翻转每个单词，
-
-Hints:
-Two-pass:
-1. reverse all strings:
-"the sky is blue" -> "eulb si yks eht"
-
-2. reverse one word:
-"eulb si yks eht" -> "blue is sky the"
 
 
 468. Validate IP Address
@@ -1751,22 +1797,6 @@ The input time is legal and ranges from 00:00 to 23:59.
 http://blog.jerkybible.com/2017/03/18/LeetCode-539-Minimum-Time-Difference/
 
 
-
-151. Reverse Words in a String
-------------------------------
-
-
-
-Given an input string, reverse the string word by word.
-
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
-
-Update (2015-02-12):
-For C programmers: Try to solve it in-place in O(1) space.
-
-click to show clarification.
 
 
 537. Complex Number Multiplication

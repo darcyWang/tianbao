@@ -62,8 +62,9 @@ ids = [1,4,3,3,4,2,3,4,5,6,1]
 news_ids = list(set(ids))
 # news_ids.sort(key=ids.index)
 
+numbers = [20,67,3,2.6,7,74,2.8,90.8,52.8,4,3,2,5,7]
 
-def containsNearbyDuplicate(self, nums, k):
+def containsNearbyDuplicateOne(nums, k):
     numDict = dict()
     for x in range(len(nums)):
         idx = numDict.get(nums[x])
@@ -72,7 +73,7 @@ def containsNearbyDuplicate(self, nums, k):
         numDict[nums[x]] = x
     return False
 
-def containsNearbyDuplicate(self, nums, k):
+def containsNearbyDuplicate(nums, k):
     lookup = {}
     for i, num in enumerate(nums):
         if num not in lookup:
@@ -85,10 +86,25 @@ def containsNearbyDuplicate(self, nums, k):
             lookup[num] = i
     return False
 
+# print containsNearbyDuplicateOne(numbers, 10)
+
+
+bbb = "the sky is blue"
+
+def reverseWords(s):
+    return ' '.join(reversed(s.split()))
+
+def reverseWords2(s):
+    print " ".join(s.split()[::-1])
+
+# print reverseWords(bbb)
+# print reverseWords2(bbb)
+
+
+
 # print news_ids
 
-numbers = [20,67,3,2.6,7,74,2.8,90.8,52.8,4,3,2,5,7]
-babys = [7,10]
+# babys = [7,10]
 
 # print third_largest(babys)
 # print newDuplicate(babys)
