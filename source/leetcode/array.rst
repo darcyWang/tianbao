@@ -350,6 +350,31 @@ If you have figured out the O(n) solution, try coding another solution using the
 
 
 
+def kadane(a):
+
+  if not a:
+    raise ValueError('Empty array!')
+    
+  current_sum, current_start = a[0], 0
+  result = (current_sum, 0, 0)
+
+  for i, item in enumerate(a[1:], start=1):
+
+    if current_sum + item < item:
+      # discard the previous subarray, it's not optimal
+      current_start = i
+      current_sum = item
+    else:
+      current_sum += item
+
+    if current_sum > result[0]:
+      # update the maximum sum and start and end indices
+      result = (current_sum, current_start, i)
+
+  return result
+
+
+
 
 189. Rotate Array 
 -----------------
