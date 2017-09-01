@@ -25,15 +25,15 @@ def new_second_largest(numbers):
 
 
 def third_largest(numbers):
-	max1 = max2= max3=None
-	for num in numbers:
-	    if num > max1:
-	        max2,max3 = max1,max2
-	        max1=num
-	    elif num > max2 and num < max1:
-	        max2,max3= num,max2
-	    elif num > max3 and num < max2:
-	        max3 = num
+    max1 = max2= max3=None
+    for num in numbers:
+        if num > max1:
+            max2,max3 = max1,max2
+            max1=num
+        elif num > max2 and num < max1:
+            max2,max3= num,max2
+        elif num > max3 and num < max2:
+            max3 = num
         if max3 == None:
             return max1
         return max3
@@ -123,8 +123,8 @@ def maxSubArray(ls):
     print "maxSum =>", maxSum
     print "start =>", start, "; finish =>", finish
 
-maxSubArray([-2, 11, -4, 13, -5, 2])
-maxSubArray([-15, 29, -36, 3, -22, 11, 19, -5])
+# maxSubArray([-2, 11, -4, 13, -5, 2])
+# maxSubArray([-15, 29, -36, 3, -22, 11, 19, -5])
 
 def newmaxSubArray(nums):
     """
@@ -141,7 +141,7 @@ def newmaxSubArray(nums):
 
 
 
-print newmaxSubArray([-15, 29, -36, 3, -22, 11, 19, -5])
+# print newmaxSubArray([-15, 29, -36, 3, -22, 11, 19, -5])
 
 # print news_ids
 
@@ -166,3 +166,137 @@ print newmaxSubArray([-15, 29, -36, 3, -22, 11, 19, -5])
 # second_largest([1])
 # => None
 # second_largest([])
+
+
+def findMaxAverage(nums, k):
+    ans = None
+    sums = 0
+    for x in range(len(nums)):
+        sums += nums[x]
+        if x >= k: sums -= nums[x-k]
+        if x >= k-1: ans = max(ans, 1.0 * sums / k)
+
+    return ans
+
+
+print findMaxAverage([1,12,-5,-6,50,3], 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
