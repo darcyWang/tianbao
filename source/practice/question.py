@@ -184,7 +184,29 @@ print findMaxAverage([1,12,-5,-6,50,3], 1)
 
 
 
+def findDisappearedNumbers(nums):
+    """
+    :type nums: List[int]
+    :rtype: List[int]
+    """
+    numset = set(nums)
+    length = len(nums)
+    result = []
+    
+    for i in range(1,length+1):
+        result.append(i)
+    
+    resultset = set(result)
+    print resultset
+    print numset
+    final = resultset - numset
+    print final
+    result = list(final)
+    
+    return result
 
+
+print findDisappearedNumbers([4,3,2,7,8,2,3,1]);
 
 
 

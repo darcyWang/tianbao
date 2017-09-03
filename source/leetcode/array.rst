@@ -375,6 +375,7 @@ If you have figured out the O(n) solution, try coding another solution using the
           return result
 
 JavaScript版本
+
 https://github.com/Arnold134777/LeetCode-LintCode/blob/master/javascript/Maximum%20Subarray/main.js
 
 
@@ -777,14 +778,26 @@ Find all the elements of [1, n] inclusive that do not appear in this array.
 Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
 
 Example:
+::
 
-Input:
-[4,3,2,7,8,2,3,1]
+        Input:
+        [4,3,2,7,8,2,3,1]
 
-Output:
-[5,6]
+        Output:
+        [5,6]
 
+给定一个整数数组，其中1 ≤ a[i] ≤ n (n = 数组长度)，一些元素出现两次，其他的出现一次。
 
+寻找所有[1, n]中没有出现在数组中的元素。
+
+可以不使用额外空间并在O(n)运行时间求解吗？你可以假设返回列表不算额外空间。
+解题思路：
+
+正负号标记法
+
+遍历数组nums，记当前元素为n，令nums[abs(n) - 1] = -abs(nums[abs(n) - 1])
+
+再次遍历nums，将正数对应的下标+1返回即为答案，因为正数对应的元素没有被上一步骤标记过。
 
 
 26. Remove Duplicates from Sorted Array
@@ -799,6 +812,20 @@ Given input array nums = [1,1,2],
 
 Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
+
+Remove Duplicates from Sorted Array II
+--------------------------------------
+
+
+Follow up for "Remove Duplicates":
+
+What if duplicates are allowed at most twice?
+
+For example,
+
+Given sorted array A = [1,1,1,2,2,3],
+
+Your function should return length = 5, and A is now [1,1,2,2,3].
 
 
 
