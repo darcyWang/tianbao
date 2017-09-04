@@ -813,6 +813,43 @@ Given input array nums = [1,1,2],
 Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
 
+
+
+.. code-block :: JavaScript
+
+        function sort_unique(arr) {
+            if (arr.length === 0) return arr;
+            arr = arr.sort(function (a, b) { return a*1 - b*1; });
+            var ret = [arr[0]];
+            for (var i = 1; i < arr.length; i++) { // start loop at 1 as element 0 can never be a duplicate
+                if (arr[i-1] !== arr[i]) {
+                    ret.push(arr[i]);
+                }
+            }
+            return ret;
+        }
+        console.log(sort_unique(['237','124','255','124','366','255']));
+        //["124", "237", "255", "366"]
+
+        /**
+         * @param {number[]} nums
+         * @return {number}
+         */
+        var removeDuplicates = function(nums) {
+            if(nums === null || nums.length === 0) return 0;
+            if(nums.length == 1) return 1;
+            var count = 0;
+            for(var i = 0; i< nums.length; i++) {
+                if(nums[i] != nums[i+1]){
+                    count ++;
+                    nums[count] = nums[i+1];
+                }
+            }
+            return count;
+        };
+
+
+
 Remove Duplicates from Sorted Array II
 --------------------------------------
 
