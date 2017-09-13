@@ -236,7 +236,7 @@ class Solution(object):
 
 test = Solution()
 l1 = [1,1,1,1,1,1,1,2,2,2,2,3,4]
-print test.removeDuplicates2(l1)
+print '答案是这个数组里面有几个数字 %d'%test.removeDuplicates2(l1) 
 
 
 
