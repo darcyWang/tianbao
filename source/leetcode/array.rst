@@ -791,13 +791,40 @@ Example:
 寻找所有[1, n]中没有出现在数组中的元素。
 
 可以不使用额外空间并在O(n)运行时间求解吗？你可以假设返回列表不算额外空间。
-解题思路：
 
-正负号标记法
+.. note ::
 
-遍历数组nums，记当前元素为n，令nums[abs(n) - 1] = -abs(nums[abs(n) - 1])
+        解题思路：正负号标记法 
 
-再次遍历nums，将正数对应的下标+1返回即为答案，因为正数对应的元素没有被上一步骤标记过。
+        #. 遍历数组nums，记当前元素为n，令nums[abs(n) - 1] = -abs(nums[abs(n) - 1])
+        #. 再次遍历nums，将正数对应的下标+1返回即为答案，因为正数对应的元素没有被上一步骤标记过。
+
+
+.. code-block :: python
+
+        def findDisappearedNumbers(nums):
+            """
+            :type nums: List[int]
+            :rtype: List[int]
+            """
+            numset = set(nums)
+            length = len(nums)
+            result = []
+            
+            for i in range(1,length+1):
+                result.append(i)
+            
+            resultset = set(result)
+            print resultset
+            print numset
+            final = resultset - numset
+            print final
+            result = list(final)
+            
+            return result
+
+
+        print findDisappearedNumbers([4,3,2,7,8,2,3,1]);
 
 
 26. Remove Duplicates from Sorted Array
@@ -807,10 +834,12 @@ Given a sorted array, remove the duplicates in place such that each element appe
 
 Do not allocate extra space for another array, you must do this in place with constant memory.
 
-For example,
-Given input array nums = [1,1,2],
 
-Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
+For example:
+::
+
+        Given input array nums = [1,1,2],
+        Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
 
 
@@ -858,12 +887,12 @@ Follow up for "Remove Duplicates":
 
 What if duplicates are allowed at most twice?
 
-For example,
+For example:
+:: 
 
-Given sorted array A = [1,1,1,2,2,3],
+        Given sorted array A = [1,1,1,2,2,3],
 
-Your function should return length = 5, and A is now [1,1,2,2,3].
-
+        Your function should return length = 5, and A is now [1,1,2,2,3].
 
 .. code-block :: JavaScript
     
@@ -895,11 +924,41 @@ Do not allocate extra space for another array, you must do this in place with co
 The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 
 Example:
-Given input array nums = [3,2,2,3], val = 3
+::
+        Given input array nums = [3,2,2,3], val = 3
 
-Your function should return length = 2, with the first two elements of nums being 2.
+        Your function should return length = 2, with the first two elements of nums being 2.
 
+我是这样理解的，给定一个数组，然后给定一个值，把数组里面对应的值都删除，最后返回的结果是新数组的长度
 
+.. code-block :: python
+
+            def removeElement(self, nums, val):
+                """
+                :type nums: List[int]
+                :type val: int
+                """
+                for x in nums[:]:
+                    if x == val:
+                        nums.remove(x)
+                return len(nums)
+                
+            def removeElementTwo(self, nums, val):
+                # @param  nums a list of integers
+                # @param  val  an integer, value need to be removed
+                # return an integer
+                while val in nums: nums.remove(val)
+                return len(nums)
+
+            def removeElementThree(self, nums, val):
+                k = 0
+                for i in nums:
+                    if i != val:
+                        nums[k] = i
+                        k += 1
+                    print i
+                    print nums
+                return k
 
 169. Majority Element
 ---------------------
@@ -912,6 +971,28 @@ Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
 
 
+给定一个长度为n的数组，寻找其中的“众数”。众数是指出现次数大于 ⌊ n/2 ⌋ 的元素。
+
+你可以假设数组是非空的并且数组中的众数永远存在。
+
+#. 排序法 时间 O(NlogN) 空间 O(1) 将数组排序，这时候数组最中间的数肯定是众数。
+#. 位操作法 时间 O(N) 空间 O(1) 假设一个数是最多只有32位的二进制数，那么我们从第一位到第32位，对每一位都计算所有数字在这一位上1的个数，如果这一位1的个数大于一半，说明众数的这一位是1，如果小于一半，说明大多数的这一位是0。
+#. 投票法  时间 O(N) 空间 O(1) 记录一个candidate变量，还有一个counter变量，开始遍历数组。如果新数和candidate一样，那么counter加上1，否则的话，如果counter不是0，则counter减去1，如果counter已经是0，则将candidate更新为这个新的数。因为每一对不一样的数都会互相消去，最后留下来的candidate就是众数。
+
+Majority Element II
+-------------------
+
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times. The algorithm should run in linear time and in O(1) space.
+
+
+复杂度
+
+时间 O(N) 空间 O(1)
+
+思路
+
+上一题中，超过一半的数只可能有一个，所以我们只要投票出一个数就行了。而这题中，超过n/3的数最多可能有两个，所以我们要记录出现最多的两个数。同样的两个candidate和对应的两个counter，如果遍历时，某个候选数和到当前数相等，则给相应计数器加1。如果两个计数器都不为0，则两个计数器都被抵消掉1。如果某个计数器为0了，则将当前数替换相应的候选数，并将计数器初始化为1。最后我们还要遍历一遍数组，确定这两个出现最多的数，是否都是众数。
+
 
 581. Shortest Unsorted Continuous Subarray
 ------------------------------------------
@@ -921,10 +1002,11 @@ Given an integer array, you need to find one continuous subarray that if you onl
 You need to find the shortest such subarray and output its length.
 
 Example 1:
-Input: [2, 6, 4, 8, 10, 9, 15]
-Output: 5
-Explanation: You need to sort [6, 4, 8, 10, 9] in ascending order to make the whole array sorted in ascending order.
-Note:
+::
+        Input: [2, 6, 4, 8, 10, 9, 15]
+        Output: 5
+        Explanation: You need to sort [6, 4, 8, 10, 9] in ascending order to make the whole array sorted in ascending order.
+        Note:
 Then length of the input array is in range [1, 10,000].
 The input array may contain duplicates, so ascending order here means <=.
 

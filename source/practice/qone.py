@@ -41,14 +41,38 @@ class Solution:
                 A[prev] = A[curr]
                 curr += 1
         return prev + 1
-        
+    
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        """
+        for x in nums[:]:
+            if x == val:
+                nums.remove(x)
+        return len(nums)
+    def removeElementTwo(self, nums, val):
+        # @param  nums a list of integers
+        # @param  val  an integer, value need to be removed
+        # return an integer
+        while val in nums: nums.remove(val)
+        return len(nums)
+    def removeElementThree(self, nums, val):
+        k = 0
+        for i in nums:
+            if i != val:
+                nums[k] = i
+                k += 1
+            print i
+            print nums
+        return k
 
 test = Solution()
 l1 = [1,1,1,1,1,1,1,2,2,2,2,3,4]
 l2 = [1,1,1,2,2,3]
-print '测试一下题目数组去重的第二种做法，就是去掉数组中重复3次以上的元素后数组的长度是 %d'%test.oneDuplicates(l1)
+# print '测试一下题目数组去重的第二种做法，就是去掉数组中重复3次以上的元素后数组的长度是 %d'%test.oneDuplicates(l1)
 
-
+print '测试一下具体的东西 %d'%test.removeElementThree(l2, 1)
 
 
 
