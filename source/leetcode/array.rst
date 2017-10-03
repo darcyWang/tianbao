@@ -1115,16 +1115,6 @@ Multiplication of any three numbers in the input won't exceed the range of 32-bi
 
 
 
-119. Pascal's Triangle II
--------------------------
-
-Given an index k, return the kth row of the Pascal's triangle.
-
-For example, given k = 3,
-Return [1,3,3,1].
-
-Note:
-Could you optimize your algorithm to use only O(k) extra space?
 
 
 
@@ -1195,6 +1185,19 @@ Return
           [1,3,3,1],
          [1,4,6,4,1]
         ]
+
+
+119. Pascal's Triangle II
+-------------------------
+
+Given an index k, return the kth row of the Pascal's triangle.
+
+For example, given k = 3,
+Return [1,3,3,1].
+
+Note:
+Could you optimize your algorithm to use only O(k) extra space?
+
 
 
 621. Task Scheduler 
@@ -1270,14 +1273,14 @@ https://github.com/csujedihy/lc-all-solutions/blob/master/621.task-scheduler/tas
 Given an array consists of non-negative integers, your task is to count the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
 
 Example 1:
-
-Input: [2,2,3,4]
-Output: 3
-Explanation:
-Valid combinations are: 
-2,3,4 (using the first 2)
-2,3,4 (using the second 2)
-2,2,3
+::      
+        Input: [2,2,3,4]
+        Output: 3
+        Explanation:
+        Valid combinations are: 
+        2,3,4 (using the first 2)
+        2,3,4 (using the second 2)
+        2,2,3
 
 Note:
 
