@@ -13,3 +13,6 @@ Leetcode
    dynamic.rst
    math.rst
    tree.rst
+   hash.rst
+   dfs.rst
+   binary.rst
