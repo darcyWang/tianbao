@@ -15,4 +15,8 @@ Leetcode
    tree.rst
    hash.rst
    dfs.rst
+   bfs.rst
    binary.rst
+   pointer.rst
+   backtracking.rst
+   design.rst
