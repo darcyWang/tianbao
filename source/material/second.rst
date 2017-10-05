@@ -1,5 +1,5 @@
-Django-celery + Redis on OSX Lion
-=================================
+more practice and things become better
+======================================
 
 Installation and Setup
 ----------------------
