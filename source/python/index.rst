@@ -1,8 +1,8 @@
 .. highlight:: rst
 
-============================
-reStructuredText with Sphinx
-============================
+====================
+Python Learning Part
+====================
 
 -----------------
 Setting up Sphinx
