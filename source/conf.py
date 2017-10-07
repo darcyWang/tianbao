@@ -31,7 +31,14 @@ import sphinx_rtd_theme
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'rst2pdf.pdfbuilder'
 ]
+
+pdf_documents = [('index', u'rst2pdf', u'Baby I love you', u'DarcyWang'),]
+# index - master document
+# rst2pdf - name of the generated pdf
+# Sample rst2pdf doc - title of the pdf
+# Your Name - author name in the pdf
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
