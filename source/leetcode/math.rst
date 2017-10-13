@@ -142,6 +142,62 @@ Note:
     #. The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
     #. Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
 
+.. code:: python
+    
+    class Solution(object):
+        def maximumProduct(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            先排序，然后找出5个数字，为什么是5个数字呢，需要考虑有负数的情况，
+            把拿到的数组进行排序，找出最小的两个数字min1和min2,然后找出数组
+            的最大3个数字,max1、max2和max3.
+            """
+            nums = sorted(nums)
+            return max(nums[-3] * nums[-2] * nums[-1], nums[0] * nums[1] * nums[-1])
+
+    assert Solution().maximumProduct([1,2,3,4]) == 24
+    assert Solution().maximumProduct([-4,-3,-2,-1,60]) == 720
+
+
+370. Range Addition
+-------------------
+
+
+Assume you have an array of length n initialized with all 0's and are given k update operations.
+
+Each operation is represented as a triplet: [startIndex, endIndex, inc] which increments each element of subarray A[startIndex ... endIndex] (startIndex and endIndex inclusive) with inc.
+
+Return the modified array after all k operations were executed.
+
+Example:
+::
+    Given:  length = 5,
+            updates = [
+                [1,  3,  2],
+                [2,  4,  3],
+                [0,  2, -2]
+            ]
+
+    Output: [-2, 0, 3, 5, 3]
+
+Explanation:
+::
+    Initial state:  [ 0, 0, 0, 0, 0 ]
+
+    After applying operation [1, 3, 2]:
+                             [ 0, 2, 2, 2, 0 ]
+
+    After applying operation [2, 4, 3]:
+                             [ 0, 2, 5, 5, 3 ]
+
+    After applying operation [0, 2, -2]:
+                             [-2, 0, 3, 5, 3 ]
+
+解法：
+这题与算法无关，是个数学题。思想是把所有需要相加的值存在第一个数，然后把这个范围的最后一位的下一位减去这个inc, 这样我所以这个范围在求最终值的时候，都可以加上这个inc，而后面的数就不会加上inc。
+
+
 
 598. Range Addition II 
 ----------------------
@@ -160,20 +216,21 @@ Example 1:
    Output: 4
 
 Explanation: 
-Initially, M = 
-[[0, 0, 0],
- [0, 0, 0],
- [0, 0, 0]]
+::
+    Initially, M = 
+    [[0, 0, 0],
+     [0, 0, 0],
+     [0, 0, 0]]
 
-After performing [2,2], M = 
-[[1, 1, 0],
- [1, 1, 0],
- [0, 0, 0]]
+    After performing [2,2], M = 
+    [[1, 1, 0],
+     [1, 1, 0],
+     [0, 0, 0]]
 
-After performing [3,3], M = 
-[[2, 2, 1],
- [2, 2, 1],
- [1, 1, 1]]
+    After performing [3,3], M = 
+    [[2, 2, 1],
+     [2, 2, 1],
+     [1, 1, 1]]
 
 So the maximum integer in M is 2, and there are four of it in M. So return 4.
 
