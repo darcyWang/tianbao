@@ -1095,28 +1095,6 @@ Note:
 You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
 
 
-628. Maximum Product of Three Numbers
--------------------------------------
-
-Given an integer array, find three numbers whose product is maximum and output the maximum product.
-
-Example 1:
-Input: [1,2,3]
-Output: 6
-Example 2:
-Input: [1,2,3,4]
-Output: 24
-Note:
-The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
-Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
-
-
-
-
-
-
-
-
 
 561. Array Partition I
 ----------------------
@@ -1152,9 +1130,6 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 
 485. Max Consecutive Ones
 -------------------------
-
-
-
 
 Given a binary array, find the maximum number of consecutive 1s in this array.
 
@@ -1243,8 +1218,8 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
 Note:
 
-    The number of tasks is in the range [1, 10000].
-    The integer n is in the range [0, 100].
+    #. The number of tasks is in the range [1, 10000].
+    #. The integer n is in the range [0, 100].
 
 
 这是一道贪心策略的题目。原题的大意有一定的操作系统知识背景，大致是说，给出任务集，每个时间片只能完成任意一个任务，同一类任务必须至少相隔n个时间片，求完成任务集的任务最少需要多少时间片。 
@@ -1268,8 +1243,6 @@ https://github.com/csujedihy/lc-all-solutions/blob/master/621.task-scheduler/tas
 611. Valid Triangle Number 
 --------------------------
 
-
-
 Given an array consists of non-negative integers, your task is to count the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
 
 Example 1:
@@ -1284,8 +1257,8 @@ Example 1:
 
 Note:
 
-    The length of the given array won't exceed 1000.
-    The integers in the given array are in the range of [0, 1000].
+    #. The length of the given array won't exceed 1000.
+    #. The integers in the given array are in the range of [0, 1000].
 
 
 对于一个三角形，只要满足两边之和大于第三边即可。这题可采用双指针遍历。
@@ -1366,8 +1339,8 @@ Output: 2
 
 Note:
 
-    The length of the array is in range [1, 20,000].
-    The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].
+    #. The length of the array is in range [1, 20,000].
+    #. The range of numbers in the array is [-1000, 1000] and the range of the integer k is [-1e7, 1e7].
 
 
 548. Split Array with Equal Sum
@@ -1394,8 +1367,8 @@ sum(k + 1, n - 1) = sum(6, 6) = 1
 
 Note:
 
-    1 <= n <= 2000.
-    Elements in the given array will be in range [-1,000,000, 1,000,000].
+    #. 1 <= n <= 2000.
+    #. Elements in the given array will be in range [-1,000,000, 1,000,000].
 
 https://wlypku.github.io/2017/04/02/Leetcode-week26/
 
@@ -1476,7 +1449,7 @@ https://wormtooth.com/20170304-leetcode-contest22/
 495. Teemo Attacking 
 --------------------
 
- In LOL world, there is a hero called Teemo and his attacking can make his enemy Ashe be in poisoned condition. Now, given the Teemo's attacking ascending time series towards Ashe and the poisoning time duration per Teemo's attacking, you need to output the total time that Ashe is in poisoned condition.
+In LOL world, there is a hero called Teemo and his attacking can make his enemy Ashe be in poisoned condition. Now, given the Teemo's attacking ascending time series towards Ashe and the poisoning time duration per Teemo's attacking, you need to output the total time that Ashe is in poisoned condition.
 
 You may assume that Teemo attacks at the very beginning of a specific time point, and makes Ashe be in poisoned condition immediately.
 
@@ -1501,8 +1474,8 @@ So you finally need to output 3.
 
 Note:
 
-    You may assume the length of given time series array won't exceed 10000.
-    You may assume the numbers in the Teemo's attacking time series and his poisoning time duration per attacking are non-negative integers, which won't exceed 10,000,000.
+    #. You may assume the length of given time series array won't exceed 10000.
+    #. You may assume the numbers in the Teemo's attacking time series and his poisoning time duration per attacking are non-negative integers, which won't exceed 10,000,000.
 
 
 
@@ -1522,11 +1495,9 @@ Could you do it without extra space and in O(n) runtime?
 
 Example:
 
-Input:
-[4,3,2,7,8,2,3,1]
+Input:  [4,3,2,7,8,2,3,1]
 
-Output:
-[2,3]
+Output:  [2,3]
 
 
 380. Insert Delete GetRandom O(1) 
@@ -1592,7 +1563,7 @@ https://all4win78.wordpress.com/2016/08/18/leetcode-381-insert-delete-getrandom-
 289. Game of Life 
 -----------------
 
- According to the Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
+According to the Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
 
 Given a board with m by n cells, each cell has an initial state live (1) or dead (0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
 
@@ -1618,16 +1589,14 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 ------------------------------
 
 
-
-
- Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
 
 Note:
 
-    You must not modify the array (assume the array is read only).
-    You must use only constant, O(1) extra space.
-    Your runtime complexity should be less than O(n2).
-    There is only one duplicate number in the array, but it could be repeated more than once.
+    #. You must not modify the array (assume the array is read only).
+    #. You must use only constant, O(1) extra space.
+    #. Your runtime complexity should be less than O(n2).
+    #. There is only one duplicate number in the array, but it could be repeated more than once.
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
@@ -1638,15 +1607,16 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 ----------------
 
 
+Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
 
-    Given an unsorted array nums, reorder it in-place such that nums[0] <= nums[1] >= nums[2] <= nums[3]....
-
-    For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5, 3, 4].
+For example, given nums = [3, 5, 2, 1, 6, 4], one possible answer is [1, 6, 2, 5, 3, 4].
 
 
 http://tiancao.me/Leetcode-Unlocked/LeetCode%20Locked/c1.42.html
 
 https://nb4799.neu.edu/wordpress/?p=841
+
+
 324. Wiggle Sort II
 -------------------
 
@@ -1835,8 +1805,7 @@ Special thanks to @mithmatt for adding this problem and creating all test cases.
 209. Minimum Size Subarray Sum 
 ------------------------------
 
-
- Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
 
 For example, given the array [2,3,1,2,4,3] and s = 7,
 the subarray [4,3] has the minimal length under the problem constraint.
@@ -1855,9 +1824,7 @@ Special thanks to @Freezen for adding this problem and creating all test cases.
 163. Missing Ranges
 -------------------
 
-
-
- Given a sorted integer array where the range of elements are in the inclusive range [lower, upper], return its missing ranges.
+Given a sorted integer array where the range of elements are in the inclusive range [lower, upper], return its missing ranges.
 For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return ["2", "4->49", "51->74", "76->99"].
 
 
@@ -1924,8 +1891,7 @@ You may assume no duplicate exists in the array.
 152. Maximum Product Subarray 
 -----------------------------
 
-
- Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+Find the contiguous subarray within an array (containing at least one number) which has the largest product.
 
 For example, given the array [2,3,-2,4],
 the contiguous subarray [2,3] has the largest product = 6. 
@@ -1937,13 +1903,13 @@ the contiguous subarray [2,3] has the largest product = 6.
 Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 
 For example, given the following triangle
-
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]
+::
+    [
+         [2],
+        [3,4],
+       [6,5,7],
+      [4,1,8,3]
+    ]
 
 The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 

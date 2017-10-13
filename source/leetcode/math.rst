@@ -194,8 +194,6 @@ Explanation:
     After applying operation [0, 2, -2]:
                              [-2, 0, 3, 5, 3 ]
 
-解法：
-这题与算法无关，是个数学题。思想是把所有需要相加的值存在第一个数，然后把这个范围的最后一位的下一位减去这个inc, 这样我所以这个范围在求最终值的时候，都可以加上这个inc，而后面的数就不会加上inc。
 
 
 
@@ -687,22 +685,14 @@ Given a positive integer a, find the smallest positive integer b whose multiplic
 If there is no answer or the answer is not fit in 32-bit signed integer, then return 0.
 
 Example 1
-Input:
+Input: 48 
 
-48 
-
-Output:
-
-68
+Output: 68
 
 Example 2
-Input:
+Input: 15
 
-15
-
-Output:
-
-35
+Output: 35
 
 题目大意：
 
@@ -784,11 +774,11 @@ Explanation:
 
 Note:
 
-    All given positions won't overlap.
-    The squirrel can take at most one nut at one time.
-    The given positions of nuts have no order.
-    Height and width are positive integers. 3 <= height * width <= 10,000.
-    The given positions contain at least one nut, only one tree and one squirrel.
+    #. All given positions won't overlap.
+    #. The squirrel can take at most one nut at one time.
+    #. The given positions of nuts have no order.
+    #. Height and width are positive integers. 3 <= height * width <= 10,000.
+    #. The given positions contain at least one nut, only one tree and one squirrel.
 
 题目大意：
 
@@ -798,11 +788,11 @@ Note:
 
 注意：
 
-    所有位置不会重叠
-    松鼠一次运送只能携带一枚坚果
-    给定坚果位置是无序的
-    高度和宽度是正整数，并且 3 <= height * width <= 10,000
-    给定位置包含至少一枚坚果，只有一棵树和一只松鼠
+    #. 所有位置不会重叠
+    #. 松鼠一次运送只能携带一枚坚果
+    #. 给定坚果位置是无序的
+    #. 高度和宽度是正整数，并且 3 <= height * width <= 10,000
+    #. 给定位置包含至少一枚坚果，只有一棵树和一只松鼠
 
 
 553. Optimal Division 
@@ -829,15 +819,15 @@ Other cases:
 
 Note:
 
-    The length of the input array is [1, 10].
-    Elements in the given array will be in range [2, 1000].
-    There is only one optimal division for each test case.
+    #. The length of the input array is [1, 10].
+    #. Elements in the given array will be in range [2, 1000].
+    #. There is only one optimal division for each test case.
 
 
 537. Complex Number Multiplication
 ----------------------------------
 
- Given two strings representing two complex numbers.
+Given two strings representing two complex numbers.
 
 You need to return a string representing their multiplication. Note i2 = -1 according to the definition.
 
@@ -855,8 +845,8 @@ Explanation: (1 - i) * (1 - i) = 1 + i2 - 2 * i = -2i, and you need convert it t
 
 Note:
 
-    The input strings will not have extra blank.
-    The input strings will be given in the form of a+bi, where the integer a and b will both belong to the range of [-100, 100]. And the output should be also in this form.
+    #. The input strings will not have extra blank.
+    #. The input strings will be given in the form of a+bi, where the integer a and b will both belong to the range of [-100, 100]. And the output should be also in this form.
 
 
 
@@ -864,9 +854,7 @@ Note:
 535. Encode and Decode TinyURL 
 ------------------------------
 
-
-
-    Note: This is a companion problem to the System Design problem: Design TinyURL.
+Note: This is a companion problem to the System Design problem: Design TinyURL.
 
 TinyURL is a URL shortening service where you enter a URL such as https://leetcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk.
 
@@ -877,8 +865,7 @@ Design the encode and decode methods for the TinyURL service. There is no restri
 ----------------------------
 
 
-
- Given a list of non-negative numbers and a target integer k, write a function to check if the array has a continuous subarray of size at least 2 that sums up to the multiple of k, that is, sums up to n*k where n is also an integer.
+Given a list of non-negative numbers and a target integer k, write a function to check if the array has a continuous subarray of size at least 2 that sums up to the multiple of k, that is, sums up to n*k where n is also an integer.
 
 Example 1:
 
@@ -894,8 +881,8 @@ Explanation: Because [23, 2, 6, 4, 7] is an continuous subarray of size 5 and su
 
 Note:
 
-    The length of the array won't exceed 10,000.
-    You may assume the sum of all the numbers is in the range of a signed 32-bit integer.
+    #. The length of the array won't exceed 10,000.
+    #. You may assume the sum of all the numbers is in the range of a signed 32-bit integer.
 
 
 469. Convex Polygon
@@ -951,11 +938,9 @@ You may assume the array's length is at most 10,000.
 
 Example:
 
-Input:
-[1,2,3]
+Input:  [1,2,3]
 
-Output:
-2
+Output:  2
 
 Explanation:
 Only two moves are needed (remember each move increments or decrements one element):
@@ -972,8 +957,8 @@ Given a non-empty string containing an out-of-order English representation of di
 
 Note:
 
-    Input contains only lowercase English letters.
-    Input is guaranteed to be valid and can be transformed to its original digits. That means invalid inputs such as "abc" or "zerone" are not permitted.
+    #. Input contains only lowercase English letters.
+    #. Input is guaranteed to be valid and can be transformed to its original digits. That means invalid inputs such as "abc" or "zerone" are not permitted.
     Input length is less than 50,000.
 
 Example 1:
@@ -1023,8 +1008,7 @@ return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] i
 397. Integer Replacement 
 ------------------------
 
-
- Given a positive integer n and you can do operations as follow:
+Given a positive integer n and you can do operations as follow:
 
     If n is even, replace n with n/2.
     If n is odd, you can replace n with either n + 1 or n - 1.
@@ -1033,22 +1017,18 @@ What is the minimum number of replacements needed for n to become 1?
 
 Example 1:
 
-Input:
-8
+Input:  8
 
-Output:
-3
+Output:  3
 
 Explanation:
 8 -> 4 -> 2 -> 1
 
 Example 2:
 
-Input:
-7
+Input:  7
 
-Output:
-4
+Output:  4
 
 Explanation:
 7 -> 8 -> 4 -> 2 -> 1
@@ -1060,8 +1040,7 @@ or
 396. Rotate Function 
 --------------------
 
-
- Given an array of integers A and let n to be its length.
+Given an array of integers A and let n to be its length.
 
 Assume Bk to be an array obtained by rotating the array A k positions clock-wise, we define a "rotation function" F on A as follow:
 
@@ -1069,8 +1048,7 @@ F(k) = 0 * Bk[0] + 1 * Bk[1] + ... + (n-1) * Bk[n-1].
 
 Calculate the maximum value of F(0), F(1), ..., F(n-1).
 
-Note:
-n is guaranteed to be less than 105.
+Note:  n is guaranteed to be less than 105.
 
 Example:
 
@@ -1088,8 +1066,7 @@ So the maximum value of F(0), F(1), F(2), F(3) is F(3) = 26.
 372. Super Pow 
 --------------
 
-
- Your task is to calculate ab mod 1337 where a is a positive integer and b is an extremely large positive integer given in the form of an array.
+Your task is to calculate ab mod 1337 where a is a positive integer and b is an extremely large positive integer given in the form of an array.
 
 Example1:
 
@@ -1114,7 +1091,7 @@ Special thanks to @Stomach_ache for adding this problem and creating all test ca
 -----------------------------
 
 
- Given a set of distinct positive integers, find the largest subset such that every pair (Si, Sj) of elements in this subset satisfies: Si % Sj = 0 or Sj % Si = 0.
+Given a set of distinct positive integers, find the largest subset such that every pair (Si, Sj) of elements in this subset satisfies: Si % Sj = 0 or Sj % Si = 0.
 
 If there are multiple solutions, return any subset is fine.
 
@@ -1187,188 +1164,5 @@ Result: [3, 9, 15, 33]
 nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
 
 Result: [-23, -5, 1, 7]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
