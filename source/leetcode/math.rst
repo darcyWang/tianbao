@@ -74,7 +74,7 @@ JS版本代码
 633. Sum of Square Numbers
 --------------------------
 
-Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
+Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a^2 + b^2 = c.
 
 Example 1:
 ::
@@ -87,7 +87,41 @@ Example 2:
    Input: 3
    Output: False
 
+.. code:: python
 
+   class Solution(object):
+       def judgeSquareSum(self, c):
+           """
+           :type c: int
+           :rtype: bool
+           """
+           for a in range(int(c ** 0.5) + 1):
+               b2 = c - a ** 2
+               if (int(b2 ** 0.5)) ** 2 == b2:
+                   return True
+           return False
+       def newSquareSum(self, c):
+           """
+           :type c: int
+           :rtype: bool
+           """
+           m = int(c ** 0.5)
+           for a in range( m + 1):
+               b = int((c - a * a) ** 0.5)
+               if ( a * a + b * b ) == c:
+                   return True
+           return False
+
+.. code:: javascript
+    
+    let newSquareSum = function(num) {
+        const m = Math.squrt(num);
+        for(var a = 0; a <= m; a++) {
+            let b = parseInt(Math.squrt(num - a*a));
+            if( a * a + b * b == num ) return true;
+        }
+        return false;
+    }
 
 628. Maximum Product of Three Numbers 
 -------------------------------------
@@ -238,24 +272,17 @@ Note:
 
 Find the nth digit of the infinite integer sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...
 
-Note:
-n is positive and will fit within the range of a 32-bit signed integer (n < 231).
+Note: n is positive and will fit within the range of a 32-bit signed integer (n < 231).
 
 Example 1:
-
-Input:
-3
-
-Output:
-3
+::
+   Input: 3
+   Output: 3
 
 Example 2:
-
-Input:
-11
-
-Output:
-0
+::
+   Input: 11
+   Output: 0
 
 Explanation:
 The 11th digit of the sequence 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... is a 0, which is part of the number 10.

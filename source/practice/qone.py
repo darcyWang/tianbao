@@ -67,13 +67,38 @@ class Solution:
             print nums
         return k
 
+    def judgeSquareSum(self, c):
+        """
+        :type c: int
+        :rtype: bool
+        """
+        for a in range(int(c ** 0.5) + 1):
+            b2 = c - a ** 2
+            if (int(b2 ** 0.5)) ** 2 == b2:
+                return True
+        return False
+    def newSquareSum(self, c):
+        """
+        :type c: int
+        :rtype: bool
+        """
+        m = int(c ** 0.5)
+        for a in range( m + 1):
+            b = c - a ** 2
+            if ( a ** 2 + b ** 2 ) == c:
+                return True
+        return False
+
 test = Solution()
 l1 = [1,1,1,1,1,1,1,2,2,2,2,3,4]
 l2 = [1,1,1,2,2,3]
 # print '测试一下题目数组去重的第二种做法，就是去掉数组中重复3次以上的元素后数组的长度是 %d'%test.oneDuplicates(l1)
 
-print '测试一下具体的东西 %d'%test.removeElementThree(l2, 1)
+# print '测试一下具体的东西 %d'%test.removeElementThree(l2, 1)
 
+print '测试一下我自己改写的算法 %s'%test.judgeSquareSum(999999)
+
+print '测试一下我自己改写的算法 %s'%test.newSquareSum(99999)
 
 
 
