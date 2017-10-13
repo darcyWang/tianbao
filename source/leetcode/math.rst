@@ -5,38 +5,87 @@
 645. Set Mismatch
 -----------------
 
-
-
- The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
+The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
 
 Given an array nums representing the data status of this set after the error. Your task is to firstly find the number occurs twice and then find the number that is missing. Return them in the form of an array.
 
 Example 1:
-
-Input: nums = [1,2,2,4]
-Output: [2,3]
+::
+   Input: nums = [1,2,2,4]
+   Output: [2,3]
 
 Note:
+    #. The given array size will in the range [2, 10000].
+    #. The given array's numbers won't have any order.
 
-    The given array size will in the range [2, 10000].
-    The given array's numbers won't have any order.
+解决办法一:
+初始化一个长度为 len(nums) + 1的列表 A,然后遍历列表 nums,统计该列表各个元素出现的个数并记录在 A 中,然后统计列表 A 元素值为 2 的索引和 0 索引即为我们所求的值
+
+.. code:: python
+
+   class Solution(object):
+    def findErrorNums(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        len_num = len(nums)
+        count = [0] * (len(nums)+1)
+        for num in nums:
+            count[num] += 1
+        for i in range(1,len(nums)+1):
+            if count[i] == 2:
+                a = i
+            if count[i] == 0:
+                b = i
+        return [a,b]
+
+JS版本代码
+
+.. code:: javascript
+
+   /**
+    * @param {number[]} nums
+    * @return {number[]}
+    */
+   var findErrorNums = function(nums) {
+       var count = new Array(nums.length + 1);
+       count.fill(0);//这个方法是将初始化的数组所有元素值为0
+       var arr = new Array(2);
+       arr.fill(-1);
+       for(var i = 0; i < nums.length; i++){
+           count[nums[i]] ++;
+       }
+       for(var i = 1; i < count.length+1; i++){
+           if(count[i] == 2){
+               arr[0] = i;
+               if(arr[1]!=-1) break;
+           }
+           if(count[i] == 0){
+               arr[1] = i;
+               if(arr[0]!=-1) break;            
+           }
+       }
+       return arr;
+   };
+
 
 
 633. Sum of Square Numbers
 --------------------------
 
- Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
+Given a non-negative integer c, your task is to decide whether there're two integers a and b such that a2 + b2 = c.
 
 Example 1:
-
-Input: 5
-Output: True
-Explanation: 1 * 1 + 2 * 2 = 5
+::
+   Input: 5
+   Output: True
+   Explanation: 1 * 1 + 2 * 2 = 5
 
 Example 2:
-
-Input: 3
-Output: False
+::
+   Input: 3
+   Output: False
 
 
 
@@ -46,19 +95,18 @@ Output: False
 Given an integer array, find three numbers whose product is maximum and output the maximum product.
 
 Example 1:
-
-Input: [1,2,3]
-Output: 6
+::
+   Input: [1,2,3]
+   Output: 6
 
 Example 2:
-
-Input: [1,2,3,4]
-Output: 24
+::
+   Input: [1,2,3,4]
+   Output: 24
 
 Note:
-
-    The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
-    Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
+    #. The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
+    #. Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
 
 
 598. Range Addition II 
@@ -71,11 +119,12 @@ Operations are represented by a 2D array, and each operation is represented by a
 You need to count and return the number of maximum integers in the matrix after performing all the operations.
 
 Example 1:
+::
+   Input: 
+   m = 3, n = 3
+   operations = [[2,2],[3,3]]
+   Output: 4
 
-Input: 
-m = 3, n = 3
-operations = [[2,2],[3,3]]
-Output: 4
 Explanation: 
 Initially, M = 
 [[0, 0, 0],
@@ -95,10 +144,9 @@ After performing [3,3], M =
 So the maximum integer in M is 2, and there are four of it in M. So return 4.
 
 Note:
-
-    The range of m and n is [1,40000].
-    The range of a is [1,m], and the range of b is [1,n].
-    The range of operations size won't exceed 10,000.
+    #. The range of m and n is [1,40000].
+    #. The range of a is [1,m], and the range of b is [1,n].
+    #. The range of operations size won't exceed 10,000.
 
 
 507. Perfect Number 
@@ -108,10 +156,10 @@ We define the Perfect Number is a positive integer that is equal to the sum of a
 Now, given an integer n, write a function that returns true when it is a perfect number and false when it is not.
 
 Example:
-
-Input: 28
-Output: True
-Explanation: 28 = 1 + 2 + 4 + 7 + 14
+::
+   Input: 28
+   Output: True
+   Explanation: 28 = 1 + 2 + 4 + 7 + 14
 
 Note: The input number n will not exceed 100,000,000. (1e8) 
 
@@ -119,16 +167,13 @@ Note: The input number n will not exceed 100,000,000. (1e8)
 453. Minimum Moves to Equal Array Elements
 ------------------------------------------
 
-
 Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal, where a move is incrementing n - 1 elements by 1.
 
 Example:
+::
+   Input: [1,2,3]
 
-Input:
-[1,2,3]
-
-Output:
-3
+   Output: 3
 
 Explanation:
 Only three moves are needed (remember each move increments two elements):
@@ -224,20 +269,20 @@ Given a positive integer num, write a function which returns True if num is a pe
 Note: Do not use any built-in library function such as sqrt.
 
 Example 1:
-
-Input: 16
-Returns: True
+::
+   Input: 16
+   Returns: True
 
 Example 2:
-
-Input: 14
-Returns: False
+::
+   Input: 14
+   Returns: False
 
 
 326. Power of Three 
 -------------------
 
- Given an integer, write a function to determine if it is a power of three.
+Given an integer, write a function to determine if it is a power of three.
 
 Follow up:
 Could you do it without using any loop / recursion?
@@ -248,14 +293,12 @@ Special thanks to @dietpepsi for adding this problem and creating all test cases
 268. Missing Number 
 -------------------
 
-
- Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
 
 For example,
 Given nums = [0, 1, 3] return 2.
 
-Note:
-Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+Note: Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
@@ -264,7 +307,7 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 263. Ugly Number
 ----------------
 
- Write a program to check whether a given number is an ugly number.
+Write a program to check whether a given number is an ugly number.
 
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
 
@@ -277,12 +320,11 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 258. Add Digits
 ---------------
 
-
- Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
+Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
 
 For example:
-
-Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
+:: 
+   Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
 
 Follow up:
 Could you do it without any loop/recursion in O(1) runtime? 
@@ -292,7 +334,7 @@ Could you do it without any loop/recursion in O(1) runtime?
 246. Strobogrammatic Number
 ---------------------------
 
- A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
 
 Write a function to determine if a number is strobogrammatic. The number is represented as a string.
 
@@ -309,7 +351,7 @@ http://www.bo-song.com/leetcode-strobogrammatic-number-ii-iii/
 231. Power of Two
 -----------------
 
- Given an integer, write a function to determine if it is a power of two.
+Given an integer, write a function to determine if it is a power of two.
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
@@ -413,7 +455,7 @@ Compute and return the square root of x.
 67. Add Binary 
 --------------
 
- Given two binary strings, return their sum (also a binary string).
+Given two binary strings, return their sum (also a binary string).
 
 For example,
 a = "11"
