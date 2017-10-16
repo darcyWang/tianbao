@@ -252,6 +252,19 @@ Example:
 
 Note: The input number n will not exceed 100,000,000. (1e8) 
 
+解题思路:
+
+#. 求出输入值num的平方差sqrt1
+#. 判断num能否将i （i属于[2, sqrt1]）整除，如果可以，则将i和num/i加入num的因数和sum中
+#. 判断num和sum是否相等，如果相等，则为完美数，否则不是
+
+注意: 因子不包括自己，所以如果输入是1的话，因子不能有1，1不是完美数
+
+作者：miltonsun
+链接：http://www.jianshu.com/p/69731980c216
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 
 453. Minimum Moves to Equal Array Elements
 ------------------------------------------
