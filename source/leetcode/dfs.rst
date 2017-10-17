@@ -22,8 +22,8 @@ Employee 1 has importance value 5, and he has two direct subordinates: employee 
 
 Note:
 
-    One employee has at most one direct leader and may have several subordinates.
-    The maximum number of employees won't exceed 2000.
+    #. One employee has at most one direct leader and may have several subordinates.
+    #. The maximum number of employees won't exceed 2000.
 
 
 339. Nested List Weight Sum
@@ -51,16 +51,16 @@ Given the list [1,[4,[6]]], return 27. (one 1 at depth 1, one 4 at depth 2, and 
 Given a binary tree, return all root-to-leaf paths.
 
 For example, given the following binary tree:
+::
+       1
+     /   \
+    2     3
+     \
+      5
 
-   1
- /   \
-2     3
- \
-  5
+    All root-to-leaf paths are:
 
-All root-to-leaf paths are:
-
-["1->2->5", "1->3"]
+    ["1->2->5", "1->3"]
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
@@ -75,7 +75,7 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
 For example:
 Given the below binary tree and sum = 22,
-
+::
               5
              / \
             4   8
@@ -139,20 +139,20 @@ The maximum depth is the number of nodes along the longest path from the root no
 Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 
 For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
-
-    1
-   / \
-  2   2
- / \ / \
-3  4 4  3
+::
+        1
+       / \
+      2   2
+     / \ / \
+    3  4 4  3
 
 But the following [1,2,2,null,3,null,3] is not:
-
-    1
-   / \
-  2   2
-   \   \
-   3    3
+::
+        1
+       / \
+      2   2
+       \   \
+       3    3
 
 Note:
 Bonus points if you could solve it both recursively and iteratively. 
@@ -171,7 +171,8 @@ Two binary trees are considered equal if they are structurally identical and the
 --------------------
 
 
- In LeetCode Store, there are some kinds of items to sell. Each item has a price.
+
+In LeetCode Store, there are some kinds of items to sell. Each item has a price.
 
 However, there are some special offers, and a special offer consists of one or more different kinds of items with a sale price.
 
@@ -203,9 +204,9 @@ You cannot add more items, though only $9 for 2A ,2B and 1C.
 
 Note:
 
-    There are at most 6 kinds of items, 100 special offers.
-    For each item, you need to buy at most 6 of them.
-    You are not allowed to buy more items than you want, even if that would lower the overall price.
+    #. There are at most 6 kinds of items, 100 special offers.
+    #. For each item, you need to buy at most 6 of them.
+    #. You are not allowed to buy more items than you want, even if that would lower the overall price.
 
 
 576. Out of Boundary Paths
@@ -227,9 +228,9 @@ Explanation:
 https://leetcode.com/static/images/problemset/out_of_boundary_paths_2.png
 Note:
 
-    Once you move the ball out of boundary, you cannot move it back.
-    The length and height of the grid is in range [1,50].
-    N is in range [0,50].
+    #. Once you move the ball out of boundary, you cannot move it back.
+    #. The length and height of the grid is in range [1,50].
+    #. N is in range [0,50].
 
 
 
@@ -238,8 +239,7 @@ Note:
 -------------------
 
 
-
- There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B is a direct friend of C, then A is an indirect friend of C. And we defined a friend circle is a group of students who are direct or indirect friends.
+There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B is a direct friend of C, then A is an indirect friend of C. And we defined a friend circle is a group of students who are direct or indirect friends.
 
 Given a N*N matrix M representing the friend relationship between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not. And you have to output the total number of friend circles among all the students.
 
@@ -278,36 +278,38 @@ Note:
 The distance between two adjacent cells is 1.
 
 Example 1:
-Input:
+::
+    Input:
 
-0 0 0
-0 1 0
-0 0 0
+    0 0 0
+    0 1 0
+    0 0 0
 
-Output:
+    Output:
 
-0 0 0
-0 1 0
-0 0 0
+    0 0 0
+    0 1 0
+    0 0 0
 
 Example 2:
-Input:
+::
+    Input:
 
-0 0 0
-0 1 0
-1 1 1
+    0 0 0
+    0 1 0
+    1 1 1
 
-Output:
+    Output:
 
-0 0 0
-0 1 0
-1 2 1
+    0 0 0
+    0 1 0
+    1 2 1
 
 Note:
 
-    The number of elements of the given matrix will not exceed 10,000.
-    There are at least one 0 in the given matrix.
-    The cells are adjacent in only four directions: up, down, left and right.
+    #. The number of elements of the given matrix will not exceed 10,000.
+    #. There are at least one 0 in the given matrix.
+    #. The cells are adjacent in only four directions: up, down, left and right.
 
 
 

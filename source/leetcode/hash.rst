@@ -20,9 +20,9 @@ One way to reach the maximum distance 4 is to pick 1 in the first or third array
 
 Note:
 
-    Each given array will have at least 1 number. There will be at least two non-empty arrays.
-    The total number of the integers in all the m arrays will be in the range of [2, 10000].
-    The integers in the m arrays will be in the range of [-10000, 10000].
+    #. Each given array will have at least 1 number. There will be at least two non-empty arrays.
+    #. The total number of the integers in all the m arrays will be in the range of [2, 10000].
+    #. The integers in the m arrays will be in the range of [-10000, 10000].
 
 题目大意：
 
@@ -53,8 +53,8 @@ Employee 1 has importance value 5, and he has two direct subordinates: employee 
 
 Note:
 
-    One employee has at most one direct leader and may have several subordinates.
-    The maximum number of employees won't exceed 2000.
+    #. One employee has at most one direct leader and may have several subordinates.
+    #. The maximum number of employees won't exceed 2000.
 
 
 
@@ -62,7 +62,8 @@ Note:
 -----------------
 
 
- The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
+
+The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
 
 Given an array nums representing the data status of this set after the error. Your task is to firstly find the number occurs twice and then find the number that is missing. Return them in the form of an array.
 
@@ -73,8 +74,8 @@ Output: [2,3]
 
 Note:
 
-    The given array size will in the range [2, 10000].
-    The given array's numbers won't have any order.
+    #. The given array size will in the range [2, 10000].
+    #. The given array's numbers won't have any order.
 
 
 
