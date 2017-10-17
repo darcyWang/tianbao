@@ -89,6 +89,17 @@ class Solution:
                 return True
         return False
 
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        return n * ( n + 1 ) / 2 - sum(nums)
+
+
+
+
 test = Solution()
 l1 = [1,1,1,1,1,1,1,2,2,2,2,3,4]
 l2 = [1,1,1,2,2,3]
@@ -96,9 +107,9 @@ l2 = [1,1,1,2,2,3]
 
 # print '测试一下具体的东西 %d'%test.removeElementThree(l2, 1)
 
-print '测试一下我自己改写的算法 %s'%test.judgeSquareSum(999999)
+# print '测试一下我自己改写的算法 %s'%test.judgeSquareSum(999999)
 
-print '测试一下我自己改写的算法 %s'%test.newSquareSum(99999)
+print '测试一下我自己改写的算法 %s'%test.missingNumber([0, 1, 3])
 
 
 

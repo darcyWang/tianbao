@@ -1944,7 +1944,7 @@ You may assume that duplicates do not exist in the tree.
 90. Subsets II 
 --------------
 
- Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
 
 Note: The solution set must not contain duplicate subsets.
 
@@ -1984,7 +1984,7 @@ The array may contain duplicates.
 ------------------------------------------
 
 
- Follow up for "Remove Duplicates":
+Follow up for "Remove Duplicates":
 What if duplicates are allowed at most twice?
 
 For example,
@@ -1997,22 +1997,22 @@ Your function should return length = 5, with the first five elements of nums bei
 ---------------
 
 
- Given a 2D board and a word, find if the word exists in the grid.
+Given a 2D board and a word, find if the word exists in the grid.
 
 The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
-For example,
-Given board =
+For example
+::
+    Given board =
+    [
+      ['A','B','C','E'],
+      ['S','F','C','S'],
+      ['A','D','E','E']
+    ]
 
-[
-  ['A','B','C','E'],
-  ['S','F','C','S'],
-  ['A','D','E','E']
-]
-
-word = "ABCCED", -> returns true,
-word = "SEE", -> returns true,
-word = "ABCB", -> returns false.
+    word = "ABCCED", -> returns true,
+    word = "SEE", -> returns true,
+    word = "ABCB", -> returns false.
 
 
 
@@ -2020,30 +2020,30 @@ word = "ABCB", -> returns false.
 -----------
 
 
- Given a set of distinct integers, nums, return all possible subsets.
+Given a set of distinct integers, nums, return all possible subsets.
 
 Note: The solution set must not contain duplicate subsets.
 
 For example,
 If nums = [1,2,3], a solution is:
-
-[
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
-  [2,3],
-  [1,2],
-  []
-]
+::
+    [
+      [3],
+      [1],
+      [2],
+      [1,2,3],
+      [1,3],
+      [2,3],
+      [1,2],
+      []
+    ]
 
 
 75. Sort Colors
 ---------------
 
 
- Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
 
 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
 
@@ -2064,18 +2064,20 @@ Could you come up with an one-pass algorithm using only constant space?
 
 Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 
-    Integers in each row are sorted from left to right.
-    The first integer of each row is greater than the last integer of the previous row.
+Integers in each row are sorted from left to right.
+
+The first integer of each row is greater than the last integer of the previous row.
 
 For example,
 
 Consider the following matrix:
 
-[
-  [1,   3,  5,  7],
-  [10, 11, 16, 20],
-  [23, 30, 34, 50]
-]
+::
+    [
+      [1,   3,  5,  7],
+      [10, 11, 16, 20],
+      [23, 30, 34, 50]
+    ]
 
 Given target = 3, return true.
 
@@ -2084,7 +2086,7 @@ Given target = 3, return true.
 73. Set Matrix Zeroes 
 ---------------------
 
- Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
 
 click to show follow up.
 Follow up:
@@ -2117,12 +2119,12 @@ An obstacle and empty space is marked as 1 and 0 respectively in the grid.
 For example,
 
 There is one obstacle in the middle of a 3x3 grid as illustrated below.
-
-[
-  [0,0,0],
-  [0,1,0],
-  [0,0,0]
-]
+::
+    [
+      [0,0,0],
+      [0,1,0],
+      [0,0,0]
+    ]
 
 The total number of unique paths is 2.
 
@@ -2155,12 +2157,12 @@ Given an integer n, generate a square matrix filled with elements from 1 to n的
 For example,
 Given n = 3,
 You should return the following matrix:
-
-[
- [ 1, 2, 3 ],
- [ 8, 9, 4 ],
- [ 7, 6, 5 ]
-]
+::
+    [
+     [ 1, 2, 3 ],
+     [ 8, 9, 4 ],
+     [ 7, 6, 5 ]
+    ]
 
 
 56. Merge Intervals 
@@ -2168,9 +2170,10 @@ You should return the following matrix:
 
 Given a collection of intervals, merge all overlapping intervals.
 
-For example,
-Given [1,3],[2,6],[8,10],[15,18],
-return [1,6],[8,10],[15,18]. 
+For example
+::
+    Given [1,3],[2,6],[8,10],[15,18],
+    return [1,6],[8,10],[15,18]. 
 
 
 
@@ -2178,16 +2181,18 @@ return [1,6],[8,10],[15,18].
 55. Jump Game 
 -------------
 
- Given an array of non-negative integers, you are initially positioned at the first index of the array.
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
 
 Each element in the array represents your maximum jump length at that position.
 
 Determine if you are able to reach the last index.
 
 For example:
-A = [2,3,1,1,4], return true.
 
-A = [3,2,1,0,4], return false. 
+::
+    A = [2,3,1,1,4], return true.
+
+    A = [3,2,1,0,4], return false. 
 
 
 
@@ -2201,12 +2206,12 @@ Given a matrix of m x n elements (m rows, n columns), return all elements of the
 
 For example,
 Given the following matrix:
-
-[
- [ 1, 2, 3 ],
- [ 4, 5, 6 ],
- [ 7, 8, 9 ]
-]
+::
+    [
+     [ 1, 2, 3 ],
+     [ 4, 5, 6 ],
+     [ 7, 8, 9 ]
+    ]
 
 You should return [1,2,3,6,9,8,7,4,5]. 
 
@@ -2226,38 +2231,37 @@ Could you do this in-place?
 40. Combination Sum II
 ----------------------
 
- Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
 
 Each number in C may only be used once in the combination.
 
 Note:
 
-    All numbers (including target) will be positive integers.
-    The solution set must not contain duplicate combinations.
+    #. All numbers (including target) will be positive integers.
+    #. The solution set must not contain duplicate combinations.
 
 For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8,
 A solution set is:
-
-[
-  [1, 7],
-  [1, 2, 5],
-  [2, 6],
-  [1, 1, 6]
-]
+::
+    [
+      [1, 7],
+      [1, 2, 5],
+      [2, 6],
+      [1, 1, 6]
+    ]
 
 39. Combination Sum 
 -------------------
 
-
-
- Given a set of candidate numbers (C) (without duplicates) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+Given a set of candidate numbers (C) (without duplicates) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
 
 The same repeated number may be chosen from C unlimited number of times.
 
 Note:
 
-    All numbers (including target) will be positive integers.
-    The solution set must not contain duplicate combinations.
+    #. All numbers (including target) will be positive integers.
+    #. The solution set must not contain duplicate combinations.
 
 For example, given candidate set [2, 3, 6, 7] and target 7,
 A solution set is:
@@ -2298,16 +2302,17 @@ You may assume no duplicate exists in the array.
 31. Next Permutation 
 --------------------
 
- Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 
 If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
 
 The replacement must be in-place, do not allocate extra memory.
 
 Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
-1,2,3 → 1,3,2
-3,2,1 → 1,2,3
-1,1,5 → 1,5,1
+::
+    1,2,3 → 1,3,2
+    3,2,1 → 1,2,3
+    1,1,5 → 1,5,1
 
 18. 4Sum
 --------
@@ -2320,21 +2325,21 @@ Note: The solution set must not contain duplicate quadruplets.
 For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.
 
 A solution set is:
-[
-  [-1,  0, 0, 1],
-  [-2, -1, 1, 2],
-  [-2,  0, 0, 2]
-]
+::
+    [
+      [-1,  0, 0, 1],
+      [-2, -1, 1, 2],
+      [-2,  0, 0, 2]
+    ]
 
 16. 3Sum Closest 
 ----------------
 
-
 Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 
-    For example, given array S = {-1 2 1 -4}, and target = 1.
+For example, given array S = {-1 2 1 -4}, and target = 1.
 
-    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
 
 15. 3Sum
@@ -2347,10 +2352,11 @@ Note: The solution set must not contain duplicate triplets.
 For example, given array S = [-1, 0, 1, 2, -1, -4],
 
 A solution set is:
-[
-  [-1, 0, 1],
-  [-1, -1, 2]
-]
+::
+    [
+      [-1, 0, 1],
+      [-1, -1, 2]
+    ]
 
 
 
@@ -2361,50 +2367,5 @@ A solution set is:
 Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 
 Note: You may not slant the container and n is at least 2. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

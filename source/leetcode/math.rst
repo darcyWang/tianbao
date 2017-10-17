@@ -793,15 +793,15 @@ Could you do it without using any loop / recursion?
                 n /= 3
             return n == 1
 
-    def onePowerOfThree(self, n):
-        if n <= 0:
-            return False
-        if n == 1:
-            return True
-        if n%3 == 0:
-            return self.onePowerOfThree(n/3)
-        else:
-            return False 
+        def onePowerOfThree(self, n):
+            if n <= 0:
+                return False
+            if n == 1:
+                return True
+            if n%3 == 0:
+                return self.onePowerOfThree(n/3)
+            else:
+                return False 
 
 
 .. tip:: 
@@ -830,6 +830,18 @@ Could you do it without using any loop / recursion?
             nums = [1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049, 177147, 531441, 1594323, 4782969, 14348907, 43046721, 129140163, 387420489, 1162261467]
             return n in nums
 
+.. tip:: 
+
+    取对数
+
+.. code-block:: python
+
+    class Solution(object):
+        def threePowerOfThree(self, n):
+
+            return n > 0 and 3 ** round(math.log(n, 3)) == 0 
+
+
 
 268. Missing Number 
 -------------------
@@ -843,6 +855,120 @@ Note: Your algorithm should run in linear runtime complexity. Could you implemen
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+
+
+
+.. caution:: 
+
+    这道题给我们n个数字，是0到n之间的数但是有一个数字去掉了，让我们寻找这个数字，要求线性的时间复杂度和常数级的空间复杂度。那么最直观的一个方法是用等差数列的求和公式求出0到n之间所有的数字之和，然后再遍历数组算出给定数字的累积和，然后做减法，差值就是丢失的那个数字
+    等差数列前n项和 - 数组之和
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def missingNumber(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            需要注意的是 等差数列的前n项和， 不是等差数列求和
+            """
+            n = len(nums)
+            return n * ( n - 1 ) / 2 - sum(nums)
+
+
+.. caution:: 
+
+    这题还有一种解法，使用位操作Bit Manipulation来解的，用到了异或操作的特性，相似的题目有Single Number 单独的数字, Single Number II 单独的数字之二和Single Number III 单独的数字之三。那么思路是既然0到n之间少了一个数，我们将这个少了一个数的数组合0到n之间完整的数组异或一下，那么相同的数字都变为0了，剩下的就是少了的那个数字了，参加代码如下：
+
+.. code-block:: python
+
+    class Solution(object):
+        def onemissing(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            a = reduce(operator.xor, nums)
+            b = reduce(operator.xor, range(len(nums) + 1))
+            return a ^ b
+
+
+.. caution:: 
+
+    这道题还可以用二分查找法来做，我们首先要对数组排序，然后我们用二分查找法算出中间元素的下标，然后用元素值和下标值之间做对比，如果元素值大于下标值，则说明缺失的数字在左边，此时将right赋为mid，反之则将left赋为mid+1。那么看到这里，作为读者的你可能会提出，排序的时间复杂度都不止O(n)，何必要多此一举用二分查找，还不如用上面两种方法呢。对，你说的没错，但是在面试的时候，有可能人家给你的数组就是排好序的，那么此时用二分查找法肯定要优于上面两种方法，所以这种方法最好也要掌握以下~
+
+这个解决办法到后面自己写出来 刷二遍的时候
+
+
+
+
+136. Single Number
+------------------
+
+
+Given an array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
+
+给定一个整数数组，除一个元素只出现一次外，其余各元素均出现两次。找出那个只出现一次的元素。
+
+对数组元素执行异或运算，最终结果即为所求。
+
+由于异或运算的性质，两个相同数字的亦或等于0，而任意数字与0的亦或都等于它本身。另外，异或运算满足交换律。
+
+a ^ b = (a & !b) || (!a & b)
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def singleNum(self, nums):
+            """
+            param {integer[]} nums
+            return {integer}
+            """
+            ans = 0
+            for num in nums:
+                ans ^= num
+            return ans
+        def twosingleNum(self, nums):
+            return reduce(operator.xor, nums)
+
+        def threeSingleNum(self, nums):
+            return reduce(lambda x, y : x ^ y, nums)
+
+
+.. caution::
+
+    先对元素进行排序，然后进行相邻两元素的对比，如a1和a2对比，a3和a4对比，如果不同，则前一个元素(a1、a3)就是所要查找的元素,实现上主要就是相邻两元素的对比，循环间隔为2，与前一元素对比，如果不同，则返回前一元素。
+    如果循环执行完没有返回，则返回列表中最后一个元素，如[1, 1, 2, 2, 3]，执行的循环为(1, 3)，在循环中最后一个元素不会参与对比（奇数个元素）
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def singleNum(self, nums):
+            nums.sort()
+            for i in range(1, len(nums), 2):
+                if nums[i] != nums[i-1]:
+                    return nums[i-1]
+                return nums[-1]
+
+
+
+137. Single Number II
+---------------------
+
+
+
+Given an array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
+
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+
 
 
 263. Ugly Number
@@ -917,7 +1043,7 @@ Write an algorithm to determine if a number is "happy".
 A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
 
 Example: 19 is a happy number
-
+::
     12 + 92 = 82
     82 + 22 = 68
     62 + 82 = 100
@@ -948,7 +1074,7 @@ Special thanks to @ts for adding this problem and creating all test cases.
 Given a positive integer, return its corresponding column title as appear in an Excel sheet.
 
 For example:
-
+::
     1 -> A
     2 -> B
     3 -> C
@@ -969,7 +1095,7 @@ Related to question Excel Sheet Column Title
 Given a column title as appear in an Excel sheet, return its corresponding column number.
 
 For example:
-
+::
     A -> 1
     B -> 2
     C -> 3
@@ -991,10 +1117,11 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 Given two binary strings, return their sum (also a binary string).
 
-For example,
-a = "11"
-b = "1"
-Return "100". 
+For example
+::
+    a = "11"
+    b = "1"
+    Return "100". 
 
 
 66. Plus One 
@@ -1061,8 +1188,7 @@ The input is assumed to be a 32-bit signed integer. Your function should return 
 640. Solve the Equation 
 -----------------------
 
-
- Solve a given equation and return the value of x in the form of string "x=#value". The equation contains only '+', '-' operation, the variable x and its coefficient.
+Solve a given equation and return the value of x in the form of string "x=#value". The equation contains only '+', '-' operation, the variable x and its coefficient.
 
 If there is no solution for the equation, return "No solution".
 
@@ -1071,37 +1197,35 @@ If there are infinite solutions for the equation, return "Infinite solutions".
 If there is exactly one solution for the equation, we ensure that the value of x is an integer.
 
 Example 1:
-
-Input: "x+5-3+x=6+x-2"
-Output: "x=2"
+::
+    Input: "x+5-3+x=6+x-2"
+    Output: "x=2"
 
 Example 2:
-
-Input: "x=x"
-Output: "Infinite solutions"
+::
+    Input: "x=x"
+    Output: "Infinite solutions"
 
 Example 3:
-
-Input: "2x=x"
-Output: "x=0"
+::
+    Input: "2x=x"
+    Output: "x=0"
 
 Example 4:
-
-Input: "2x+3x-6x=x+2"
-Output: "x=-1"
+::
+    Input: "2x+3x-6x=x+2"
+    Output: "x=-1"
 
 Example 5:
-
-Input: "x=x+2"
-Output: "No solution"
+::
+    Input: "x=x+2"
+    Output: "No solution"
 
 
 
 
 634. Find the Derangement of An Array
 -------------------------------------
-
-
 
 In combinatorial mathematics, a derangement is a permutation of the elements of a set, such that no element appears in its original position.
 
@@ -1137,14 +1261,12 @@ Given a positive integer a, find the smallest positive integer b whose multiplic
 If there is no answer or the answer is not fit in 32-bit signed integer, then return 0.
 
 Example 1
-Input: 48 
-
-Output: 68
+::
+    Input: 48   Output: 68
 
 Example 2
-Input: 15
-
-Output: 35
+::
+    Input: 15  Output: 35
 
 题目大意：
 
@@ -1168,9 +1290,9 @@ Output: True
 
 Note:
 
-    All the input integers are in the range [-10000, 10000].
-    A valid square has four equal sides with positive length and four equal angles (90-degree angles).
-    Input points have no order.
+    #. All the input integers are in the range [-10000, 10000].
+    #. A valid square has four equal sides with positive length and four equal angles (90-degree angles).
+    #. Input points have no order.
 
 
 592. Fraction Addition and Subtraction 
@@ -1180,32 +1302,32 @@ Note:
 Given a string representing an expression of fraction addition and subtraction, you need to return the calculation result in string format. The final result should be irreducible fraction. If your final result is an integer, say 2, you need to change it to the format of fraction that has denominator 1. So in this case, 2 should be converted to 2/1.
 
 Example 1:
-
-Input:"-1/2+1/2"
-Output: "0/1"
+::
+    Input:"-1/2+1/2"
+    Output: "0/1"
 
 Example 2:
-
-Input:"-1/2+1/2+1/3"
-Output: "1/3"
+::
+    Input:"-1/2+1/2+1/3"
+    Output: "1/3"
 
 Example 3:
-
-Input:"1/3-1/2"
-Output: "-1/6"
+::
+    Input:"1/3-1/2"
+    Output: "-1/6"
 
 Example 4:
-
-Input:"5/3+1/3"
-Output: "2/1"
+::
+    Input:"5/3+1/3"
+    Output: "2/1"
 
 Note:
 
-    The input string only contains '0' to '9', '/', '+' and '-'. So does the output.
-    Each fraction (input and output) has format ±numerator/denominator. If the first input fraction or the output is positive, then '+' will be omitted.
-    The input only contains valid irreducible fractions, where the numerator and denominator of each fraction will always be in the range [1,10]. If the denominator is 1, it means this fraction is actually an integer in a fraction format defined above.
-    The number of given fractions will be in the range [1,10].
-    The numerator and denominator of the final result are guaranteed to be valid and in the range of 32-bit int.
+    #. The input string only contains '0' to '9', '/', '+' and '-'. So does the output.
+    #. Each fraction (input and output) has format ±numerator/denominator. If the first input fraction or the output is positive, then '+' will be omitted.
+    #. The input only contains valid irreducible fractions, where the numerator and denominator of each fraction will always be in the range [1,10]. If the denominator is 1, it means this fraction is actually an integer in a fraction format defined above.
+    #. The number of given fractions will be in the range [1,10].
+    #. The numerator and denominator of the final result are guaranteed to be valid and in the range of 32-bit int.
 
 
 
@@ -1284,16 +1406,16 @@ Given two strings representing two complex numbers.
 You need to return a string representing their multiplication. Note i2 = -1 according to the definition.
 
 Example 1:
-
-Input: "1+1i", "1+1i"
-Output: "0+2i"
-Explanation: (1 + i) * (1 + i) = 1 + i2 + 2 * i = 2i, and you need convert it to the form of 0+2i.
+::
+    Input: "1+1i", "1+1i"
+    Output: "0+2i"
+    Explanation: (1 + i) * (1 + i) = 1 + i2 + 2 * i = 2i, and you need convert it to the form of 0+2i.
 
 Example 2:
-
-Input: "1+-1i", "1+-1i"
-Output: "0+-2i"
-Explanation: (1 - i) * (1 - i) = 1 + i2 - 2 * i = -2i, and you need convert it to the form of 0+-2i.
+::
+    Input: "1+-1i", "1+-1i"
+    Output: "0+-2i"
+    Explanation: (1 - i) * (1 - i) = 1 + i2 - 2 * i = -2i, and you need convert it to the form of 0+-2i.
 
 Note:
 
@@ -1554,19 +1676,19 @@ If z liters of water is measurable, you must have z liters of water contained wi
 
 Operations allowed:
 
-    Fill any of the jugs completely with water.
-    Empty any of the jugs.
-    Pour water from one jug into another till the other jug is completely full or the first jug itself is empty.
+    #. Fill any of the jugs completely with water.
+    #. Empty any of the jugs.
+    #. Pour water from one jug into another till the other jug is completely full or the first jug itself is empty.
 
 Example 1: (From the famous "Die Hard" example)
-
-Input: x = 3, y = 5, z = 4
-Output: True
+::
+    Input: x = 3, y = 5, z = 4
+    Output: True
 
 Example 2:
-
-Input: x = 2, y = 6, z = 5
-Output: False
+::
+    Input: x = 2, y = 6, z = 5
+    Output: False
 
 Credits:
 Special thanks to @vinod23 for adding this problem and creating all test cases.
@@ -1586,13 +1708,13 @@ The returned array must be in sorted order.
 Expected time complexity: O(n)
 
 Example:
+::
+    nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,
 
-nums = [-4, -2, 2, 4], a = 1, b = 3, c = 5,
+    Result: [3, 9, 15, 33]
 
-Result: [3, 9, 15, 33]
+    nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
 
-nums = [-4, -2, 2, 4], a = -1, b = 3, c = 5
-
-Result: [-23, -5, 1, 7]
+    Result: [-23, -5, 1, 7]
 
 
