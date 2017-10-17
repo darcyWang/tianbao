@@ -175,15 +175,6 @@ Output: index1=1, index2=2
 
 
 
-69. Sqrt(x)
------------
-
-
-Implement int sqrt(int x).
-
-Compute and return the square root of x.
-
-
 35. Search Insert Position
 --------------------------
 

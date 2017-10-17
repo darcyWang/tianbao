@@ -260,11 +260,12 @@ Note: The input number n will not exceed 100,000,000. (1e8)
 
 注意: 因子不包括自己，所以如果输入是1的话，因子不能有1，1不是完美数
 
-作者：miltonsun
-链接：http://www.jianshu.com/p/69731980c216
-來源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
+还有一种解法是在给定的n的范围内其实只有五个符合要求的完美数字，于是就有这种枚举的解法，那么套用一句诸葛孔明的名言就是，我从未见过如此厚颜无耻之解法
+
+num==6 || num==28 || num==496 || num==8128 || num==33550336
+
+在给定的区间里面就只有这几个数字符合
 
 453. Minimum Moves to Equal Array Elements
 ------------------------------------------
@@ -277,13 +278,78 @@ Example:
 
    Output: 3
 
-Explanation:
-Only three moves are needed (remember each move increments two elements):
+Explanation: Only three moves are needed (remember each move increments two elements):
 
 [1,2,3]  =>  [2,3,3]  =>  [3,4,3]  =>  [4,4,4]
 
 
+先定义一下，sum = 数组移动前所有元素的总和，n = 数组的长度，m = 移动步数，就是答案咯
+x = 最后的元素等于的值， minNum = 数组值最小的元素
 
+sum + m * (n - 1) = x * n
+
+x = minNum + m
+
+sum - minNum * n = m
+
+.. code:: python
+
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var minMoves = function(nums) {
+        var total=0;
+        nums.sort(function(a,b){return a-b;});
+        for(var i=0;i<nums.length;i++)
+        {
+            total+=nums[i];
+        }
+        var result=total-nums[0]*nums.length;
+        return result;
+    };
+
+    def minMoves(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return sum(nums) - min(nums) * len(nums)
+
+
+
+
+462. Minimum Moves to Equal Array Elements II
+---------------------------------------------
+
+Given a non-empty integer array, find the minimum number of moves required to make all array elements equal, where a move is incrementing a selected element by 1 or decrementing a selected element by 1.
+
+You may assume the array's length is at most 10,000.
+
+Example:
+::
+    Input:  [1,2,3]
+
+    Output:  2
+
+Explanation:  Only two moves are needed (remember each move increments or decrements one element):
+
+[1,2,3]  =>  [2,2,3]  =>  [2,2,2]
+
+.. code-block:: python
+
+    class Solution(object):
+        def minMoves2(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            nums = sorted(nums)
+            median = nums[len(nums)//2]
+            s = 0
+            for v in nums:
+                s+=abs(v-median)
+            return s
 
 441. Arranging Coins 
 --------------------
@@ -296,27 +362,27 @@ Given n, find the total number of full staircase rows that can be formed.
 n is a non-negative integer and fits within the range of a 32-bit signed integer.
 
 Example 1:
+::
+    n = 5
 
-n = 5
+    The coins can form the following rows:
+    ¤
+    ¤ ¤
+    ¤ ¤
 
-The coins can form the following rows:
-¤
-¤ ¤
-¤ ¤
-
-Because the 3rd row is incomplete, we return 2.
+    Because the 3rd row is incomplete, we return 2.
 
 Example 2:
+::
+    n = 8
 
-n = 8
+    The coins can form the following rows:
+    ¤
+    ¤ ¤
+    ¤ ¤ ¤
+    ¤ ¤
 
-The coins can form the following rows:
-¤
-¤ ¤
-¤ ¤ ¤
-¤ ¤
-
-Because the 4th row is incomplete, we return 3.
+    Because the 4th row is incomplete, we return 3.
 
 
 
@@ -328,12 +394,213 @@ Given two non-negative integers num1 and num2 represented as string, return the 
 
 Note:
 
-    The length of both num1 and num2 is < 5100.
-    Both num1 and num2 contains only digits 0-9.
-    Both num1 and num2 does not contain any leading zero.
-    You must not use any built-in BigInteger library or convert the inputs to integer directly.
+    #. The length of both num1 and num2 is < 5100.
+    #. Both num1 and num2 contains only digits 0-9.
+    #. Both num1 and num2 does not contain any leading zero.
+    #. You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+.. tip:: 
+
+    当两个字符串实现相加的时候，我们应该可以想到既然想加都有了，那就一定会有相减、相乘咯。对吧，baby，这就是在做题目过程出现的follow up
 
 
+::
+
+    // Given two numbers represented as strings, return multiplication of the numbers as a string.
+
+    // Note:
+    // The numbers can be arbitrarily large and are non-negative.
+    // Converting the input string to integer is NOT allowed.
+    // You should NOT use internal library such as BigInteger.
+    // Hide Company Tags Facebook Twitter
+    // Hide Tags Math String
+    // Hide Similar Problems (M) Add Two Numbers (E) Plus One (E) Add Binary
+
+    /**
+     * @param {string} num1
+     * @param {string} num2
+     * @return {string}
+     */
+    var multiply = function(num1, num2) {
+        if(num1 === null || num2 === null || num1.length === 0 || num2.length === 0 || num1 === '0' || num2 === '0') {
+            return '0';
+        }
+        
+        var arr1 = num1.split('').reverse();
+        var arr2 = num2.split('').reverse();
+        var result = [];
+        
+        for(var i = 0; i < arr1.length; i++) {
+            var carry = 0;
+            var val1 = parseInt(arr1[i]);
+            
+            for(var j = 0; j < arr2.length; j++) {
+                var val2 = parseInt(arr2[j]);
+                var product = val1*val2 + carry;
+                var exist = result[i+j] || 0;
+                var sum = product + exist;
+                var digit = sum%10;
+                carry = Math.floor(sum/10);
+                result[i+j] = digit;
+            }
+            
+            if(carry > 0) {
+                result[i+j] = carry;
+            }
+        }
+        
+        result.reverse();
+        result = result.join('');
+        
+        return result;
+    };
+
+    multiply('123', '456')
+
+
+第二种选择
+
+::
+    
+    class Solution:
+        # @param num1, a string
+        # @param num2, a string
+        # @return a string
+        def multiply(self, num1, num2):
+            # Handle with the special case that, at least of the input is 0.
+            if num1 == "0" or num2 == "0":      return "0"
+
+            result = [0] * (len(num1) + len(num2))
+            num1 = [int(i) for i in num1]
+            num2 = [int(i) for i in num2]
+
+            for index1 in xrange(len(num1)):
+                multiplier = num1[index1]
+                temp = [i*multiplier for i in num2]         # Multiply
+                temp.extend([0] * (len(num1) - index1 - 1)) # Shift
+
+                # Add to the final result
+                for resIndex in xrange(1, len(temp) + 1):
+                    result[-resIndex] += temp[-resIndex]
+
+            # Normalize the final result.
+            # We do not need to consider the first element.
+            # For a m-length integer multiply n-length integer, the result
+            # is at most with length of m+n. Thus the first element in array
+            # "result" will never be more than 9.
+            for resIndex in xrange(len(result)-1, 0, -1):
+                result[resIndex-1] += result[resIndex] // 10
+                result[resIndex] %= 10
+
+            # Convert the final result into string
+            result = "".join([str(i) for i in result]).lstrip("0")
+
+            return result
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def addStrings(self, num1, num2):
+            """
+            :type num1: str
+            :type num2: str
+            :rtype: str
+            """
+            def _convertInter(num):
+                return ord(num) - ord('0')
+
+            # 将两个字符串逆序后，转换为list，这里题目有要求，不能使用库函数直接把string转换为int，需要我们自己实现一个字符串转换数字的函数。
+            num1, num2 = list(map(_convertInter, num1[::-1])), list(map(int, num2[::-1]))
+
+            # 如果num2的长度 大于 num1，交换它们的顺序。
+            if len(num1)<len(num2):
+                num1, num2 = num2, num1
+
+            carry = 0
+            for i in range(len(num1)):
+                n = num2[i] if i<len(num2) else 0 # 较短的那一位如果不够，则该位补0
+                tmp = n + carry + num1[i] # 有进位，则将进位加上
+                num1[i] = tmp % 10
+                carry = tmp // 10
+
+            # 最后存在进位，记得将这个进位加上。
+            if carry:
+                num1.append(1)
+            # 这里没有要求不能将integer转换为str，所以直接使用了内建函数str()
+            return ''.join(map(str, num1))[::-1]
+
+
+            from itertools import izip_longest
+            class Solution(object):
+                def addStrings(self, num1, num2):
+                    res, c = "", 0
+                    for (x, y) in izip_longest(num1[::-1], num2[::-1], fillvalue='0'):
+                        s = (int(x) + int(y) + c)
+                        d, c = s % 10, int(s / 10)
+                        res = str(d) + res
+
+                    if c > 0: res = str(c) + res
+
+                    return res
+
+            class Solution(object):
+                def addStrings(self, num1, num2):
+                    """
+                    :type num1: str
+                    :type num2: str
+                    :rtype: str
+                    """
+                    i = len(num1) - 1
+                    j = len(num2) - 1
+                    num = ""
+                    carry = 0
+                    while i >= 0 or j >= 0:
+                        result = carry
+                        if i >= 0:
+                            result += int(num1[i])
+                        if j >= 0:
+                            result += int(num2[j])
+                        if result >= 10:
+                            carry = 1
+                        else:
+                            carry = 0
+                        num = str(result % 10) + num
+                        i -= 1
+                        j -= 1
+                    if carry == 1:
+                        num = "1" + num
+                    return num
+
+            assert Solution().addStrings("111", "234965") == "235076"
+            assert Solution().addStrings("999", "1") == "1000"
+
+
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def addStrings(self, num1, num2):
+            """
+            :type num1: str
+            :type num2: str
+            :rtype: str
+            """
+            result = []
+            carry = 0
+            idx1, idx2 = len(num1), len(num2)
+            while idx1 or idx2 or carry:
+                digit = carry
+                if idx1:
+                    idx1 -= 1
+                    digit += int(num1[idx1])
+                if idx2:
+                    idx2 -= 1
+                    digit += int(num2[idx2])
+                carry = digit > 9
+                result.append(str(digit % 10))
+            return ''.join(result[::-1])
 
 400. Nth Digit
 --------------
@@ -374,6 +641,135 @@ Example 2:
    Returns: False
 
 
+解法I 牛顿迭代（Newton's Method）
+
+求平方根可以转化为求函数y = x ^ 2 - num的根
+
+迭代过程x = (x + num / x) * 1/2
+
+.. code-block:: python
+
+    class Solution(object):
+        def isPerfectSquare(self, num):
+            """
+            :type num: int
+            :rtype: bool
+            """
+            x = num
+            while x * x > num:
+                x = (x + num / x) / 2
+            return x * x == num
+
+
+解法II 二分法（Binary Search）
+
+.. code-block:: python
+
+    class Solution(object):
+        def isPerfectSquare(self, num):
+            """
+            :type num: int
+            :rtype: bool
+            """
+            left, right = 0, num
+            while left <= right:
+                mid = (left + right) / 2
+                if mid * mid >= num:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            return left * left == num
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def isPerfectSquare(self, num):
+            """
+            :type num: int
+            :rtype: bool
+            """
+            L, R = 1, (num >> 1) + 1
+            while L <= R:
+                m = L + ((R - L) >> 1)
+                mul = m ** 2
+                if mul == num:
+                    return True
+                elif mul > num:
+                    R = m - 1
+                else:
+                    L = m + 1
+            return False
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def isPerfectSquare(self, num):
+            """
+            :type num: int
+            :rtype: bool
+            """
+            L, R = 1, (num >> 1) + 1
+            while L <= R:
+                m = L + ((R - L) >> 1)
+                mul = m ** 2
+                if mul == num:
+                    return True
+                elif mul > num:
+                    R = m - 1
+                else:
+                    L = m + 1
+            return False
+
+
+69. Sqrt(x) 
+-----------
+
+Implement int sqrt(int x).
+
+Compute and return the square root of x.
+
+这道题目的答案就是上面题目答案修改一下
+
+.. code-block:: javascript
+
+    /**
+     * @param {number} num
+     * @return {boolean}
+     */
+    var isPerfectSquare = function(num) {
+        var lo = 1;
+        var hi = num;
+        var isPS = false;
+
+        if (num === 1) {
+            isPS = true;
+        }
+
+        while (lo <= hi) {
+            var mid = lo + Math.floor((hi - lo) / 2);
+            var midSquare = mid * mid;
+            if (midSquare === num) {
+                isPS = true;
+                break;
+            } else if (midSquare > num) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return isPS;
+    };
+
+
+
+
+
+
+
+
 326. Power of Three 
 -------------------
 
@@ -382,8 +778,58 @@ Given an integer, write a function to determine if it is a power of three.
 Follow up:
 Could you do it without using any loop / recursion?
 
-Credits:
-Special thanks to @dietpepsi for adding this problem and creating all test cases.
+.. code-block:: python
+
+    class Solution(object):
+        def isPowerOfThree(self, n):
+            """
+            :type n:int
+            :rtype : bool
+            """
+
+            if(n <= 0):
+                return False
+            while n%3 == 0:
+                n /= 3
+            return n == 1
+
+    def onePowerOfThree(self, n):
+        if n <= 0:
+            return False
+        if n == 1:
+            return True
+        if n%3 == 0:
+            return self.onePowerOfThree(n/3)
+        else:
+            return False 
+
+
+.. tip:: 
+
+
+    当然，题目说了不能循环或递归，上面的解法能AC但不太符合题意。考虑到输入是“Integer”，是有范围的（<2147483648），所以存在能输入的最大的3的幂次，即 3^19=1162261467。所以只要检查输入能否被它整除即可
+
+.. code-block:: python
+
+    class Solution(object):
+        def twoPowerOfThree(self, n):
+            return n > 0 and 1162261467 % n == 0
+
+
+
+
+.. tip::
+
+    还可以算出能输入的所有3的幂次，保存到list或dict中，对每次输入判断是否在这些数中即可。
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def threePowerOfThree(self, n):
+            nums = [1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049, 177147, 531441, 1594323, 4782969, 14348907, 43046721, 129140163, 387420489, 1162261467]
+            return n in nums
+
 
 268. Missing Number 
 -------------------
@@ -537,13 +983,6 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
-
-69. Sqrt(x) 
------------
-
-Implement int sqrt(int x).
-
-Compute and return the square root of x.
 
 
 
@@ -937,28 +1376,6 @@ Explanation:
 解题思路：
 
 遍历顶点，判断相邻三个顶点A、B、C组成的两个向量(AB, AC)的叉积是否同负同正。
-
-
-
-
-462. Minimum Moves to Equal Array Elements II 
----------------------------------------------
-
-
-Given a non-empty integer array, find the minimum number of moves required to make all array elements equal, where a move is incrementing a selected element by 1 or decrementing a selected element by 1.
-
-You may assume the array's length is at most 10,000.
-
-Example:
-
-Input:  [1,2,3]
-
-Output:  2
-
-Explanation:
-Only two moves are needed (remember each move increments or decrements one element):
-
-[1,2,3]  =>  [2,2,3]  =>  [2,2,2]
 
 
 
