@@ -1073,12 +1073,51 @@ Write a function to determine if a number is strobogrammatic. The number is repr
 
 For example, the numbers "69", "88", and "818" are all strobogrammatic.
 
-注意到0-9中有五个数字满足这种“镜像对称”，所以我们将它们放在一个哈希表中，然后遍历num中的前一半字符（包括最中间的字符），一旦发现某字符不在哈希表中，或者虽然是，但是在后面的对应位置上的字符不是它的“镜像对称”字符，就返回false。如果检查完所有的字符都没有问题，则返回true。
 
-https://tonycao.gitbooks.io/leetcode-locked/content/LeetCode%20Locked/c1.5.html
+时间 O(N) 空间 O(1)
 
 
-http://www.bo-song.com/leetcode-strobogrammatic-number-ii-iii/
+翻转后对称的数就那么几个，我们可以根据这个建立一个映射关系：8->8, 0->0, 1->1, 6->9, 9->6，然后从两边向中间检查对应位置的两个字母是否有映射关系就行了。比如619，先判断6和9是有映射的，然后1和自己又是映射，所以是对称数。
+
+
+
+247. Strobogrammatic Number II
+------------------------------
+
+
+
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+
+Find all strobogrammatic numbers that are of length = n.
+
+For example, Given n = 2, return ["11","69","88","96"].
+
+找出所有的可能，必然是深度优先搜索。但是每轮搜索如何建立临时的字符串呢？因为数是“对称”的，我们插入一个字母就知道对应位置的另一个字母是什么，所以我们可以从中间插入来建立这个临时的字符串。这样每次从中间插入两个“对称”的字符，之前插入的就被挤到两边去了。这里有几个边界条件要考虑：
+
+如果是第一个字符，即临时字符串为空时进行插入时，不能插入'0'，因为没有0开头的数字
+
+如果n=1的话，第一个字符则可以是'0'
+
+如果只剩下一个带插入的字符，这时候不能插入'6'或'9'，因为他们不能和自己产生映射，翻转后就不是自己了
+
+这样，当深度优先搜索时遇到这些情况，则要相应的跳过
+
+
+
+
+248. Strobogrammatic Number III
+-------------------------------
+
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+
+Write a function to count the total strobogrammatic numbers that exist in the range of low <= num <= high.
+
+For example,
+Given low = "50", high = "100", return 3. Because 69, 88, and 96 are three strobogrammatic numbers.
+
+Note:
+Because the range might be a large number, the low and high numbers are represented as string.
+
 
 
 231. Power of Two
