@@ -30,7 +30,7 @@ import sphinx_rtd_theme
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # 'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc'
 ]
 
 # pdf_documents = [('index', u'rst2pdf', u'Baby I love you', u'DarcyWang'),]
