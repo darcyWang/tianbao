@@ -14,7 +14,12 @@ Part Python
    :maxdepth: 2
    :glob:
 
+   python/index.rst
+   gre/index.rst
    leetcode/index.rst
-
+   material/second.rst
+   practice/index.rst
+   toefl/index.rst
+   django/index.rst
 
 
