@@ -1,5 +1,5 @@
 Hash部分
-=======
+=========
 
 
 624. Maximum Distance in Arrays
@@ -9,12 +9,14 @@ Hash部分
 Given m arrays, and each array is sorted in ascending order. Now you can pick up two integers from two different arrays (each array picks one) and calculate the distance. We define the distance between two integers a and b to be their absolute difference |a-b|. Your task is to find the maximum distance.
 
 Example 1:
+::
+    Input: 
+    [[1,2,3],
+     [4,5],
+     [1,2,3]]
 
-Input: 
-[[1,2,3],
- [4,5],
- [1,2,3]]
-Output: 4
+    Output: 4
+    
 Explanation: 
 One way to reach the maximum distance 4 is to pick 1 in the first or third array and pick 5 in the second array.
 
@@ -639,15 +641,15 @@ If your line go through the edge of a brick, then the brick is not considered as
 You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will obviously cross no bricks.
 
 Example:
-
-Input: 
-[[1,2,2,1],
- [3,1,2],
- [1,3,2],
- [2,4],
- [3,1,2],
- [1,3,1,1]]
-Output: 2
+::
+    Input: 
+    [[1,2,2,1],
+     [3,1,2],
+     [1,3,2],
+     [2,4],
+     [3,1,2],
+     [1,3,1,1]]
+    Output: 2
 Explanation: 
 
 Note:
@@ -702,22 +704,24 @@ Note: The length of the given binary array will not exceed 50,000.
  Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.
 
 Examples 1
-Input:
+::
+    Input:
 
-  5
- /  \
-2   -3
+      5
+     /  \
+    2   -3
 
-return [2, -3, 4], since all the values happen only once, return all of them in any order.
+    return [2, -3, 4], since all the values happen only once, return all of them in any order.
 
 Examples 2
-Input:
+::
+    Input:
 
-  5
- /  \
-2   -5
+      5
+     /  \
+    2   -5
 
-return [2], since 2 happens twice, however -5 only occur once.
+    return [2], since 2 happens twice, however -5 only occur once.
 
 Note: You may assume the sum of values in any subtree is in the range of 32-bit signed integer. 
 
