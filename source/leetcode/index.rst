@@ -16,3 +16,4 @@ Leetcode
    hash.rst
    dfs.rst
    binary.rst
+   array/index.rst

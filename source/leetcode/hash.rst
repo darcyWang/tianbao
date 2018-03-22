@@ -10,7 +10,7 @@ Given m arrays, and each array is sorted in ascending order. Now you can pick up
 
 Example 1:
 ::
-    Input: 
+    Input:
     [[1,2,3],
      [4,5],
      [1,2,3]]
