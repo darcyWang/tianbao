@@ -12,3 +12,10 @@
 
    partone.rst
    parttwo.rst
+   partthree.rst
+   partfour.rst
+   partfive.rst
+   partsix.rst
+   partseven.rst
+   parteight.rst
+   partnine.rst

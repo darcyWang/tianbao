@@ -1,5 +1,5 @@
-题目序号 414、217、219、283、121、122、123、188
-====================================================
+题目序号 414、217、219、283、121、122、123、188、53、189、
+============================================================
 
 
 414. Third Maximum Number 
@@ -116,16 +116,23 @@ Given an array of integers, find if the array contains any duplicates. Your func
             numSet.add(num)
         return False
 
-判断了有重复的元素，怎么去重
+
+.. admonition:: 保爷语录
+    
+    判断了有重复的元素，怎么去重
+
+
 
 .. code-block:: javascript
 
     var arr = [9, 9, 111, 2, 3, 4, 4, 5, 7];
     var sorted_arr = arr.slice().sort(); 
+    
     // You can define the comparing function here. 
     // JS by default uses a crappy string compare.
     // (we use slice to clone the array so the
     // original array won't be modified)
+    
     var results = [];
     for (var i = 0; i < arr.length - 1; i++) {
         if (sorted_arr[i + 1] == sorted_arr[i]) {
@@ -142,13 +149,54 @@ Given an array of integers, find if the array contains any duplicates. Your func
 
 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
 
-https://github.com/jzhangnu/Leetcode-JS-Solutions/issues/43
 
+.. code-block:: javascript
+
+    var containsNearbyDuplicate = function(nums, k) {
+        var hashT={}, pt = 0;
+        for(var i=0;i<nums.length;i++){
+            if(hashT[nums[i]] === undefined){
+                hashT[nums[i]] = i;
+            }
+            else if(pt == 0){
+                pt=i-hashT[nums[i]];   
+                hashT[nums[i]] = i;
+            }
+            else if((i-hashT[nums[i]]) <pt)pt = i-hashT[nums[i]];
+        }
+        if(pt<=k && pt!==0)return true
+        else return false
+    };
+
+
+
+    var containsNearbyDuplicate = function(nums, k) {
+        if(nums.length <= 1 || k < 1)
+        {
+            return false;
+        }
+        var map = {};
+        for(var i=0; i<nums.length; i++)
+        {
+            if(map[nums[i]] !== undefined)
+            {
+                return true;
+            }
+            else 
+            {
+                if(i - k >=0)
+                {
+                    map[nums[i-k]] = undefined;
+                }
+                map[nums[i]] = true;
+            }
+        }
+        return false;
+    };
 
 .. caution::
-        
-        这道题目还是有些没搞明白，从一个数组里面判断重复的元素相间隔的距离，
-        如果数组里面有很多重复的元素，该怎么搞
+    这道题目还是有些没搞明白，从一个数组里面判断重复的元素相间隔的距离，
+    如果数组里面有很多重复的元素，该怎么搞
 
 
 283. Move Zeroes 
@@ -158,13 +206,10 @@ Given an array nums, write a function to move all 0's to the end of it while mai
 
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
 
-Note:
-
-#. You must do this in-place without making a copy of the array.
-#. Minimize the total number of operations.
-
-Credits:
-Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+.. caution::
+    Note:
+    #. You must do this in-place without making a copy of the array.
+    #. Minimize the total number of operations.
 
 
 复杂度
@@ -175,22 +220,21 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 
 .. code-block:: javascript
 
-        var numbers = [0,0,0,0,0,0,0,0,1,2,3,5,0,6,6,0,3,4,5,6,6,7,8,9,9,0,6,55,5,5,4,33,31,2,423,5,7,657,8,679,564,345,0,231,2,3,3,32,3,3,3,4,5,6,6,7,8,9,96,5,4,4,4,3,3,3,5,6,7,8,9,9];
+    var numbers = [0,0,0,0,0,0,0,0,1,2,3,5,0,6,6,0,3,4,5,6,6,7,8,9,9,0,6,55,5,5,4,33,31,2,423,5,7,657,8,679,564,345,0,231,2,3,3,32,3,3,3,4,5,6,6,7,8,9,96,5,4,4,4,3,3,3,5,6,7,8,9,9];
 
-        var moveZeros = function (arr) {
-          for(var i = arr.length; i--;) {
-              if(arr[i] === 0) {
-                  arr.splice(i, 1);
-                  arr.push(0);
-              }
+    var moveZeros = function (arr) {
+      for(var i = arr.length; i--;) {
+          if(arr[i] === 0) {
+              arr.splice(i, 1);
+              arr.push(0);
           }
-          return arr;
-        }
+      }
+      return arr;
+    }
 
-
-        var moveZeros = function (arr) {
-          return arr.filter(function(x) {return x !== 0}).concat(arr.filter(function(x) {return x === 0;}));
-        }
+    var moveZeros = function (arr) {
+      return arr.filter(function(x) {return x !== 0}).concat(arr.filter(function(x) {return x === 0;}));
+    }
 
 还是没有看到Python的写法
 
@@ -302,21 +346,159 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
 
 .. code-block:: Python
 
-       def maxProfit(self, k, prices):
-            n = len(prices)
-            if k >= (n>>1):return self.maxProfit2(prices)
-            dp =[[0 for j in xrange(n)]for i in xrange(k+1)]
-     
-            for i in xrange(1,k+1):
-                maxTemp=-prices[0]
-                for j in xrange(1,n):
-                    dp[i][j]=max(dp[i][j-1],prices[j] + maxTemp)
-                    maxTemp =max(maxTemp,dp[i-1][j-1] - prices[j])
-            return dp[k][n-1]
-     
-        def maxProfit2(self,prices):
-            ans = 0
-            for i in xrange(1,len(prices)):
-                if prices[i]>prices[i-1]:
-                    ans +=prices[i]-prices[i-1]
-            return ans
+    def maxProfit(self, k, prices):
+        n = len(prices)
+        if k >= (n>>1):return self.maxProfit2(prices)
+        dp =[[0 for j in xrange(n)]for i in xrange(k+1)]
+ 
+        for i in xrange(1,k+1):
+            maxTemp=-prices[0]
+            for j in xrange(1,n):
+                dp[i][j]=max(dp[i][j-1],prices[j] + maxTemp)
+                maxTemp =max(maxTemp,dp[i-1][j-1] - prices[j])
+        return dp[k][n-1]
+    
+    def maxProfit2(self,prices):
+        ans = 0
+        for i in xrange(1,len(prices)):
+            if prices[i]>prices[i-1]:
+                ans +=prices[i]-prices[i-1]
+        return ans
+
+    # DP
+    def maxProfit1(self, prices):
+        if not prices:
+            return 0
+        loc = glo = 0
+        for i in xrange(1, len(prices)):
+            loc = max(loc+prices[i]-prices[i-1], 0)
+            glo = max(glo, loc)
+        return glo
+                
+    def maxProfit2(self, prices):
+        if not prices:
+            return 0
+        minPri, maxPro = prices[0], 0
+        for i in xrange(1, len(prices)):
+            minPri = min(minPri, prices[i])
+            maxPro = max(maxPro, prices[i]-minPri)
+        return maxPro
+                
+    # Reuse maximum subarray method
+    def maxProfit(self, prices):
+        if not prices or len(prices) == 1:
+            return 0
+        dp = [0] * len(prices)
+        for i in xrange(1, len(prices)):
+            dp[i] = prices[i]-prices[i-1]
+        glo = loc = dp[0]
+        for i in xrange(1, len(dp)):
+            loc = max(loc+dp[i], dp[i])
+            glo = max(glo, loc)
+        return glo
+                
+
+
+53. Maximum Subarray 
+--------------------
+
+Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+
+For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
+the contiguous subarray [4,-1,2,1] has the largest sum = 6.
+
+
+If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+
+
+
+.. code-block:: Python
+
+    def kadane(a):
+
+      if not a:
+        raise ValueError('Empty array!')
+        
+      current_sum, current_start = a[0], 0
+      result = (current_sum, 0, 0)
+
+      for i, item in enumerate(a[1:], start=1):
+
+        if current_sum + item < item:
+          # discard the previous subarray, it's not optimal
+          current_start = i
+          current_sum = item
+        else:
+          current_sum += item
+
+        if current_sum > result[0]:
+          # update the maximum sum and start and end indices
+          result = (current_sum, current_start, i)
+
+      return result
+
+.. code-block:: javascript
+
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var maxSubArray = function(nums) {
+      if(nums.length <= 0){
+        return 0;
+      }
+
+      var maxSubArray = nums[0];
+      var sum = nums[0];
+      if(sum < 0){
+        sum = 0;
+      }
+      for(var index = 0;index < nums.length;index++){
+        sum += nums[index];
+        if(sum > maxSubArray){
+          maxSubArray = sum;
+        }
+
+        if(sum < 0){
+          sum = 0;
+        }
+      }
+      return maxSubArray;
+    };
+
+
+    var result = maxSubArray([-2,-1,3,4,-2,4]);
+    console.log(result);
+
+
+
+
+189. Rotate Array 
+-------------------
+
+Rotate an array of n elements to the right by k steps.
+
+For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
+
+Note:
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
+
+
+
+Related problem: Reverse Words in a String II
+
+.. hint::
+    这道题目有一种很经典的做法：
+
+    #. 三步反转法。
+    #. 结合题目中给出的样例进行说明：首先根据kk的大小，将字符串S切分为A、B两部分(A的长度为n−kn−k，B的长度为kk)，则A=”1234”，B=”567”；
+    #. 将A和B分别进行反转，得A=”4321”，B=”765”，AB=”4321765”；
+    #. 将AB整体进行反转，得AB=”5671234”。
+    
+    这样就得到了答案，是不是很神奇？其实该方法可以通过数学原理进行说明：利用矩阵求逆的原理，假设原矩阵为AB，需要求解BA，那么求解过程如下所示：
+    这里应该是个数学公式
+    
+    #. BA=(A−1B−1)−1
+    #. BA=(A−1B−1)−1
+    #. 相信到这里，你对三步反转法已经有了一个深刻的认识。
+
