@@ -17,3 +17,4 @@ Leetcode
    dfs.rst
    binary.rst
    array/index.rst
+   string/index.rst
