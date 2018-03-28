@@ -12,3 +12,7 @@
    stringone.rst
    stringtwo.rst
    stringthree.rst
+   stringfour.rst
+   stringfive.rst
+   stringsix.rst
+   stringseven.rst
