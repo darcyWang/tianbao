@@ -18,3 +18,4 @@ Leetcode
    binary.rst
    array/index.rst
    string/index.rst
+   math/index.rst

@@ -10,27 +10,27 @@ Note: The length of path between two nodes is represented by the number of edges
 
 Example 1:
 :: 
-        Input:
+    Input:
 
-                      5
-                     / \
-                    4   5
-                   / \   \
-                  1   1   5
+              5
+             / \
+            4   5
+           / \   \
+          1   1   5
 
-        Output: 2
+    Output: 2
 
 Example 2:
 ::
-        Input:
+    Input:
 
-                      1
-                     / \
-                    4   5
-                   / \   \
-                  4   4   5
+              1
+             / \
+            4   5
+           / \   \
+          4   4   5
 
-        Output: 2
+    Output: 2
 
 Note: The given binary tree has not more than 10000 nodes. The height of the tree is not more than 1000. 
 
@@ -62,8 +62,7 @@ Note: The given binary tree has not more than 10000 nodes. The height of the tre
 671. Second Minimum Node In a Binary Tree
 -----------------------------------------
 
-
- Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes.
+Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes.
 
 Given such a binary tree, you need to output the second minimum value in the set made of all the nodes' value in the whole tree.
 
@@ -71,25 +70,26 @@ If no such second minimum value exists, output -1 instead.
 
 Example 1:
 :: 
-        Input: 
-            2
-           / \
-          2   5
-             / \
-            5   7
+    Input: 
+        2
+       / \
+      2   5
+         / \
+        5   7
 
-        Output: 5
-        Explanation: The smallest value is 2, the second smallest value is 5.
+    Output: 5
+    Explanation: The smallest value is 2, the second smallest value is 5.
 
 Example 2:
 ::
-        Input: 
-            2
-           / \
-          2   2
+    Input: 
+        2
+       / \
+      2   2
 
-        Output: -1
-        Explanation: The smallest value is 2, but there isn't any second smallest value.
+    Output: -1
+    Explanation: The smallest value is 2, but there isn't any second smallest value.
+
 
 669. Trim a Binary Search Tree 
 ------------------------------
@@ -98,39 +98,39 @@ Given a binary search tree and the lowest and highest boundaries as L and R, tri
 
 Example 1:
 :: 
-        Input: 
-            1
-           / \
-          0   2
+    Input: 
+        1
+       / \
+      0   2
 
-          L = 1
-          R = 2
+      L = 1
+      R = 2
 
-        Output: 
-            1
-              \
-               2
+    Output: 
+        1
+          \
+           2
 
 Example 2:
 ::
-        Input: 
-            3
-           / \
-          0   4
-           \
-            2
-           /
-          1
+    Input: 
+        3
+       / \
+      0   4
+       \
+        2
+       /
+      1
 
-          L = 1
-          R = 3
+      L = 1
+      R = 3
 
-        Output: 
-              3
-             / 
-           2   
-          /
-         1
+    Output: 
+          3
+         / 
+       2   
+      /
+     1
 
 653. Two Sum IV - Input is a BST 
 --------------------------------
@@ -139,29 +139,29 @@ Given a Binary Search Tree and a target number, return true if there exist two e
 
 Example 1:
 :: 
-        Input: 
-            5
-           / \
-          3   6
-         / \   \
-        2   4   7
+    Input: 
+        5
+       / \
+      3   6
+     / \   \
+    2   4   7
 
-        Target = 9
+    Target = 9
 
-        Output: True
+    Output: True
 
 Example 2:
 ::
-        Input: 
-            5
-           / \
-          3   6
-         / \   \
-        2   4   7
+    Input: 
+        5
+       / \
+      3   6
+     / \   \
+    2   4   7
 
-        Target = 28
+    Target = 28
 
-        Output: False
+    Output: False
 
 
 637. Average of Levels in Binary Tree 
@@ -172,39 +172,40 @@ Given a non-empty binary tree, return the average value of the nodes on each lev
 
 Example 1:
 ::
-        Input:
-            3
-           / \
-          9  20
-            /  \
-           15   7
-        Output: [3, 14.5, 11]
-        Explanation:
-        The average value of nodes on level 0 is 3,  on level 1 is 14.5, and on level 2 is 11. Hence return [3, 14.5, 11].
+    Input:
+        3
+       / \
+      9  20
+        /  \
+       15   7
+    Output: [3, 14.5, 11]
 
-Note:
+    Explanation:
+    The average value of nodes on level 0 is 3,  on level 1 is 14.5, and on level 2 is 11. Hence return [3, 14.5, 11].
 
-    The range of node's value is in the range of 32-bit signed integer.
+Note: The range of node's value is in the range of 32-bit signed integer.
+
+
 
 617. Merge Two Binary Trees 
 ---------------------------
 
-
- Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.
+Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.
 
 You need to merge them into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of new tree.
 
 Example 1:
-
-Input: 
-    Tree 1                     Tree 2                  
+::
+    Input: 
+        Tree 1                     Tree 2                  
           1                         2                             
          / \                       / \                            
         3   2                     1   3                        
        /                           \   \                      
       5                             4   7                  
-Output: 
-Merged tree:
+    
+    Output: 
+    Merged tree:
          3
         / \
        4   5
@@ -224,30 +225,30 @@ You need to construct a string consists of parenthesis and integers from a binar
 The null node needs to be represented by empty parenthesis pair "()". And you need to omit all the empty parenthesis pairs that don't affect the one-to-one mapping relationship between the string and the original binary tree.
 
 Example 1:
+::
+    Input: Binary tree: [1,2,3,4]
+           1
+         /   \
+        2     3
+       /    
+      4     
 
-Input: Binary tree: [1,2,3,4]
-       1
-     /   \
-    2     3
-   /    
-  4     
-
-Output: "1(2(4))(3)"
+    Output: "1(2(4))(3)"
 
 Explanation: Originallay it needs to be "1(2(4)())(3()())", 
 but you need to omit all the unnecessary empty parenthesis pairs. 
 And it will be "1(2(4))(3)".
 
 Example 2:
+::
+    Input: Binary tree: [1,2,3,null,4]
+           1
+         /   \
+        2     3
+         \  
+          4 
 
-Input: Binary tree: [1,2,3,null,4]
-       1
-     /   \
-    2     3
-     \  
-      4 
-
-Output: "1(2()(4))(3)"
+    Output: "1(2()(4))(3)"
 
 Explanation: Almost the same as the first example, 
 except we can't omit the first parenthesis pair to break the one-to-one mapping relationship between the input and the output.
@@ -255,43 +256,46 @@ except we can't omit the first parenthesis pair to break the one-to-one mapping 
 572. Subtree of Another Tree 
 ----------------------------
 
- Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and node values with a subtree of s. A subtree of s is a tree consists of a node in s and all of this node's descendants. The tree s could also be considered as a subtree of itself.
+
+Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and node values with a subtree of s. A subtree of s is a tree consists of a node in s and all of this node's descendants. The tree s could also be considered as a subtree of itself.
 
 Example 1:
-Given tree s:
+::
+    Given tree s:
 
-     3
-    / \
-   4   5
-  / \
- 1   2
+         3
+        / \
+       4   5
+      / \
+     1   2
 
-Given tree t:
+    Given tree t:
 
-   4 
-  / \
- 1   2
+       4 
+      / \
+     1   2
 
 Return true, because t has the same structure and node values with a subtree of s.
 
 Example 2:
-Given tree s:
+::
+    Given tree s:
 
-     3
-    / \
-   4   5
-  / \
- 1   2
-    /
-   0
+         3
+        / \
+       4   5
+      / \
+     1   2
+        /
+       0
 
-Given tree t:
+    Given tree t:
 
-   4
-  / \
- 1   2
+       4
+      / \
+     1   2
 
-Return false. 
+    Return false. 
 
 
 
@@ -305,22 +309,23 @@ The tilt of a tree node is defined as the absolute difference between the sum of
 The tilt of the whole tree is defined as the sum of all nodes' tilt.
 
 Example:
+::
+    Input: 
+             1
+           /   \
+          2     3
+    Output: 1
 
-Input: 
-         1
-       /   \
-      2     3
-Output: 1
+
 Explanation: 
-Tilt of node 2 : 0
-Tilt of node 3 : 0
-Tilt of node 1 : |2-3| = 1
-Tilt of binary tree : 0 + 0 + 1 = 1
+#. Tilt of node 2 : 0
+#. Tilt of node 3 : 0
+#. Tilt of node 1 : |2-3| = 1
+#. Tilt of binary tree : 0 + 0 + 1 = 1
 
 Note:
-
-    The sum of node values in any subtree won't exceed the range of 32-bit integer.
-    All the tilt values won't exceed the range of 32-bit integer.
+The sum of node values in any subtree won't exceed the range of 32-bit integer.
+All the tilt values won't exceed the range of 32-bit integer.
 
 
 
@@ -1315,30 +1320,28 @@ Output: [1, 3, 9]
  Given a binary tree, find the leftmost value in the last row of the tree.
 
 Example 1:
+::
+    Input:
 
-Input:
+        2
+       / \
+      1   3
 
-    2
-   / \
-  1   3
-
-Output:
-1
+    Output: 1
 
 Example 2:
+::
+    Input:
 
-Input:
+            1
+           / \
+          2   3
+         /   / \
+        4   5   6
+           /
+          7
 
-        1
-       / \
-      2   3
-     /   / \
-    4   5   6
-       /
-      7
-
-Output:
-7
+    Output: 7
 
 Note: You may assume the tree (i.e., the given root node) is not NULL. 
 
@@ -1505,25 +1508,25 @@ Given a binary tree, find the length of the longest consecutive sequence path.
 
 The path refers to any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The longest consecutive path need to be from parent to child (cannot be the reverse).
 
-For example,
-
-   1
-    \
-     3
-    / \
-   2   4
+For example
+::
+       1
         \
-         5
-Longest consecutive sequence path is 3-4-5, so return 3.
+         3
+        / \
+       2   4
+            \
+             5
+    Longest consecutive sequence path is 3-4-5, so return 3.
 
-   2
-    \
-     3
-    /
-   2    
-  /
- 1
-Longest consecutive sequence path is 2-3',not3-2-1', so return `2'.
+       2
+        \
+         3
+        /
+       2    
+      /
+     1
+    Longest consecutive sequence path is 2-3',not3-2-1', so return `2'.
 
 
 
@@ -1548,16 +1551,17 @@ Note: If the given node has no in-order successor in the tree, return null.
 
 Given an array of numbers, verify whether it is the correct preorder traversal sequence of a binary search tree.
 You may assume each number in the sequence is unique.
+
 Follow up:
-Could you do it using only constant space complexity?
+#. Could you do it using only constant space complexity?
 Brute-force solution:
 The idea to solve the problem is: a[0] must be the root of the BST. Then we start from index 1 and iterate until a number which is greater than root, mark as i. All the numbers less than i must be less than root, number greater than i must be greater than root. Then we can recursively validate the BST.
 
 
-先复习一下BST，给定一个节点，其左子树的所有节点都小于该节点，右子树的所有节点都大于该节点；preorder序列是指在遍历该BST的时候，先记录根节点，再遍历左子树，然后遍历右子树；所以一个preorder序列有这样一个特点，左子树的序列必定都在右子树的序列之前；并且左子树的序列必定都小于根节点，右子树的序列都大于根节点；
-根据上面的特点很容易通过递归的方式完成：
-如果序列只有一个元素，那么肯定是正确的，对应只有一个节点的树；
-如果多于一个元素，以当前节点为根节点；并从当前节点向后遍历，直到大于根节点的节点出现（或者到尾巴），那么根节点之后，该大节点之前的，是左子树；该大节点及之后的组成右子树；递归判断左右子树即可；
+#. 先复习一下BST，给定一个节点，其左子树的所有节点都小于该节点，右子树的所有节点都大于该节点；preorder序列是指在遍历该BST的时候，先记录根节点，再遍历左子树，然后遍历右子树；所以一个preorder序列有这样一个特点，左子树的序列必定都在右子树的序列之前；并且左子树的序列必定都小于根节点，右子树的序列都大于根节点；
+#. 根据上面的特点很容易通过递归的方式完成：
+#. 如果序列只有一个元素，那么肯定是正确的，对应只有一个节点的树；
+#. 如果多于一个元素，以当前节点为根节点；并从当前节点向后遍历，直到大于根节点的节点出现（或者到尾巴），那么根节点之后，该大节点之前的，是左子树；该大节点及之后的组成右子树；递归判断左右子树即可；
 那么什么时候一个序列肯定不是一个preorder序列呢？前面得到的右子树，如果在其中出现了比根节点还小的数，那么就可以直接返回false了；
 
 
@@ -1571,16 +1575,17 @@ Given a binary tree, count the number of uni-value subtrees.
 A Uni-value subtree means all nodes of the subtree have the same value.
 
 For example:
-Given binary tree,
+::
+    Given binary tree,
 
-              5
-             / \
-            1   5
-           / \   \
-          5   5   5
- 
+                  5
+                 / \
+                1   5
+               / \   \
+              5   5   5
+     
 
-return 4.
+    return 4.
 
  
 
@@ -1594,18 +1599,19 @@ return 4.
 
 Given a binary tree where all the right nodes are either leaf nodes with a sibling (a left node that shares the same parent node) or empty, flip it upside down and turn it into a tree where the original right nodes turned into left leaf nodes. Return the new root.
 For example:
-Given a binary tree {1,2,3,4,5},
-    1
-   / \
-  2   3
- / \
-4   5
-return the root of the binary tree [4,5,2,#,#,3,1].
-   4
-  / \
- 5   2
-    / \
-   3   1  
+::
+    Given a binary tree {1,2,3,4,5},
+        1
+       / \
+      2   3
+     / \
+    4   5
+    return the root of the binary tree [4,5,2,#,#,3,1].
+       4
+      / \
+     5   2
+        / \
+       3   1  
 
 
 
@@ -1619,7 +1625,7 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
-
+::
         _______3______
        /              \
     ___5__          ___1__
@@ -1646,8 +1652,6 @@ You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
 Follow up:
 What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
 
-Credits:
-Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
@@ -1696,8 +1700,6 @@ Calling next() will return the next smallest number in the BST.
 
 Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 
-Credits:
-Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
@@ -1757,36 +1759,35 @@ Note:
 
     You may only use constant extra space.
 
-For example,
-Given the following binary tree,
+For example
+::
+    Given the following binary tree,
 
-         1
-       /  \
-      2    3
-     / \    \
-    4   5    7
+             1
+           /  \
+          2    3
+         / \    \
+        4   5    7
 
-After calling your function, the tree should look like:
+    After calling your function, the tree should look like:
 
-         1 -> NULL
-       /  \
-      2 -> 3 -> NULL
-     / \    \
-    4-> 5 -> 7 -> NULL
+             1 -> NULL
+           /  \
+          2 -> 3 -> NULL
+         / \    \
+        4-> 5 -> 7 -> NULL
 
 
 116. Populating Next Right Pointers in Each Node
 ------------------------------------------------
 
+Given a binary tree
 
-
- Given a binary tree
-
-    struct TreeLinkNode {
-      TreeLinkNode *left;
-      TreeLinkNode *right;
-      TreeLinkNode *next;
-    }
+struct TreeLinkNode {
+    TreeLinkNode *left;
+    TreeLinkNode *right;
+    TreeLinkNode *next;    
+}
 
 Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
 
@@ -1794,8 +1795,8 @@ Initially, all next pointers are set to NULL.
 
 Note:
 
-    You may only use constant extra space.
-    You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+#. You may only use constant extra space.
+#. You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
 
 For example,
 Given the following perfect binary tree,
@@ -1821,33 +1822,32 @@ After calling your function, the tree should look like:
 ---------------------------------------
 
 
- Given a binary tree, flatten it to a linked list in-place.
+Given a binary tree, flatten it to a linked list in-place.
 
-For example,
-Given
+For example
+::
+    Given
 
-         1
-        / \
-       2   5
-      / \   \
-     3   4   6
+             1
+            / \
+           2   5
+          / \   \
+         3   4   6
 
-The flattened tree should look like:
+    The flattened tree should look like:
 
-   1
-    \
-     2
-      \
-       3
+       1
         \
-         4
+         2
           \
-           5
+           3
             \
-             6
+             4
+              \
+               5
+                \
+                 6
 
-click to show hints.
-Hints:
 
 If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
 
@@ -1855,25 +1855,26 @@ If you notice carefully in the flattened tree, each node's right child points to
 113. Path Sum II
 ----------------
 
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 
- Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
 For example:
-Given the below binary tree and sum = 22,
+::
+    Given the below binary tree and sum = 22,
 
-              5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \    / \
-        7    2  5   1
+                  5
+                 / \
+                4   8
+               /   / \
+              11  13  4
+             /  \    / \
+            7    2  5   1
 
-return
+    return
 
-[
-   [5,4,11,2],
-   [5,8,4,5]
-]
+    [
+       [5,4,11,2],
+       [5,8,4,5]
+    ]
 
 
 
@@ -1894,8 +1895,7 @@ You may assume that duplicates do not exist in the tree.
 
 Given preorder and inorder traversal of a tree, construct the binary tree.
 
-Note:
-You may assume that duplicates do not exist in the tree. 
+Note: You may assume that duplicates do not exist in the tree. 
 
 
 
@@ -1931,21 +1931,22 @@ return its zigzag level order traversal as:
 Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
 
 For example:
-Given binary tree [3,9,20,null,null,15,7],
+::
+    Given binary tree [3,9,20,null,null,15,7],
 
-    3
-   / \
-  9  20
-    /  \
-   15   7
+        3
+       / \
+      9  20
+        /  \
+       15   7
 
-return its level order traversal as:
+    return its level order traversal as:
 
-[
-  [3],
-  [9,20],
-  [15,7]
-]
+    [
+      [3],
+      [9,20],
+      [15,7]
+    ]
 
 
 
@@ -1953,30 +1954,29 @@ return its level order traversal as:
 -------------------------------
 
 
-
- Given a binary tree, determine if it is a valid binary search tree (BST).
+Given a binary tree, determine if it is a valid binary search tree (BST).
 
 Assume a BST is defined as follows:
 
-    The left subtree of a node contains only nodes with keys less than the node's key.
-    The right subtree of a node contains only nodes with keys greater than the node's key.
-    Both the left and right subtrees must also be binary search trees.
+#. The left subtree of a node contains only nodes with keys less than the node's key.
+#. The right subtree of a node contains only nodes with keys greater than the node's key.
+#. Both the left and right subtrees must also be binary search trees.
 
 Example 1:
+::
+        2
+       / \
+      1   3
 
-    2
-   / \
-  1   3
-
-Binary tree [2,1,3], return true.
+    Binary tree [2,1,3], return true.
 
 Example 2:
+::
+        1
+       / \
+      2   3
 
-    1
-   / \
-  2   3
-
-Binary tree [1,2,3], return false. 
+    Binary tree [1,2,3], return false. 
 
 
 
@@ -1987,14 +1987,15 @@ Binary tree [1,2,3], return false.
 
 Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
 
-For example,
-Given n = 3, there are a total of 5 unique BST's.
+For example
+::
+    Given n = 3, there are a total of 5 unique BST's.
 
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
+       1         3     3      2      1
+        \       /     /      / \      \
+         3     2     1      1   3      2
+        /     /       \                 \
+       2     1         2                 3
 
 
 95. Unique Binary Search Trees II
@@ -2002,14 +2003,15 @@ Given n = 3, there are a total of 5 unique BST's.
 
 Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1...n.
 
-For example,
-Given n = 3, your program should return all 5 unique BST's shown below.
+For example
+::
+    Given n = 3, your program should return all 5 unique BST's shown below.
 
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
+       1         3     3      2      1
+        \       /     /      / \      \
+         3     2     1      1   3      2
+        /     /       \                 \
+       2     1         2                 3
 
 
 
@@ -2020,31 +2022,16 @@ Given n = 3, your program should return all 5 unique BST's shown below.
 Given a binary tree, return the inorder traversal of its nodes' values.
 
 For example:
-Given binary tree [1,null,2,3],
+::
+    Given binary tree [1,null,2,3],
 
-   1
-    \
-     2
-    /
-   3
+       1
+        \
+         2
+        /
+       3
 
-return [1,3,2].
+    return [1,3,2].
 
 Note: Recursive solution is trivial, could you do it iteratively?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
