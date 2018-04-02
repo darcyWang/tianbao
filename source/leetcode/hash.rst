@@ -47,11 +47,12 @@ For example, employee 1 is the leader of employee 2, and employee 2 is the leade
 Now given the employee information of a company, and an employee id, you need to return the total importance value of this employee and all his subordinates.
 
 Example 1:
+::
+    Input: [[1, 5, [2, 3]], [2, 3, []], [3, 3, []]], 1
+    Output: 11
 
-Input: [[1, 5, [2, 3]], [2, 3, []], [3, 3, []]], 1
-Output: 11
-Explanation:
-Employee 1 has importance value 5, and he has two direct subordinates: employee 2 and employee 3. They both have importance value 3. So the total importance value of employee 1 is 5 + 3 + 3 = 11.
+    Explanation:
+    Employee 1 has importance value 5, and he has two direct subordinates: employee 2 and employee 3. They both have importance value 3. So the total importance value of employee 1 is 5 + 3 + 3 = 11.
 
 Note:
 
@@ -70,9 +71,9 @@ The set S originally contains numbers from 1 to n. But unfortunately, due to the
 Given an array nums representing the data status of this set after the error. Your task is to firstly find the number occurs twice and then find the number that is missing. Return them in the form of an array.
 
 Example 1:
-
-Input: nums = [1,2,2,4]
-Output: [2,3]
+::
+    Input: nums = [1,2,2,4]
+    Output: [2,3]
 
 Note:
 
@@ -86,32 +87,34 @@ Note:
 -----------------------------------
 
 
- Suppose Andy and Doris want to choose a restaurant for dinner, and they both have a list of favorite restaurants represented by strings.
+Suppose Andy and Doris want to choose a restaurant for dinner, and they both have a list of favorite restaurants represented by strings.
 
 You need to help them find out their common interest with the least list index sum. If there is a choice tie between answers, output all of them with no order requirement. You could assume there always exists an answer.
 
 Example 1:
+::
+    Input:
+    ["Shogun", "Tapioca Express", "Burger King", "KFC"]
+    ["Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"]
+    Output: ["Shogun"]
 
-Input:
-["Shogun", "Tapioca Express", "Burger King", "KFC"]
-["Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"]
-Output: ["Shogun"]
-Explanation: The only restaurant they both like is "Shogun".
+    Explanation: The only restaurant they both like is "Shogun".
 
 Example 2:
+::
+    Input:
+    ["Shogun", "Tapioca Express", "Burger King", "KFC"]
+    ["KFC", "Shogun", "Burger King"]
+    Output: ["Shogun"]
 
-Input:
-["Shogun", "Tapioca Express", "Burger King", "KFC"]
-["KFC", "Shogun", "Burger King"]
-Output: ["Shogun"]
-Explanation: The restaurant they both like and have the least index sum is "Shogun" with index sum 1 (0+1).
+    Explanation: The restaurant they both like and have the least index sum is "Shogun" with index sum 1 (0+1).
 
 Note:
 
-    The length of both lists will be in the range of [1, 1000].
-    The length of strings in both lists will be in the range of [1, 30].
-    The index is starting from 0 to the list length minus 1.
-    No duplicates in both lists.
+#. The length of both lists will be in the range of [1, 1000].
+#. The length of strings in both lists will be in the range of [1, 30].
+#. The index is starting from 0 to the list length minus 1.
+#. No duplicates in both lists.
 
 
 
@@ -124,10 +127,11 @@ We define a harmonious array is an array where the difference between its maximu
 Now, given an integer array, you need to find the length of its longest harmonious subsequence among all its possible subsequences.
 
 Example 1:
+::
+    Input: [1,3,2,2,5,2,3,7]
+    Output: 5
 
-Input: [1,3,2,2,5,2,3,7]
-Output: 5
-Explanation: The longest harmonious subsequence is [3,2,2,2,3].
+    Explanation: The longest harmonious subsequence is [3,2,2,2,3].
 
 Note: The length of the input array will not exceed 20,000. 
 
@@ -138,25 +142,27 @@ Note: The length of the input array will not exceed 20,000.
 Given an integer array with even length, where different numbers in this array represent different kinds of candies. Each number means one candy of the corresponding kind. You need to distribute these candies equally in number to brother and sister. Return the maximum number of kinds of candies the sister could gain.
 
 Example 1:
+::
+    Input: candies = [1,1,2,2,3,3]
+    Output: 3
 
-Input: candies = [1,1,2,2,3,3]
-Output: 3
 Explanation:
 There are three different kinds of candies (1, 2 and 3), and two candies for each kind.
 Optimal distribution: The sister has candies [1,2,3] and the brother has candies [1,2,3], too. 
 The sister has three different kinds of candies. 
 
 Example 2:
+::
+    Input: candies = [1,1,2,3]
+    Output: 2
 
-Input: candies = [1,1,2,3]
-Output: 2
 Explanation: For example, the sister has candies [2,3] and the brother has candies [1,1]. 
 The sister has two different kinds of candies, the brother has only one kind of candies. 
 
 Note:
 
-    The length of the given array is in range [2, 10,000], and will be even.
-    The number in given array is in range [-100,000, 100,000].
+#. The length of the given array is in range [2, 10,000], and will be even.
+#. The number in given array is in range [-100,000, 100,000].
 
 
 
@@ -168,14 +174,14 @@ Given a List of words, return the words that can be typed using letters of alpha
 
 
 Example 1:
-
-Input: ["Hello", "Alaska", "Dad", "Peace"]
-Output: ["Alaska", "Dad"]
+::
+    Input: ["Hello", "Alaska", "Dad", "Peace"]
+    Output: ["Alaska", "Dad"]
 
 Note:
 
-    You may use one character in the keyboard more than once.
-    You may assume the input string will only contain letters of alphabet.
+#. You may use one character in the keyboard more than once.
+#. You may assume the input string will only contain letters of alphabet.
 
 
 463. Island Perimeter
@@ -185,13 +191,14 @@ Note:
 You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells). The island doesn't have "lakes" (water inside that isn't connected to the water around the island). One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
 
 Example:
+::
+    [[0,1,0,0],
+     [1,1,1,0],
+     [0,1,0,0],
+     [1,1,0,0]]
 
-[[0,1,0,0],
- [1,1,1,0],
- [0,1,0,0],
- [1,1,0,0]]
+    Answer: 16
 
-Answer: 16
 Explanation: The perimeter is the 16 yellow stripes in the image below:
 
 
@@ -206,12 +213,10 @@ Given n points in the plane that are all pairwise distinct, a "boomerang" is a t
 Find the number of boomerangs. You may assume that n will be at most 500 and coordinates of points are all in the range [-10000, 10000] (inclusive).
 
 Example:
+::
+    Input: [[0,0],[1,0],[2,0]]
 
-Input:
-[[0,0],[1,0],[2,0]]
-
-Output:
-2
+    Output: 2
 
 Explanation:
 The two boomerangs are [[1,0],[0,0],[2,0]] and [[1,0],[2,0],[0,0]]
@@ -230,24 +235,20 @@ Strings consists of lowercase English letters only and the length of both string
 The order of output does not matter.
 
 Example 1:
+::
+    Input: s: "cbaebabacd" p: "abc"
 
-Input:
-s: "cbaebabacd" p: "abc"
-
-Output:
-[0, 6]
+    Output: [0, 6]
 
 Explanation:
 The substring with start index = 0 is "cba", which is an anagram of "abc".
 The substring with start index = 6 is "bac", which is an anagram of "abc".
 
 Example 2:
+::
+    Input: s: "abab" p: "ab"
 
-Input:
-s: "abab" p: "ab"
-
-Output:
-[0, 1, 2]
+    Output: [0, 1, 2]
 
 Explanation:
 The substring with start index = 0 is "ab", which is an anagram of "ab".
@@ -268,12 +269,10 @@ Note:
 Assume the length of given string will not exceed 1,010.
 
 Example:
+::
+    Input: "abccccdd"
 
-Input:
-"abccccdd"
-
-Output:
-7
+    Output:  7
 
 Explanation:
 One longest palindrome that can be built is "dccaccd", whose length is 7.
@@ -284,20 +283,19 @@ One longest palindrome that can be built is "dccaccd", whose length is 7.
 ------------------------
 
 
- Given two strings s and t which consist of only lowercase letters.
+Given two strings s and t which consist of only lowercase letters.
 
 String t is generated by random shuffling string s and then add one more letter at a random position.
 
 Find the letter that was added in t.
 
 Example:
+::
+    Input:
+    s = "abcd"
+    t = "abcde"
 
-Input:
-s = "abcd"
-t = "abcde"
-
-Output:
-e
+    Output: e
 
 Explanation:
 'e' is the letter that was added.
@@ -344,7 +342,7 @@ Special thanks to @memoryless for adding this problem and creating all test case
 ----------------------------------
 
 
- Given two arrays, write a function to compute their intersection.
+Given two arrays, write a function to compute their intersection.
 
 Example:
 Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2, 2].
@@ -372,7 +370,7 @@ Given a pattern and a string str, find if str follows the same pattern.
 Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in str.
 
 Examples:
-
+::
     pattern = "abba", str = "dog cat cat dog" should return true.
     pattern = "abba", str = "dog cat cat fish" should return false.
     pattern = "aaaa", str = "dog cat cat dog" should return false.
@@ -381,13 +379,12 @@ Examples:
 Notes:
 You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space.
 
-Credits:
-Special thanks to @minglotus6 for adding this problem and creating all test cases.
-
 
 
 266. Palindrome Permutation
 ---------------------------
+
+
 Given a string, determine if a permutation of the string could form a palindrome.
 
 For example,
@@ -395,9 +392,8 @@ For example,
 
 Hint:
 
-            Consider the palindromes of odd vs even length. What difference do you notice?
-            Count the frequency of each character.
-            If each character occurs even number of times, then it must be a palindrome. How about character which occurs odd number of times?
+#. Consider the palindromes of odd vs even length. What difference do you notice? Count the frequency of each character.
+#. If each character occurs even number of times, then it must be a palindrome. How about character which occurs odd number of times?
 
 
 
@@ -470,8 +466,6 @@ Description:
 
 Count the number of prime numbers less than a non-negative number, n.
 
-Credits:
-Special thanks to @mithmatt for adding this problem and creating all test cases.
 
 
 
@@ -532,19 +526,19 @@ return [0, 1].
 -------------------------------
 
 
- Implement a magic directory with buildDict, and search methods.
+Implement a magic directory with buildDict, and search methods.
 
 For the method buildDict, you'll be given a list of non-repetitive words to build a dictionary.
 
 For the method search, you'll be given a word, and judge whether if you modify exactly one character into another character in this word, the modified word is in the dictionary you just built.
 
 Example 1:
-
-Input: buildDict(["hello", "leetcode"]), Output: Null
-Input: search("hello"), Output: False
-Input: search("hhllo"), Output: True
-Input: search("hell"), Output: False
-Input: search("leetcoded"), Output: False
+::
+    Input: buildDict(["hello", "leetcode"]), Output: Null
+    Input: search("hello"), Output: False
+    Input: search("hhllo"), Output: True
+    Input: search("hell"), Output: False
+    Input: search("leetcoded"), Output: False
 
 Note:
 
@@ -558,7 +552,7 @@ Note:
 ------------------
 
 
- In English, we have a concept called root, which can be followed by some other words to form another longer word - let's call this word successor. For example, the root an, followed by other, which can form another word another.
+In English, we have a concept called root, which can be followed by some other words to form another longer word - let's call this word successor. For example, the root an, followed by other, which can form another word another.
 
 Now, given a dictionary consisting of many roots and a sentence. You need to replace all the successor in the sentence with the root forming it. If a successor has many roots can form it, replace it with the root with the shortest length.
 
@@ -649,7 +643,9 @@ Example:
      [2,4],
      [3,1,2],
      [1,3,1,1]]
+
     Output: 2
+
 Explanation: 
 
 Note:
@@ -664,9 +660,7 @@ Note:
 535. Encode and Decode TinyURL
 ------------------------------
 
-
-
-    Note: This is a companion problem to the System Design problem: Design TinyURL.
+Note: This is a companion problem to the System Design problem: Design TinyURL.
 
 TinyURL is a URL shortening service where you enter a URL such as https://leetcode.com/problems/design-tinyurl and it returns a short URL such as http://tinyurl.com/4e9iAk.
 
@@ -680,16 +674,16 @@ Design the encode and decode methods for the TinyURL service. There is no restri
 Given a binary array, find the maximum length of a contiguous subarray with equal number of 0 and 1.
 
 Example 1:
-
-Input: [0,1]
-Output: 2
-Explanation: [0, 1] is the longest contiguous subarray with equal number of 0 and 1.
+::
+    Input: [0,1]
+    Output: 2
+    Explanation: [0, 1] is the longest contiguous subarray with equal number of 0 and 1.
 
 Example 2:
-
-Input: [0,1,0]
-Output: 2
-Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal number of 0 and 1.
+::
+    Input: [0,1,0]
+    Output: 2
+    Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal number of 0 and 1.
 
 Note: The length of the given binary array will not exceed 50,000. 
 
@@ -700,8 +694,7 @@ Note: The length of the given binary array will not exceed 50,000.
 ------------------------------
 
 
-
- Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.
+Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.
 
 Examples 1
 ::
@@ -731,21 +724,19 @@ Note: You may assume the sum of values in any subtree is in the range of 32-bit 
 ------------
 
 
-
 Given four lists A, B, C, D of integer values, compute how many tuples (i, j, k, l) there are such that A[i] + B[j] + C[k] + D[l] is zero.
 
 To make problem a bit easier, all A, B, C, D have same length of N where 0 ≤ N ≤ 500. All integers are in the range of -228 to 228 - 1 and the result is guaranteed to be at most 231 - 1.
 
 Example:
+::
+    Input:
+    A = [ 1, 2]
+    B = [-2,-1]
+    C = [-1, 2]
+    D = [ 0, 2]
 
-Input:
-A = [ 1, 2]
-B = [-2,-1]
-C = [-1, 2]
-D = [ 0, 2]
-
-Output:
-2
+    Output: 2
 
 Explanation:
 The two tuples are:
@@ -762,36 +753,36 @@ The two tuples are:
 Given a string, sort it in decreasing order based on the frequency of characters.
 
 Example 1:
+::
+    Input:
+    "tree"
 
-Input:
-"tree"
-
-Output:
-"eert"
+    Output:
+    "eert"
 
 Explanation:
 'e' appears twice while 'r' and 't' both appear once.
 So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
 
 Example 2:
+::
+    Input:
+    "cccaaa"
 
-Input:
-"cccaaa"
-
-Output:
-"cccaaa"
+    Output:
+    "cccaaa"
 
 Explanation:
 Both 'c' and 'a' appear three times, so "aaaccc" is also a valid answer.
 Note that "cacaca" is incorrect, as the same characters must be together.
 
 Example 3:
+::
+    Input:
+    "Aabb"
 
-Input:
-"Aabb"
-
-Output:
-"bbAa"
+    Output:
+    "bbAa"
 
 Explanation:
 "bbaA" is also a valid answer, but "Aabb" is incorrect.
@@ -807,9 +798,9 @@ Note that 'A' and 'a' are treated as two different characters.
 
 Design a data structure that supports all following operations in average O(1) time.
 
-    insert(val): Inserts an item val to the set if not already present.
-    remove(val): Removes an item val from the set if present.
-    getRandom: Returns a random element from current set of elements. Each element must have the same probability of being returned.
+#. insert(val): Inserts an item val to the set if not already present.
+#. remove(val): Removes an item val from the set if present.
+#. getRandom: Returns a random element from current set of elements. Each element must have the same probability of being returned.
 
 Example:
 
@@ -845,10 +836,10 @@ randomSet.getRandom();
 
 Design a simplified version of Twitter where users can post tweets, follow/unfollow another user and is able to see the 10 most recent tweets in the user's news feed. Your design should support the following methods:
 
-    postTweet(userId, tweetId): Compose a new tweet.
-    getNewsFeed(userId): Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
-    follow(followerId, followeeId): Follower follows a followee.
-    unfollow(followerId, followeeId): Follower unfollows a followee.
+#. postTweet(userId, tweetId): Compose a new tweet.
+#. getNewsFeed(userId): Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
+#. follow(followerId, followeeId): Follower follows a followee.
+#. unfollow(followerId, followeeId): Follower unfollows a followee.
 
 Example:
 
@@ -883,7 +874,7 @@ twitter.getNewsFeed(1);
 ----------------------------
 
 
- Given a non-empty array of integers, return the k most frequent elements.
+Given a non-empty array of integers, return the k most frequent elements.
 
 For example,
 Given [1,1,1,2,2,3] and k = 2, return [1,2].
@@ -902,9 +893,9 @@ Note:
 You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
 
 For example:
-
-Secret number:  "1807"
-Friend's guess: "7810"
+::
+    Secret number:  "1807"
+    Friend's guess: "7810"
 
 Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)
 
@@ -919,8 +910,6 @@ In this case, the 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow, 
 
 You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.
 
-Credits:
-Special thanks to @jeantimex for adding this problem and creating all test cases.
 
 
 
@@ -929,7 +918,7 @@ Special thanks to @jeantimex for adding this problem and creating all test cases
 ------------
 
 
- Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.
+Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.
 
 According to the definition of h-index on Wikipedia: "A scientist has index h if h of his/her N papers have at least h citations each, and the other N − h papers have no more than h citations each."
 
@@ -949,12 +938,12 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 Given n points on a 2D plane, find if there is such a line parallel to y-axis that reflect the given set of points.
 
 Example 1:
-
-Given points = [[1,1],[-1,1]], return true.
+::
+    Given points = [[1,1],[-1,1]], return true.
 
 Example 2:
-
-Given points = [[1,1],[-1,-1]], return false.
+::
+    Given points = [[1,1],[-1,-1]], return false.
 
 Follow up:
 Could you do better than O(n2)?
@@ -964,9 +953,6 @@ Hint:
     Find the smallest and largest x-value for all points.
     If there is a line then it should be at y = (minX + maxX) / 2.
     For each point, make sure that it has a reflected point in the opposite side.
-
-Credits:
-Special thanks to @memoryless for adding this problem and creating all test cases.
 
 
 
@@ -1000,46 +986,45 @@ Given a binary tree, return the vertical order traversal of its nodes' values. (
 If two nodes are in the same row and column, the order should be from left to right.
 
 Examples:
-Given binary tree [3,9,20,null,null,15,7],
+::
+    Given binary tree [3,9,20,null,null,15,7],
 
-    3
-   / \
-  9  20
-    /  \
-   15   7
+        3
+       / \
+      9  20
+        /  \
+       15   7
 
- 
+    return its vertical order traversal as:
 
-return its vertical order traversal as:
-
-[
-  [9],
-  [3,15],
-  [20],
-  [7]
-]
+    [
+      [9],
+      [3,15],
+      [20],
+      [7]
+    ]
 
  
 
 Given binary tree [3,9,20,4,5,2,7],
+::
+        _3_
+       /   \
+      9    20
+     / \   / \
+    4   5 2   7
 
-    _3_
-   /   \
-  9    20
- / \   / \
-4   5 2   7
+     
 
- 
+    return its vertical order traversal as:
 
-return its vertical order traversal as:
-
-[
-  [4],
-  [9],
-  [3,5,2],
-  [20],
-  [7]
-]
+    [
+      [4],
+      [9],
+      [3,5,2],
+      [20],
+      [7]
+    ]
 
 
 
@@ -1052,22 +1037,22 @@ Given two sparse matrices A and B, return the result of AB.
 You may assume that A's column number is equal to B's row number.
 
 Example:
+::
+    A = [
+      [ 1, 0, 0],
+      [-1, 0, 3]
+    ]
 
-A = [
-  [ 1, 0, 0],
-  [-1, 0, 3]
-]
-
-B = [
-  [ 7, 0, 0 ],
-  [ 0, 0, 0 ],
-  [ 0, 0, 1 ]
-]
+    B = [
+      [ 7, 0, 0 ],
+      [ 0, 0, 0 ],
+      [ 0, 0, 1 ]
+    ]
 
 
-     |  1 0 0 |   | 7 0 0 |   |  7 0 0 |
-AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
-                  | 0 0 1 |
+         |  1 0 0 |   | 7 0 0 |   |  7 0 0 |
+    AB = | -1 0 3 | x | 0 0 0 | = | -7 0 3 |
+                      | 0 0 1 |
 
 
 
@@ -1175,13 +1160,11 @@ Given two integers representing the numerator and denominator of a fraction, ret
 If the fractional part is repeating, enclose the repeating part in parentheses.
 
 For example,
-
+::
     Given numerator = 1, denominator = 2, return "0.5".
     Given numerator = 2, denominator = 1, return "2".
     Given numerator = 2, denominator = 3, return "0.(6)".
 
-Credits:
-Special thanks to @Shangrila for adding this problem and creating all test cases.
 
 
 
@@ -1189,7 +1172,7 @@ Special thanks to @Shangrila for adding this problem and creating all test cases
 138. Copy List with Random Pointer
 ----------------------------------
 
- A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
 
 Return a deep copy of the list. 
 
@@ -1201,15 +1184,16 @@ Return a deep copy of the list.
 Given a binary tree, return the inorder traversal of its nodes' values.
 
 For example:
-Given binary tree [1,null,2,3],
+::
+    Given binary tree [1,null,2,3],
 
-   1
-    \
-     2
-    /
-   3
+       1
+        \
+         2
+        /
+       3
 
-return [1,3,2].
+    return [1,3,2].
 
 Note: Recursive solution is trivial, could you do it iteratively?
 
@@ -1220,14 +1204,17 @@ Note: Recursive solution is trivial, could you do it iteratively?
 
 Given an array of strings, group anagrams together.
 
-For example, given: ["eat", "tea", "tan", "ate", "nat", "bat"],
-Return:
+For example, 
+::
+    given: ["eat", "tea", "tan", "ate", "nat", "bat"],
+    
+    Return:
 
-[
-  ["ate", "eat","tea"],
-  ["nat","tan"],
-  ["bat"]
-]
+    [
+      ["ate", "eat","tea"],
+      ["nat","tan"],
+      ["bat"]
+    ]
 
 Note: All inputs will be in lower-case.
 
