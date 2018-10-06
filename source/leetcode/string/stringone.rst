@@ -143,23 +143,41 @@ For example
     return "blue is sky the".
 
 
+.. code-block:: python
 
-For C programmers: Try to solve it in-place in O(1) space.
+    def reverseWords(s):
+        return ' '.join(reversed(s.split()))
 
-Clarification:
+    class Solution(object):
+        def reverseWords(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            tmp = s.split()
+            res = " ".join(tmp[::-1])
+            return res
 
-    #. What constitutes a word?
-       
-    A sequence of non-space characters constitutes a word.
-    #. Could the input string contain leading or trailing spaces?
-    
-    Yes. However, your reversed string should not contain leading or trailing spaces.
+    def reverseWords2(s):
+        print " ".join(s.split()[::-1])
 
 
-    #. How about multiple spaces between two words?
-    Reduce them to a single space in the reversed string.
+    class Solution(object):
+        def reverseWords(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            tmp = s.split()
+            tmp.reverse()
+            res = " ".join(tmp)
+            return res
 
 
+.. code-block:: javascript
+
+        var hello = 'the sky is blue'.split(' ').reverse().join(' ');
+        console.log(hello)
 
 
 186. Reverse Words in a String II
@@ -188,19 +206,38 @@ Two-pass:
 #. 2. reverse one word:
 "eulb si yks eht" -> "blue is sky the"
 
-
 .. code-block:: python
 
-    def reverseWords(s):
-        return ' '.join(reversed(s.split()))
+    class Solution(object):
+        def reverseString(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            return s[::-1]
 
-    def reverseWords2(s):
-        print " ".join(s.split()[::-1])
+    class Solution(object):
+        def reverseString(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            lst = list(s)
+            n = len(lst)
+            start, end = 0, n - 1
+
+            while start < end:
+                lst[end], lst[start]  = lst[start],lst[end]
+                start += 1
+                end -= 1
+            return ''.join(lst)
+
 
 .. code-block:: javascript
 
-        var hello = 'the sky is blue'.split(' ').reverse().join(' ');
-        console.log(hello)
+    let hello = "Let's take LeetCode contest".split(' ').map(s => s.split().reverse().join()).join(' ')
+    console.log(hello)
+
 
 
 557. Reverse Words in a String III
@@ -221,7 +258,7 @@ JavaScript答案
 
 .. code-block:: javascript
 
-    var hello = "Let's take LeetCode contest".split(' ').map(s => s.split().reverse().join()).join(' ')
+    let hello = "Let's take LeetCode contest".split(' ').map(s => s.split().reverse().join()).join(' ')
     console.log(hello)
 
 
