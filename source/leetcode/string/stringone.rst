@@ -337,29 +337,81 @@ Length of the given string and k will in the range [1, 10000]
 
 
 .. code-block:: Javascript 
+    
+    思路：先将字符串分片（每2k为一组），然后对每一组进行长度判断，长度小于k的和长度大于k*
 
-    function reverseStr (s, k) {
-        var arr = s.split('');
-        var i = 0;
-        var n = arr.length;
-        while(i < n) {
-            var j = Math.min(i + k - 1, n - 1);
-            reverse(arr,i,j);
-            i += 2 * k;
-        }
-        return arr.join('');
+    /**
+     * @param {string} s
+     * @param {number} k
+     * @return {string}
+     */
+    var reverseStr = function(s, k) { 
+        if(k <= 1){
+            return s;
+        }    
+        var Arr = [];
+        for(var i = 0 ; i < s.length; i += 2*k ){
+            var subStr = s.slice(i,i+2*k);
+            var arr = subStr.split('');
+            if(arr.length <= k){
+              var str =  arr.reverse().join('');
+            }else{
+                var subArr = arr.slice(0,k);
+                subArr.reverse(); 
+                var str = subArr.concat(arr.slice(k,2*k)).join('');
+            }
+            Arr[i] = str;
+        }    
+        var result = Arr.join('');
+        return result;
     };
 
-
-    function reverse(arr,i,j){
-        while(i < j) {
-            var tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-            i++;
-            j--;
+    /**
+     * @param {string} s
+     * @param {number} k
+     * @return {string}
+     */
+    var reverseStr = function(s, k) {
+        var output_str = '';
+        for(var i=0;i<s.length;i=i+2*k)
+        {
+            var haystack = s.substr(i,2*k);
+            if(haystack.length < k)
+            {
+                output_str += myReverse(haystack);
+            }
+            else
+            {
+                output_str += myReverse(haystack.substr(0,k)) + haystack.substr(k);
+            }
         }
+        return output_str;
+    };
+
+    function myReverse(str)
+    {
+        var arr = str.split('');
+        var reversedArr = arr.reverse();
+        return reversedArr.join('');
     }
+
+
+.. code-lock:: python
+    
+    class Solution(object):
+        def reverseStr(self, s, k):
+            """
+            :type s: str
+            :type k: int
+            :rtype: str
+            """
+            length = len(s)
+            for i in range(0, length, 2 * k):
+                if i + k >= length:
+                    s = s[:i] + s[i:][::-1]
+                else:
+                    s = s[:i] + s[i:i + k][::-1] + s[i + k:]
+            return s
 
 345. Reverse Vowels of a String
 -------------------------------
