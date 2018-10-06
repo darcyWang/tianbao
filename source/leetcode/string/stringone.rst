@@ -26,7 +26,57 @@ The read function will only be called once for each test case.
 
 
 
-这道题木有搞明白
+It took me several hours to understand what the problem is talking about.
+
+Let's look at the very first sentence of the description, "The API: int read4(char *buf) reads 4 characters at a time from a file." I though this function read a file, which is represented by *buf. But I was wrong. The correct understanding should be like this: this function reads a file, and writes the first 4 characters to *buf, and if there are less than 4 characters to be read, then only the valid number of characters will be read and written to *buf.
+
+Similarly, the function to be implemented, int read(char buf, int n) that reads n characters from the file, means n characters should be written to *buf.
+
+Also the examples are very misleading. Let's say example 1,
+Input: buf = "abc", n = 4
+Output: "abc"
+Explanation: The actual number of characters read is 3, which is "abc".
+The input *buf is not "abc". The file to be read is "abc". The input, *buf , should be where the characters are written to. The output, is not the return value of read(buf, 4), but should be the actual characters in *buf after the function is called. And the return value should be an int, which is 3.
+
+Hope this clarification helps :) 
+
+
+
+总结一下，就是read4(*read4_buf)这个函数的意思就是从文件当中读4个字符并将其写入到read4_buf中去，返回值是实际读取到的字符个数，即如果文件中只剩3个（不到4个字符了） ，那么就只写3个字符到read4_buf中去，返回值是3
+
+所以我们要实现的read(*buf)函数也是这样，我们要读取n个字符并写入到buf中去并且返回实际读取到的字符个数，如果不够我们就有多少写多少，然后返回实际写入的个数
+
+那么现在我们有两种情况：
+::
+    n大于文件中的字符数，我们检测文件结束并停止读取并返回文件中的字符数。
+    n小于或等于文件中的字符数，当读取足够的字符时返回（即n）
+
+
+代码中用eof代表'end of file'
+
+.. code-block:: python
+
+    class Solution(object):
+        def read(self, buf, n):
+            """
+            :type buf: Destination buffer (List[str])
+            :type n: Maximum number of characters to read (int)
+            :rtype: The number of characters read (int)
+            """
+            if n == 0 :
+                return 0
+            total_read, eof = 0, False
+            while not eof:
+                read4_buf = [''] * 4
+                cur_read = read4(read4_buf)
+                if (cur_read < 4):
+                    eof = True
+                for i in range(cur_read):
+                    buf[total_read] = read4_buf[i]
+                    total_read += 1
+                    if total_read == n:
+                        return total_read
+            return total_read
 
 
 
@@ -48,8 +98,37 @@ The read function may be called multiple times.
         这道题目跟上面一样没有搞明白
 
 
+我来总结一下，跟第157题不一样的地方就是，157是就读一次，158是可以读好几次 例如： 文件是‘abcdefg’
+
+    #. 157题就读一次，给一个n就行了。n给1那buf就是‘a’, n给2那buf就是‘ab’
+    #. 但是158不一样，可以多次read，比如第一次n给1，那buf是‘a’，再read一次，n给2，那'a'已经读过了，所以现在buf是'bc'了， 如果再来个n=3的话，buf就是‘def’,
 
 
+总之就是一个test case 中read函数可以调用一次和调用多次的区别
+
+.. code-block:: python
+
+    class Solution(object):
+        head, tail, buffer = 0, 0, [''] * 4 ## 定义全局变量
+        
+        def read(self, buf, n):
+            """
+            :type buf: Destination buffer (List[str])
+            :type n: Maximum number of characters to read (int)
+            :rtype: The number of characters read (int)
+            """
+            i = 0
+            while i < n:
+                if self.head == self.tail: ## read4 的缓存区为空的时候
+                    self.head = 0
+                    self.tail = read4(self.buffer) ## 开始进缓存区
+                    if self.tail == 0:
+                        break
+                while i < n and self.head < self.tail:
+                    buf[i] = self.buffer[self.head] ## 读出缓存区的变量
+                    i += 1
+                    self.head += 1
+            return i
 
 151. Reverse Words in a String
 ------------------------------
