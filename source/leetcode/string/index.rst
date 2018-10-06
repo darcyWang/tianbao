@@ -15,4 +15,3 @@
    stringfour.rst
    stringfive.rst
    stringsix.rst
-   stringseven.rst

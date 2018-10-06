@@ -252,7 +252,7 @@ Example 1:
 
 Note: In the string, each word is separated by single space and there will not be any extra space in the string.
 
-
+这个问题跟上面的差不多  答案应该是一样的， 可以参考一下
 
 JavaScript答案
 
@@ -310,6 +310,11 @@ Example:
 Given s = "hello", return "olleh".
 
 
+.. code-block:: javascript
+    
+    let s = 'hello'
+    console.log(s.split('').reverse().join(''))
+
 
 541. Reverse String II
 ----------------------
@@ -333,7 +338,7 @@ Length of the given string and k will in the range [1, 10000]
 
 .. code-block:: Javascript 
 
-    var reverseStr = function(s, k) {
+    function reverseStr (s, k) {
         var arr = s.split('');
         var i = 0;
         var n = arr.length;
@@ -344,6 +349,8 @@ Length of the given string and k will in the range [1, 10000]
         }
         return arr.join('');
     };
+
+
     function reverse(arr,i,j){
         while(i < j) {
             var tmp = arr[i];
@@ -369,4 +376,51 @@ Write a function that takes a string as input and reverse only the vowels of a s
 
 Note:
 The vowels does not include the letter "y".
+
+
+字符串不可变，所以用list代替，最后join
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def reverseVowels(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            vowels = 'aeiou'
+            string = list(s)
+            i, j = 0, len(s) -1
+            while i <= j:
+                if string[i].lower() not in vowels:
+                    i += 1
+                elif string[j].lower() not in vowels:
+                    j -= 1
+                else:
+                    string[i], string[j] = string[j], string[i]
+                    i += 1
+                    j -= 1
+            return ''.join(string)
+
+    
+    """ 正则版本 """
+    class Solution(object):
+        def reverseVowels(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            vowels = re.findall('(?i)[aeiou]', s)
+            return re.sub('(?i)[aeiou]', lambda m: vowels.pop(), s)
+
+
+
+
+
+
+
+
+
+
 
