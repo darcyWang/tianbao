@@ -12,7 +12,7 @@ Leetcode
    tree.rst
    hash.rst
    dfs.rst
-   binary.rst
+   binary/index.rst
    array/index.rst
    string/index.rst
    math/index.rst
