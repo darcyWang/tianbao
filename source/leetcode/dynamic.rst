@@ -1,4 +1,4 @@
-动态规划Dynamic programming部分
+动态规划dynamic programming部分
 =============================
 
 
