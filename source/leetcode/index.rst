@@ -8,11 +8,11 @@ Leetcode
 .. toctree::
    :maxdepth: 2
 
-   dynamic.rst
-   tree.rst
-   hash.rst
-   dfs.rst
+   string/index.rst
+   tree/index.rst
+   hash/index.rst
+   dfs/index.rst
    binary/index.rst
    array/index.rst
-   string/index.rst
    math/index.rst
+   dynamic/index.rst
