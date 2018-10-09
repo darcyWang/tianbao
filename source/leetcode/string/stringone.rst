@@ -267,6 +267,7 @@ JavaScript答案
 
 You are given a string representing an attendance record for a student. The record only contains the following three characters:
 
+Explaination:
 ::
     'A' : Absent.
     'L' : Late.
@@ -286,13 +287,13 @@ Example 2:
     Input: "PPALLL"
     Output: False
 
+简单一点就是给一个字符串，判断里面是否包含AA或者LLL，返回true or false
 
 .. code-block:: Javascript
 
     function baby (s) {
-            let twoStr = s.split('').sort().join('').toLowerCase().indexOf('aa');
-            let oneStr = s.toLowerCase().indexOf('lll');
-        
+        let twoStr = s.split('').sort().join('').toLowerCase().indexOf('aa');
+        let oneStr = s.toLowerCase().indexOf('lll');
         if( twoStr < 0 && oneStr < 0 ) {
             return true;
         }else{
@@ -300,6 +301,9 @@ Example 2:
         }
     }
     console.log(baby('ACFHPLLL'))
+
+
+
 
 344. Reverse String
 -------------------
