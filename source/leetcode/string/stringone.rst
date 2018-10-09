@@ -287,22 +287,68 @@ Example 2:
     Input: "PPALLL"
     Output: False
 
-简单一点就是给一个字符串，判断里面是否包含AA或者LLL，返回true or false
+简单一点就是给一个字符串，判断里面是否包含两个A或者连续的LLL，返回true or false
 
 .. code-block:: Javascript
 
-    function baby (s) {
-        let twoStr = s.split('').sort().join('').toLowerCase().indexOf('aa');
-        let oneStr = s.toLowerCase().indexOf('lll');
-        if( twoStr < 0 && oneStr < 0 ) {
-            return true;
-        }else{
-            return false;
-        }
-    }
-    console.log(baby('ACFHPLLL'))
+    var checkRecord = function(s) {
+        if(s.includes("LLL") || s.indexOf("A") != s.lastIndexOf("A")) return false;
+        else return true;
+    };
+    var checkRecord = function(s) {
+        return !(s.indexOf('A') >= 0 && s.indexOf('A', s.indexOf('A') + 1) >= 0 || s.indexOf('LLL') >= 0);
+    };
+    // 备注一下还是尼玛正则很强大啊
+    var checkRecord = function(s) {
+        // check if there are more than 2 As and 3 continuous Ls
+        return !/^.*(A.*A|L{3,}).*$/.test(s);
+    };
+
+.. code-block:: python
+
+    class Solution(object):
+        def checkRecord(self, s):
+            """
+            :type s: str
+            :rtype: bool
+            """
+            return s.count('A') <=1 and 'LLL' not in s
+
+            return (s.count('A')<=1) and ('LLL' not in s )
 
 
+    class Solution:
+        def checkRecord(self, s):
+            return False if 'LLL' in s or s.count('A') > 1 else True
+
+551. Student Attendance Record II
+---------------------------------
+
+Hard模式 看看题目就行了哈
+
+Given a positive integer n, return the number of all possible attendance records with length n, which will be regarded as rewardable. The answer may be very large, return it after mod 109 + 7.
+
+A student attendance record is a string that only contains the following three characters:
+
+Explaination:
+::
+    'A' : Absent.
+    'L' : Late.
+    'P' : Present.
+
+A record is regarded as rewardable if it doesn't contain more than one 'A' (absent) or more than two continuous 'L' (late).
+
+Example 1:
+::
+    Input: n = 2
+    Output: 8 
+    Explanation:
+    There are 8 records with length 2 will be regarded as rewardable:
+    "PP" , "AP", "PA", "LP", "PL", "AL", "LA", "LL"
+
+
+Only "AA" won't be regarded as rewardable owing to more than one absent times. 
+Note: The value of n won't exceed 100,000.
 
 
 344. Reverse String
@@ -342,62 +388,16 @@ Length of the given string and k will in the range [1, 10000]
 
 .. code-block:: Javascript 
     
-    思路：先将字符串分片（每2k为一组），然后对每一组进行长度判断，长度小于k的和长度大于k*
-
-    /**
-     * @param {string} s
-     * @param {number} k
-     * @return {string}
-     */
-    var reverseStr = function(s, k) { 
-        if(k <= 1){
-            return s;
-        }    
-        var Arr = [];
-        for(var i = 0 ; i < s.length; i += 2*k ){
-            var subStr = s.slice(i,i+2*k);
-            var arr = subStr.split('');
-            if(arr.length <= k){
-              var str =  arr.reverse().join('');
-            }else{
-                var subArr = arr.slice(0,k);
-                subArr.reverse(); 
-                var str = subArr.concat(arr.slice(k,2*k)).join('');
-            }
-            Arr[i] = str;
-        }    
-        var result = Arr.join('');
-        return result;
+    let reverseStr = function(s, k) {
+      if(s.length < k)
+        return s.split("").reverse().join("");
+      let res = "";
+      for(let i = 0; i < s.length; i+=2*k) {
+        res += s.split("").slice(i, i+k).reverse().join("");
+        res += s.slice(i+k, i+2*k);
+      }
+      return res;
     };
-
-    /**
-     * @param {string} s
-     * @param {number} k
-     * @return {string}
-     */
-    var reverseStr = function(s, k) {
-        var output_str = '';
-        for(var i=0;i<s.length;i=i+2*k)
-        {
-            var haystack = s.substr(i,2*k);
-            if(haystack.length < k)
-            {
-                output_str += myReverse(haystack);
-            }
-            else
-            {
-                output_str += myReverse(haystack.substr(0,k)) + haystack.substr(k);
-            }
-        }
-        return output_str;
-    };
-
-    function myReverse(str)
-    {
-        var arr = str.split('');
-        var reversedArr = arr.reverse();
-        return reversedArr.join('');
-    }
 
 
 .. code-lock:: python
@@ -423,19 +423,50 @@ Length of the given string and k will in the range [1, 10000]
 
 Write a function that takes a string as input and reverse only the vowels of a string.
 
+
+Example
 ::
-    Example 1:
     Given s = "hello", return "holle".
 
-    Example 2:
     Given s = "leetcode", return "leotcede".
 
 Note:
 The vowels does not include the letter "y".
 
-
+替换字符串里面的元音字母'aeiou'
 字符串不可变，所以用list代替，最后join
 
+
+
+..code-block:: javascript
+    
+    var reverseVowels = function(s) {
+        if(s === null || s.length === 0) {
+            return s;
+        }
+        var chars = s.split('');
+        var low = 0;
+        var high = s.length - 1;
+        var vowels = "aeiouAEIOU";
+        var tmp;
+        while(low < high) {
+            while(low < high && vowels.indexOf(chars[low]) === -1) {
+                low++;
+            }
+            
+            while(low < high && vowels.indexOf(chars[high]) === -1) {
+                high--;
+            }
+            
+            tmp = chars[high];
+            chars[high] = chars[low];
+            chars[low] = tmp;
+            low++;
+            high--;
+        }
+        
+        return chars.join('');
+    };
 
 .. code-block:: python
 
@@ -459,6 +490,23 @@ The vowels does not include the letter "y".
                     j -= 1
             return ''.join(string)
 
+    class Solution(object):
+        def reverseVowels(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+            vowel = 'AEIOUaeiou'
+            s = list(s)
+            i,j = 0, len(s)-1
+            while i<j:
+                while s[i] not in vowel and i<j:
+                    i = i + 1
+                while s[j] not in vowel and i<j:
+                    j = j - 1
+                s[i], s[j] = s[j], s[i]
+                i, j = i + 1, j - 1
+            return ''.join(s)
     
     """ 正则版本 """
     class Solution(object):
