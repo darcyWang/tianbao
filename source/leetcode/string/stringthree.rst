@@ -53,6 +53,45 @@ For example,
     b = "1"
     Return "100".
 
+用字符串模拟二进制整数加法。写了一个更通用的算法，修改self.radix即可将代码改为如八进制整数加法、十进制整数加法等。
+
+但是在实现过程中，为了处理上的方便，以及为了让代码更简洁，对两个加数的数组做了补零的操作。否则还得分a比b长，b比a长，a和b一样长3种case来处理，代码可能会比较繁琐。
+
+
+.. code-block:: python
+
+    class Solution:
+
+        def __init__(self):
+            self.radix = 2
+
+        # @param a, a string
+        # @param b, a string
+        # @return a string
+        def addBinary(self, a, b):
+
+            a_nums = [(ord(ch) - ord('0')) for ch in a]
+            b_nums = [(ord(ch) - ord('0')) for ch in b]
+            a_nums_size = len(a_nums)
+            b_nums_size = len(b_nums)
+            max_nums_size = max(a_nums_size, b_nums_size)
+            a_extend_nums = [0 for i in range(0, max_nums_size - a_nums_size)]
+            b_extend_nums = [0 for i in range(0, max_nums_size - b_nums_size)]
+            a_nums = a_extend_nums + a_nums
+            b_nums = b_extend_nums + b_nums
+            sum_nums = [0] * max_nums_size
+
+            carry = 0
+            for i in range(max_nums_size - 1, -1, -1):
+                sum = a_nums[i] + b_nums[i] + carry
+                sum_nums[i] = sum % self.radix
+                carry = sum / self.radix
+
+            sum_str = ("1" if 1 == carry else "")
+            for i in range(0, max_nums_size):
+                sum_str += chr(sum_nums[i] + ord('0'))
+
+            return sum_str
 
 125. Valid Palindrome
 ---------------------

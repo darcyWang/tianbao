@@ -157,34 +157,7 @@ All the strings in input have length in range [1, 1000].
 #. 使用KMP字符串匹配算法找出s中包含的dict中字符串的所有位置，将对应colored置为'1'
 #. 将colored中连续1用<b></b>包围
    
-https://leetcode.com/articles/add-bold-tag-in-a-string/
 
-.. code-block:: Python
-
-    class Solution(object):
-        def addBoldTag(self, s, dict):
-            """
-            :type s: str
-            :type dict: List[str]
-            :rtype: str
-            """
-            start = end = -1
-            ans = ''
-            for x, c in enumerate(s):
-                nend = 0
-                for d in dict:
-                    if s[x:].startswith(d):
-                        nend = max(nend, len(d))
-                if nend:
-                    if start == -1: start = x
-                    end = max(end, nend + x)
-                    continue
-                if x >= end:
-                    ans += '<b>' + s[start:end] + '</b>'
-                    start = end = -1
-                if start == -1: ans += c
-            if start > -1: ans += '<b>' + s[start:end] + '</b>'
-            return ans
 
 
 49. Group Anagrams
