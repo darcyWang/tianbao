@@ -1,4 +1,4 @@
-题目序号   
+题目序号 663、685、662、655、654、652、623
 ============================================================
 
 
@@ -10,15 +10,16 @@
 Given a binary tree with n nodes, your task is to check if it's possible to partition the tree to two trees which have the equal sum of values after removing exactly one edge on the original tree.
 
 Example 1:
+:: 
+    Input:     
+      5
+     / \
+    10 10
+      /  \
+     2   3
 
-Input:     
-    5
-   / \
-  10 10
-    /  \
-   2   3
+    Output: True
 
-Output: True
 Explanation: 
     5
    / 

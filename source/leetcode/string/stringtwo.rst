@@ -6,7 +6,71 @@
 -------------------------
 
 Write a function to find the longest common prefix string amongst an array of strings.
-::
+
+
+解法1:
+
+以一个小例子来解释，strs=['laa', 'lab', 'lac'], 如果存在LCP的话它肯定就在第一个字符串strs[0]中，并且LCP的长度肯定不会大于strs[0]的长度
+
+#. 依次假设LCP长度为0到len(strs[0]),在每一轮循环中:  
+#. a.只要strs中存在比当前长度i更短的string，立刻返回上一轮LCP，即strs[0][:i]
+#. b.只要strs中存在当前index字符与LCP该index不相同的字符串，立刻返回上一轮LCP，即strs[0][:i]
+#. 如果一直没返回，说明strs[0]本身就是LCP，返回它
+
+.. code-block:: python
+
+    class Solution(object):
+        def longestCommonPrefix(self, strs):
+            """
+            :type strs: List[str]
+            :rtype: str
+            """
+            if not strs:
+                return ""
+            for i in range(len(strs[0])):
+                for str in strs:
+                    if len(str) <= i or strs[0][i] != str[i]:
+                        return strs[0][:i]
+            return strs[0]
+
+解法2:
+#. dp[i]代表前i+1个字符串的最大前缀串，
+#. 如果第i+2个字符串不以dp[i]为前缀，就去掉dp[i]的最后一个字符再试一次
+#. 都去完了那么dp[i+1]肯定就是空串了，也就等于这时候的dp[i]，因为dp[i]的每个字符已经被去完了
+
+.. code-block:: python
+    
+    class Solution(object):
+        def longestCommonPrefix(self, strs):
+            """
+            :type strs: List[str]
+            :rtype: str
+            """
+            if not strs:
+                return ''
+            dp = [strs[0]]*len(strs)
+            for i in range(1,len(strs)):
+                while not strs[i].startswith(dp[i-1]):
+                    dp[i-1] = dp[i-1][:-1]
+                dp[i] = dp[i-1]
+            return dp[-1]
+
+
+python无敌啊！！！有没有天理啊，手动滑稽😏😏😏😏！一行解法：
+
+.. code-block:: python
+
+    class Solution(object):
+        def longestCommonPrefix(self, strs):
+            """
+            :type strs: List[str]
+            :rtype: str
+            """
+            return os.path.commonprefix(strs)
+
+
+.. code-block:: javascript
+
     function sharedStart(array){
         var A = array.concat().sort(),  //拿到数组后进行合并排序
         a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;
@@ -48,32 +112,34 @@ Example 2:
     Output: False
 
 
-Note: 
+Note: The input will be a non-empty word consisting of uppercase and lowercase latin letters.
 
 .. hint ::
-    The input will be a non-empty word consisting of uppercase and lowercase latin letters.
+    思路其实非常简单 判断单词的大写小，可以使用正则和一些hack写法
 
 
-https://stackoverflow.com/questions/1027224/how-can-i-test-if-a-letter-in-a-string-is-uppercase-or-lowercase-using-javascrip
+.. code-block :: javascript
 
+    var detectCapitalUse = function(word) {
+        // either all capitals, all small cases, or Capital follow by small cases
+        return /^[A-Z]+$|^[a-z]+$|^[A-Z][a-z]+$/.test(word);
+    };
 
-方法一：
+    function detectCapitalUse(s){
+      let str = /^([A-Z]+)([a-z]*)$/g, str2 = /^([a-z]*)$/g;
+      if(str.test(s)){return true;}
+      if(str2.test(s)){return true;}
+      return false;
+    }
 
-#. 将单词转换为大写得到up，
-#. 将单词转换为小写得到low，
-#. 若word与up或与low相等，则返回true，
-#. 否则去掉word的首字母得到last，
-#. 若last转换为小写后仍与last相等，则返回true，否则返回false。
+    console.log(detectCapitalUse('FlaG'));
+    console.log(detectCapitalUse('USA'));
+    console.log(detectCapitalUse('Google'));
 
+.. code-block:: python
 
-方法二：
-
-#. flag为0表示首字母判断，flag为1表示首字母小写，flag为2表示首字母大写，
-#. flag为1的情况下，若有大写字母出现则返回false，
-#. flag为2的情况下，若有小写字母出现则flag置为3，
-#. 若有大写字母出现则flag置为4，flag为3的情况下，
-#. 若有大写字母出现则返回false，flag为4的情况下，
-#. 若有小写字母出现则返回false。最终返回true。
+    def detectCapitalUse(self, word):
+        return word.isupper() or word.islower() or word.istitle()
 
 
 20. Valid Parentheses

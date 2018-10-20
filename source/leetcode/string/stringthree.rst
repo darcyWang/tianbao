@@ -110,6 +110,52 @@ Have you consider that the string might be empty? This is a good question to ask
 For the purpose of this problem, we define empty string as valid palindrome.
 
 
+
+.. attention::
+
+        判断是否是回文的几种解决方法
+
+
+
+.. code-block:: python
+
+    def isPalindrome(self, head):
+        fast = slow = head
+        # find the mid node
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        # reverse the second half
+        node = None
+        while slow:
+            nxt = slow.next
+            slow.next = node
+            node = slow
+            slow = nxt
+        # compare the first and second half nodes
+        while node: # while node and head:
+            if node.val != head.val:
+                return False
+            node = node.next
+            head = head.next
+        return True
+
+O(n) extra space solution by using deque:
+
+.. code-block:: python
+
+    # O(n) space
+    def isPalindrome(self, head):
+        queue = collections.deque([])
+        cur = head
+        while cur:
+            queue.append(cur)
+            cur = cur.next
+        while len(queue) >= 2:
+            if queue.popleft().val != queue.pop().val:
+                return False
+        return True
+
 468. Validate IP Address
 ------------------------
 
