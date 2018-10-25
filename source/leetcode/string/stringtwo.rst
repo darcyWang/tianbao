@@ -8,6 +8,36 @@
 Write a function to find the longest common prefix string amongst an array of strings.
 
 
+
+
+.. code-block:: python
+
+    def longestCommonPrefix(self, strs):
+        if not strs:
+            return ""
+        return reduce(self.merge, strs)
+        
+    def merge(self, h1, h2):
+        i = 0
+        while i < len(h1) and i < len(h2) and h1[i] == h2[i]:
+            i += 1
+        return h1[:i]   
+        
+        
+    def longestCommonPrefix(self, strs):
+        prefix = ''
+        # * is the unpacking operator, essential here
+        for z in zip(*strs):
+            bag = set(z)
+            if len(bag) == 1:
+                prefix += bag.pop()
+            else:
+                break
+        return prefix
+
+
+
+
 解法1:
 
 以一个小例子来解释，strs=['laa', 'lab', 'lac'], 如果存在LCP的话它肯定就在第一个字符串strs[0]中，并且LCP的长度肯定不会大于strs[0]的长度
