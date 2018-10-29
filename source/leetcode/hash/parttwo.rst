@@ -125,6 +125,123 @@ You may assume pattern contains only lowercase letters, and str contains lowerca
 
 
 
+.. code-block:: python
+
+    def wordPattern(self, pattern, str):
+        s = pattern
+        t = str.split()
+        return map(s.find, s) == map(t.index, t)
+
+    def wordPattern(self, pattern, str):
+        f = lambda s: map({}.setdefault, s, range(len(s)))
+        return f(pattern) == f(str.split())
+        
+    def wordPattern(self, pattern, str):
+        s = pattern
+        t = str.split()
+        return len(set(zip(s, t))) == len(set(s)) == len(set(t)) and len(s) == len(t)   
+        
+    def wordPattern(self, pattern, str):
+        if len(pattern) != len(str.split()):
+            return False
+        d1, d2 = {}, {}
+        for p, r in zip(pattern, str.split()):
+            if p in d1:
+                if d1[p] != r:
+                    return False
+            d1[p] = r
+            if r in d2:
+                if d2[r] != p:
+                    return False
+            d2[r] = p
+        return True 
+
+
+
+4.pattern = "abba", str = "dog dog dog dog" should return false.
+
+因为这个的限制，所以中间加了一个loop用来查询是否这个a对应的已经出现过了。
+
+不过其实也可以用两个dictionary来处理，可以O(n^3) -> O(n^2)
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def wordPattern(self, pattern, str):
+            """
+            :type pattern: str
+            :type str: str
+            :rtype: bool
+            """
+            strList = str.split(' ')
+            if len(pattern) != len(strList):
+                return False
+            lookup = {}
+            for i in range(len(strList)):
+                if pattern[i] not in lookup:
+                    for key in lookup:
+                        if lookup[key] == strList[i]:
+                            return False
+                    lookup[pattern[i]] = strList[i]
+                elif lookup[pattern[i]] != strList[i]:
+                    return False
+                    
+            return True
+
+
+
+另外看到一段非常简短代码，使用了map函数，有待学习
+
+
+思路2
+
+pattern 和 str 只要是同一种模式即可，所以我们可以简单将 pattern 和 str 两两组合，然后判断长度。
+
+比如 pattern = 'aba' str = 'dog cat cat'
+
+将它们两两组合
+sp = set([('a', 'dog'),('b', 'cat') ('a', 'cat')])
+
+sp 的长度为3。
+但是 pattern 和 str 去重后的长度分别为 2。 所以则判断 pattern 和 str 不是同一种模式的，如果是的话那么 sp 的长度也应该是 2 而不是 3。 
+
+不管 pattern 和 str 分别是什么，如果模式相同，那么它们组合后也会有相同的模式，会有相同的去重后的长度。
+
+有没有一种可能全部长度相同但模式不同的呢？
+以上面的为例：
+
+pattern 的模式是 aba 模式。 去重后是 ab 模式。
+str         则是 abb 模式。 去重后是 ab 模式。
+
+它们两两组合后是 abc 模式， a = (a + a) b = (b + b) c = (a + b)。
+如果两两组合后相同，
+那么不管是组合成 
+a = (a + a) b = (b + b) b = (b + b)
+还是
+a = (a + a) b = (b + b) a = (a + a)
+
+都会被去重为 ab 模式。
+
+
+代码：
+.. code-block:: python
+
+    class Solution(object):
+        def wordPattern(self, pattern, string):
+            """
+            :type pattern: str
+            :type str: str
+            :rtype: bool
+            """
+            pattern = list(pattern)
+            string = string.split(' ')
+            if len(pattern) != len(string):
+                return False
+            temp = len(set(zip(pattern, string)))
+            return temp == len(set(pattern)) and temp == len(set(string))
+
+
 266. Palindrome Permutation
 ---------------------------
 
@@ -157,23 +274,6 @@ You may assume the string contains only lowercase alphabets.
 
 Follow up:
 What if the inputs contain unicode characters? How would you adapt your solution to such case?
-
-
-
-219. Contains Duplicate II
---------------------------
-
-
-Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
-
-
-
-
-217. Contains Duplicate
------------------------
-
-
-Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct. 
 
 
 

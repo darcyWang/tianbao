@@ -1,4 +1,4 @@
-题目序号 521、522、28
+题目序号 521、522、28、19
 ============================================================
 
 
@@ -115,3 +115,61 @@ Returns the index of the first occurrence of needle in haystack, or -1 if needle
 
 还没来得及仔细看答案
 https://www.youtube.com/watch?v=GTJr8OvyEVQ
+
+
+
+19. Remove Nth Node From End of List
+-------------------------------------
+
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+::
+    Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+
+Given n will always be valid.
+
+Follow up:
+
+Could you do this in one pass?
+
+
+技巧 dummy head 和双指针。切记最后要返回dummy.next而不是head，因为有这样一种情况，删掉节点后linked list空了，那返回head的话结果显然不同。如： 输入链表为[1], n = 1, 应该返回None而不是[1]
+
+.. code-block:: python
+    
+    class Solution(object):
+        def removeNthFromEnd(self, head, n):
+            """
+            :type head: ListNode
+            :type n: int
+            :rtype: ListNode
+            """
+            dummy = ListNode(-1)
+            dummy.next = head
+            p, q = dummy, dummy
+            
+            for i in range(n):
+                q = q.next
+                
+            while q.next:
+                p = p.next
+                q = q.next
+            
+            p.next = p.next.next
+            return dummy.next
+
+        def removeNthFromEnd(self, head, n):
+            dummy = ListNode(0)
+            dummy.next = head
+            fast = slow = dummy
+            for _ in xrange(n):
+                fast = fast.next
+            while fast and fast.next:
+                fast = fast.next
+                slow = slow.next
+            slow.next = slow.next.next
+            return dummy.next

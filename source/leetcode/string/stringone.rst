@@ -198,7 +198,29 @@ For example,
 Could you do it in-place without allocating extra space?
 
 
+
+.. code-block:: python
+
+    def reverseWords(self, s):
+        s = list(" ".join(s.split()))[::-1]
+        i = 0 
+        while i < len(s):
+            start = i 
+            while i < len(s) and not s[i].isspace():
+                i += 1
+            self.reverse(s, start, i-1)
+            i += 1
+        return "".join(s)
+
+    def reverse(self, s, i, j):
+        while i < j:
+            s[i], s[j] = s[j], s[i]
+            i += 1; j -= 1
+
 Hints:
+
+
+下面的解决办法是分两步走，第一步是把所有的字符串字母
 Two-pass:
 #. 1. reverse all strings:
 "the sky is blue" -> "eulb si yks eht"
@@ -262,25 +284,7 @@ JavaScript答案
     console.log(hello)
 
 
-这个python的写法还是没有搞清楚是怎么一个走法
 
-.. code-block:: python
-
-    def reverseWords(self, s):
-        s = list(" ".join(s.split()))[::-1]
-        i = 0 
-        while i < len(s):
-            start = i 
-            while i < len(s) and not s[i].isspace():
-                i += 1
-            self.reverse(s, start, i-1)
-            i += 1
-        return "".join(s)
-
-    def reverse(self, s, i, j):
-        while i < j:
-            s[i], s[j] = s[j], s[i]
-            i += 1; j -= 1
 
 
 551. Student Attendance Record I

@@ -283,15 +283,59 @@ jQuery.validator.addMethod('validIP', function(value) {
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 For example, given n = 3, a solution set is:
-::
-        [
-          "((()))",
-          "(()())",
-          "(())()",
-          "()(())",
-          "()()()"
-        ]
 
+::
+    [
+      "((()))",
+      "(()())",
+      "(())()",
+      "()(())",
+      "()()()"
+    ]
+
+.. code-block:: python
+
+    def printParenthesis(str, n): 
+        if(n > 0):
+            _printParenthesis(str, 0, n, 0, 0); 
+        return; 
+      
+    def _printParenthesis(str, pos, n, open, close): 
+          
+        if(close == n): 
+            for i in str: 
+                print(i, end = ""); 
+            print(); 
+            return; 
+        else: 
+            if(open > close): 
+                str[pos] = '}'; 
+                _printParenthesis(str, pos + 1, n, open, close + 1); 
+            if(open < n): 
+                str[pos] = '{'; 
+                _printParenthesis(str, pos + 1, n, open + 1, close); 
+      
+    # Driver Code 
+    n = 3; 
+    str = [""] * 2 * n; 
+    printParenthesis(str, n); 
+
+
+
+    class Solution(object):
+        def generateParenthesis(self, n):
+            res = []
+            self.dfs(n, n, "", res)
+            return res
+                
+        def dfs(self, leftRemain, rightRemain, path, res):
+            if leftRemain > rightRemain or leftRemain < 0 or rightRemain < 0:
+                return  # backtracking
+            if leftRemain == 0 and rightRemain == 0:
+                res.append(path)
+                return 
+            self.dfs(leftRemain-1, rightRemain, path+"(", res)
+            self.dfs(leftRemain, rightRemain-1, path+")", res)
 
 生成合法的括号对。
 这里只需要搞清楚“合法(well-formed)”的概念就行了，那就是
@@ -299,34 +343,39 @@ For example, given n = 3, a solution set is:
 2.任一位置之前的右括号数不大于左括号数
 
 有了这样两点，那么要生成括号对总数为n的所有可能性的串。就从空字符串开始，按照上面的第二点限制，逐步添加左右括号即可。
-当拿到合法的串，长度为k，时，要继续添加一个括号，那么就看这个串如果左括号的数目没有达到n，那就可以在此基础上添加一个左括号；
+当拿到合法的串，长度为k时，要继续添加一个括号，那么就看这个串如果左括号的数目没有达到n，那就可以在此基础上添加一个左括号；
 同时，如果串内右括号数目小于左括号数目的话，还可以在k串上添加一个右括号。
 这样遍历了所有长度为k的合法串之后，我们就得到了所有合法的长度为k+1的串。
 当我们生成了所有长度为2n的合法串，就得到了答案。
 
-::
+.. code-block:: python
 
-        class Solution(object):
-            def bfs(self, left, right, depth, n, string, result):
-                if depth == 2 * n:
-                    result.append(string)
-                    return
-                if left < n:
-                    string += '('
-                    self.bfs(left + 1, right, depth + 1, n, string, result)
-                    string = string[:len(string) - 1]
-                if left > right:
-                    string += ')'
-                    self.bfs(left, right + 1, depth + 1, n, string, result)
-                    string = string[:len(string) - 1]
-            def generateParenthesis(self, n):
-                """
-                :type n: int
-                :rtype: List[str]
-                """
-                result = []
-                self.bfs(0, 0, 0, n, '', result)
-                return result
+    class Solution(object):
+        def generateParenthesis(self, n):
+            """
+            :type n: int
+            :rtype: List[str]
+            """
+            result = []
+            self.bfs(0, 0, 0, n, '', result)
+            return result
+        def bfs(self, left, right, depth, n, string, result):
+            if depth == 2 * n:
+                result.append(string)
+                return
+            if left < n:
+                string += '('
+                self.bfs(left + 1, right, depth + 1, n, string, result)
+                string = string[:len(string) - 1]
+            if left > right:
+                string += ')'
+                self.bfs(left, right + 1, depth + 1, n, string, result)
+                string = string[:len(string) - 1]
+
+
+
+
+
 
 647. Palindromic Substrings
 ---------------------------

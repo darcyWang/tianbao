@@ -306,7 +306,7 @@ How to make sure the duplicated files you find are not false positive?
 
 
 
-http://pythoncentral.io/finding-duplicate-files-with-python/
+
 
 
 
