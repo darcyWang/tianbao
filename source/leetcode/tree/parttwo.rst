@@ -1,5 +1,5 @@
-题目序号 538、501、437、404、270、257、235、226、112
-============================================================
+题目序号 538、501、437、404、270、257、235、226
+============================================
 
 
 
@@ -207,25 +207,4 @@ For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another exa
           7     2
          / \   / \
         9   6 3   1
-
-
-
-112. Path Sum
--------------
-
-Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
-For example:
-::
-
-        Given the below binary tree and sum = 22,
-
-                      5
-                     / \
-                    4   8
-                   /   / \
-                  11  13  4
-                 /  \      \
-                7    2      1
-
-        return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 

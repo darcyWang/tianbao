@@ -119,24 +119,24 @@ Given the list [1,[4,[6]]], return 17. (one 1 at depth 3, one 4 at depth 2, and 
 Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.
 
 Example 1:
-
+::
      0          3
 
      |          |
 
      1 --- 2    4
 
-Given n = 5 and edges = [[0, 1], [1, 2], [3, 4]], return 2.
+    Given n = 5 and edges = [[0, 1], [1, 2], [3, 4]], return 2.
 
 Example 2:
-
+::
      0           4
 
      |           |
 
      1 --- 2 --- 3
 
-Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]], return 1.
+    Given n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]], return 1.
 
  Note:
 
@@ -146,6 +146,70 @@ You can assume that no duplicate edges will appear in edges. Since all edges are
 
 这道题让我们求无向图中连通区域的个数，LeetCode中关于图Graph的题屈指可数，解法都有类似的特点，都是要先构建邻接链表Adjacency List来做。这道题的一种解法是利用DFS来做，思路是给每个节点都有个flag标记其是否被访问过，对于一个未访问过的节点，我们将结果自增1，因为这肯定是一个新的连通区域，然后我们通过邻接链表来遍历与其相邻的节点，并将他们都标记成已访问过，遍历完所有的连通节点后我们继续寻找下一个未访问过的节点，以此类推直至所有的节点都被访问过了，那么此时我们也就求出来了连通区域的个数。
 
+
+..code-block:: python
+
+    def connect(self, root):
+        if root and root.left and root.right:
+            root.left.next = root.right
+            if root.next:
+                root.right.next = root.next.left
+            self.connect(root.left)
+            self.connect(root.right)
+        
+    def connect1(self, root):
+        if root and root.left and root.right:
+            root.left.next = root.right
+            if root.next:
+                root.right.next = root.next.left
+            self.connect(root.left)
+            self.connect(root.right)
+     
+    # BFS       
+    def connect2(self, root):
+        if not root:
+            return 
+        queue = [root]
+        while queue:
+            curr = queue.pop(0)
+            if curr.left and curr.right:
+                curr.left.next = curr.right
+                if curr.next:
+                    curr.right.next = curr.next.left
+                queue.append(curr.left)
+                queue.append(curr.right)
+        
+    # DFS 
+    def connect(self, root):
+        if not root:
+            return 
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            if curr.left and curr.right:
+                curr.left.next = curr.right
+                if curr.next:
+                    curr.right.next = curr.next.left
+                stack.append(curr.right)
+                stack.append(curr.left) 
+
+    # BFS with queue
+    def connect(self, root):
+        if not root:
+            return 
+        queue, nextLevel = [root], []   # queue records the previous level
+        while queue:
+            curr = queue.pop(0)
+            if curr.left:
+                nextLevel.append(curr.left)
+            if curr.right:
+                nextLevel.append(curr.right)
+            if queue:
+                curr.next = queue[0]
+            if not queue and nextLevel:
+                queue, nextLevel = nextLevel, queue
+        
+        
 
 261. Graph Valid Tree
 ---------------------

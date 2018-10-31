@@ -1,4 +1,4 @@
-题目序号 210、207、200、199、133、129、117、116、114、113、109、106、105、98
+题目序号 210、207、200、199、133、129、117、116、114、109、106、105、98
 ============================================================================
 
 
@@ -279,28 +279,6 @@ If you notice carefully in the flattened tree, each node's right child points to
 
 
 
-
-113. Path Sum II
-----------------
-
- Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
-For example:
-Given the below binary tree and sum = 22,
-
-              5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \    / \
-        7    2  5   1
-
-return
-
-[
-   [5,4,11,2],
-   [5,8,4,5]
-]
 
 
 
