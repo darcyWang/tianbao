@@ -1,4 +1,4 @@
-题目序号 21、28、19、206
+题目序号 21、28、19、206、215、286
 ============================================================
 
 
@@ -37,6 +37,52 @@ Example:
         else:
             l2.next = self.mergeTwoLists(l1, l2.next)
             return l2
+
+
+        
+    # iteratively
+    def mergeTwoLists1(self, l1, l2):
+        dummy = cur = ListNode(0)
+        while l1 and l2:
+            if l1.val < l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
+        cur.next = l1 or l2
+        return dummy.next
+        
+    # recursively    
+    def mergeTwoLists2(self, l1, l2):
+        if not l1 or not l2:
+            return l1 or l2
+        if l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2
+            
+    # in-place, iteratively        
+    def mergeTwoLists(self, l1, l2):
+        if None in (l1, l2):
+            return l1 or l2
+        dummy = cur = ListNode(0)
+        dummy.next = l1
+        while l1 and l2:
+            if l1.val < l2.val:
+                l1 = l1.next
+            else:
+                nxt = cur.next
+                cur.next = l2
+                tmp = l2.next
+                l2.next = nxt
+                l2 = tmp
+            cur = cur.next
+        cur.next = l1 or l2
+        return dummy.next   
 
 28. Implement strStr()
 ----------------------
@@ -150,3 +196,140 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 
 
 用三个指针，分别指向prev，cur 和 nxt，然后loop一圈还算比较简单.
+
+
+
+215. Kth Largest Element in an Array
+-------------------------------------
+
+
+
+
+Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Example 1:
+::
+    Input: [3,2,1,5,6,4] and k = 2
+    Output: 5
+
+Example 2:
+::
+    Input: [3,2,3,1,2,4,5,5,6] and k = 4
+    Output: 4
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ array's length.
+
+
+.. code-block:: python
+
+    # k+(n-k)*log(k) time
+    def findKthLargest1(self, nums, k):
+        heap = nums[:k]
+        heapq.heapify(heap)  # create a min-heap whose size is k 
+        for num in nums[k:]:
+            if num > heap[0]:
+               heapq.heapreplace(heap, num)
+            # or use:
+            # heapq.heappushpop(heap, num)
+        return heap[0]
+      
+    # O(n) time, quicksort-Partition method   
+    def findKthLargest(self, nums, k):
+        pos = self.partition(nums, 0, len(nums)-1)
+        if pos > len(nums) - k:
+            return self.findKthLargest(nums[:pos], k-(len(nums)-pos))
+        elif pos < len(nums) - k:
+            return self.findKthLargest(nums[pos+1:], k)
+        else:
+            return nums[pos]
+
+
+
+
+
+286. Walls and Gates
+---------------------
+
+You are given a m x n 2D grid initialized with these three possible values.
+
+.. hint::
+
+    -1 - A wall or an obstacle.
+    0 - A gate.
+    INF - Infinity means an empty room. 
+
+We use the value 231 - 1 = 2147483647 to represent INF as you may assume that the distance to a gate is less than 2147483647.
+
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+For example, given the 2D grid:
+
+
+.. hint::
+
+    INF  -1  0  INF
+    INF INF INF  -1
+    INF  -1 INF  -1
+      0  -1 INF INF
+
+
+After running your function, the 2D grid should be:
+
+
+.. hint:: 
+
+    3  -1   0   1
+    2   2   1  -1
+    1  -1   2  -1
+    0  -1   3   4
+
+#. 这里附上了BFS和DFS的解法，但是显然BFS更快。最先找到gate，然后以gate为root进行BFS遍历，叶子节点为四个方向。
+#. 最巧妙地部分是这里定义了static final d，来确定四个方向的位置，即通过用i，j +/- 1的方式来得到[i, j+1],[i+1,j],[i, j-1], [i-1, j]。
+#. 注意在遍历四个方向时不要出界。
+   
+
+.. code-block:: python
+    
+    # BFS
+    def wallsAndGates(self, rooms):
+        if not rooms:
+            return 
+        r, c= len(rooms), len(rooms[0])
+        for i in xrange(r):
+            for j in xrange(c):
+                if rooms[i][j] == 0:
+                    queue = collections.deque([])
+                    queue.append((i+1, j, 1)); queue.append((i-1, j, 1))
+                    queue.append((i, j+1, 1)); queue.append((i, j-1, 1))
+                    visited = set()
+                    while queue:
+                        x, y, val = queue.popleft()
+                        if x < 0 or x >= r or y < 0 or y >= c or rooms[x][y] in [0, -1] or (x, y) in visited:
+                            continue
+                        visited.add((x, y))
+                        rooms[x][y] = min(rooms[x][y], val)
+                        queue.append((x+1, y, val+1)); queue.append((x-1, y, val+1))
+                        queue.append((x, y+1, val+1)); queue.append((x, y-1, val+1))
+
+
+
+
+    After checking this solution, the code above can be shorten by using a better prunning clause, no visited flag is needed:
+
+    def wallsAndGates(self, rooms):
+        if not rooms:
+            return 
+        r, c= len(rooms), len(rooms[0])
+        for i in xrange(r):
+            for j in xrange(c):
+                if rooms[i][j] == 0:
+                    queue = collections.deque([(i+1, j, 1), (i-1, j, 1), (i, j+1, 1), (i, j-1, 1)])
+                    while queue:
+                        x, y, val = queue.popleft()
+                        if x < 0 or x >= r or y < 0 or y >= c or rooms[x][y] <= val:
+                            continue
+                        rooms[x][y] = val
+                        queue.extend([(x+1, y, val+1), (x-1, y, val+1), (x, y+1, val+1), (x, y-1, val+1)])
+
+
+
