@@ -1,4 +1,4 @@
-题目序号 21、28、19
+题目序号 21、28、19、206
 ============================================================
 
 
@@ -105,3 +105,48 @@ Could you do this in one pass?
                 slow = slow.next
             slow.next = slow.next.next
             return dummy.next
+
+
+206. Reverse Linked List
+--------------------------
+
+Reverse a singly linked list.
+
+Example:
+::
+    
+    Input: 1->2->3->4->5->NULL
+    Output: 5->4->3->2->1->NULL
+
+
+Follow up:
+
+A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+
+.. code-block:: python
+
+    # Iteratively
+    def reverseList1(self, head):
+        node = None
+        while head:
+            tmp = head.next
+            head.next = node
+            node = head
+            head = tmp
+        return node
+     
+    # Recursively    
+    def reverseList(self, head):
+        return self.helper(head, None)
+        
+    def helper(self, head, node):
+        if not head:
+            return node
+        tmp = head.next
+        head.next = node
+        return self.helper(tmp, head)
+
+
+
+用三个指针，分别指向prev，cur 和 nxt，然后loop一圈还算比较简单.

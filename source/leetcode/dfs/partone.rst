@@ -1,5 +1,5 @@
-题目序号 690、339、257、112、111、110、108、104、101、100
-============================================================
+题目序号 690、339、257、112、111、110、108、104、101
+=================================================
 
 
 
@@ -158,15 +158,6 @@ But the following [1,2,2,null,3,null,3] is not:
 Note:
 Bonus points if you could solve it both recursively and iteratively. 
 
-
-
-
-100. Same Tree
---------------
-
- Given two binary trees, write a function to check if they are equal or not.
-
-Two binary trees are considered equal if they are structurally identical and the nodes have the same value. 
 
 
 
