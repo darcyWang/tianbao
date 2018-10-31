@@ -240,6 +240,33 @@ For example:
 
 
 .. code-block:: python
+
+    class Solution(object):
+        def zigzagLevelOrder(self, root):
+            """
+            :type root: TreeNode
+            :rtype: List[List[int]]
+            """
+            if not root:
+                return []
+            res, cur_level, level_count = [], [root], 0
+            while cur_level:
+                next_level, tmp_res = [], []
+                for node in cur_level:
+                    tmp_res.append(node.val)
+                    if node.left:
+                        next_level.append(node.left)
+                    if node.right:
+                        next_level.append(node.right)
+                if level_count % 2 == 0:
+                    res.append(tmp_res)  
+                else:
+                    tmp_res.reverse()
+                    res.append(tmp_res)
+                level_count += 1
+                cur_level = next_level
+                
+            return res
     
     We can solve this problem by using BFS with queue. Level information is needed in order to reverse the odd row.
 
