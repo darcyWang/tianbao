@@ -3,10 +3,148 @@
 
 
 
+207. Course Schedule
+--------------------
+
+
+There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+For example:
+
+2, [[1,0]]
+
+There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+
+2, [[1,0],[0,1]]
+
+There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+
+Note:
+::
+    The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
+    You may assume that there are no duplicate edges in the input prerequisites.
+
+pre-requisite问题，只需要判断最终的topological结果长度与courses数目是否相等即可
+
+DFS 和 BFS都可以用来拓扑排序。
+
+.. code-block:: python
+
+    class Solution(object):
+        def canFinish(self, numCourses, prerequisites):
+            """
+            :type numCourses: int
+            :type prerequisites: List[List[int]]
+            :rtype: bool
+            """
+            graph = collections.defaultdict(list)
+            indegrees = [0] * numCourses
+            
+            for course, pre in prerequisites:
+                graph[pre].append(course)
+                indegrees[course] += 1
+                
+            return self.topologicalSort(graph, indegrees) == numCourses
+        
+        
+        def topologicalSort(self, graph, indegrees):
+            count = 0
+            queue = []
+            for i in range(len(indegrees)):
+                if indegrees[i] == 0:
+                    queue.append(i)
+            while queue:
+                course = queue.pop()
+                count += 1
+                for i in graph[course]:
+                    indegrees[i] -= 1
+                    if indegrees[i] == 0:
+                        queue.append(i)
+            return count
+
+.. code-block:: python
+
+    # BFS: from the end to the front
+    def canFinish1(self, numCourses, prerequisites):
+        forward = {i: set() for i in xrange(numCourses)}
+        backward = collections.defaultdict(set)
+        for i, j in prerequisites:
+            forward[i].add(j)
+            backward[j].add(i)
+        queue = collections.deque([node for node in forward if len(forward[node]) == 0])
+        while queue:
+            node = queue.popleft()
+            for neigh in backward[node]:
+                forward[neigh].remove(node)
+                if len(forward[neigh]) == 0:
+                    queue.append(neigh)
+            forward.pop(node)
+        return not forward  # if there is cycle, forward won't be None
+
+    # BFS: from the front to the end    
+    def canFinish2(self, numCourses, prerequisites):
+        forward = {i: set() for i in xrange(numCourses)}
+        backward = collections.defaultdict(set)
+        for i, j in prerequisites:
+            forward[i].add(j)
+            backward[j].add(i)
+        queue = collections.deque([node for node in xrange(numCourses) if not backward[node]])
+        count = 0
+        while queue:
+            node = queue.popleft()
+            count += 1
+            for neigh in forward[node]:
+                backward[neigh].remove(node)
+                if not backward[neigh]:
+                    queue.append(neigh)
+        return count == numCourses
+        
+    # DFS: from the end to the front
+    def canFinish3(self, numCourses, prerequisites):
+        forward = {i: set() for i in xrange(numCourses)}
+        backward = collections.defaultdict(set)
+        for i, j in prerequisites:
+            forward[i].add(j)
+            backward[j].add(i)
+        stack = [node for node in forward if len(forward[node]) == 0]
+        while stack:
+            node = stack.pop()
+            for neigh in backward[node]:
+                forward[neigh].remove(node)
+                if len(forward[neigh]) == 0:
+                    stack.append(neigh)
+            forward.pop(node)
+        return not forward
+            
+    # DFS: from the front to the end    
+    def canFinish(self, numCourses, prerequisites):
+        forward = {i: set() for i in xrange(numCourses)}
+        backward = collections.defaultdict(set)
+        for i, j in prerequisites:
+            forward[i].add(j)
+            backward[j].add(i)
+        stack = [node for node in xrange(numCourses) if not backward[node]]
+        while stack:
+            node = stack.pop()
+            for neigh in forward[node]:
+                backward[neigh].remove(node)
+                if not backward[neigh]:
+                    stack.append(neigh)
+            backward.pop(node)
+        return not backward
+
+
+
 
 210. Course Schedule II
 -----------------------
- There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+
+There are a total of n courses you have to take, labeled from 0 to n - 1.
 
 Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
 
@@ -37,36 +175,47 @@ Hints:
     Topological sort could also be done via BFS.
 
 
-207. Course Schedule
---------------------
+course schedule II 在I的基础上改了3行代码过了
 
- There are a total of n courses you have to take, labeled from 0 to n - 1.
+论代码可重用性的重要程度,beats 97.77%
 
-Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
 
-Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+.. code-block:: python
 
-For example:
-
-2, [[1,0]]
-
-There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
-
-2, [[1,0],[0,1]]
-
-There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
-
-Note:
-
-    The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
-    You may assume that there are no duplicate edges in the input prerequisites.
-
-click to show more hints.
-Hints:
-
-    This problem is equivalent to finding if a cycle exists in a directed graph. If a cycle exists, no topological ordering exists and therefore it will be impossible to take all courses.
-    Topological Sort via DFS - A great video tutorial (21 minutes) on Coursera explaining the basic concepts of Topological Sort.
-    Topological sort could also be done via BFS.
+    class Solution(object):
+        def findOrder(self, numCourses, prerequisites):
+            """
+            :type numCourses: int
+            :type prerequisites: List[List[int]]
+            :rtype: List[int]
+            """
+            graph = collections.defaultdict(list)
+            indegrees = [0] * numCourses
+            
+            for course, pre in prerequisites:
+                graph[pre].append(course)
+                indegrees[course] += 1
+            
+            count, stack = self.topologicalSort(graph, indegrees)
+            return stack if count == numCourses else []
+        
+        
+        def topologicalSort(self, graph, indegrees):
+            count = 0
+            queue = []
+            stack = []
+            for i in range(len(indegrees)):
+                if indegrees[i] == 0:
+                    queue.append(i)
+            while queue:
+                course = queue.pop()
+                stack.append(course)
+                count += 1
+                for i in graph[course]:
+                    indegrees[i] -= 1
+                    if indegrees[i] == 0:
+                        queue.append(i)
+            return (count, stack)
 
 
 200. Number of Islands
@@ -91,9 +240,6 @@ Example 2:
 00011
 
 Answer: 3
-
-Credits:
-Special thanks to @mithmatt for adding this problem and creating all test cases.
 
 
 
