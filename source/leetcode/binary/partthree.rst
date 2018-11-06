@@ -89,9 +89,126 @@ Given target = 3, return true.
 50. Pow(x, n)
 -------------
 
-Implement pow(x, n). 
+Implement pow(x, n), which calculates x raised to the power n (xn).
+
+Example 1:
+::
+    Input: 2.00000, 10
+    Output: 1024.00000
+
+Example 2:
+::
+    Input: 2.10000, 3
+    Output: 9.26100
+
+Example 3:
+::
+    Input: 2.00000, -2
+    Output: 0.25000
+    Explanation: 2-2 = 1/22 = 1/4 = 0.25
+Note:
+
+*. -100.0 < x < 100.0
+*. n is a 32-bit signed integer, within the range [−231, 231 − 1]
 
 
+.. code-block:: python
+        
+    class Solution:
+        myPow = pow
+    That's even shorter than the other more obvious "cheat":
+
+    class Solution:
+        def myPow(self, x, n):
+            return x ** n
+    And to calm down the haters, here's me "doing it myself":
+
+    Recursive:
+
+    class Solution:
+        def myPow(self, x, n):
+            if not n:
+                return 1
+            if n < 0:
+                return 1 / self.myPow(x, -n)
+            if n % 2:
+                return x * self.myPow(x, n-1)
+            return self.myPow(x*x, n/2)
+    Iterative:
+
+    class Solution:
+        def myPow(self, x, n):
+            if n < 0:
+                x = 1 / x
+                n = -n
+            pow = 1
+            while n:
+                if n & 1:
+                    pow *= x
+                x *= x
+                n >>= 1
+            return pow  
+        
+        
+    # I
+    def myPow(self, x, n):
+        if n == 0:
+            return 1
+        if n < 0:
+            return 1.0/self.myPow(x, -n)
+        if n & 1:
+            return self.myPow(x, n/2) ** 2 * x
+        else:
+            return self.myPow(x, n/2) ** 2
+
+    # II
+    def myPow(self, x, n):
+        if n == 0:
+            return 1
+        if n < 0:
+            return 1.0/self.myPow(x, -n)
+        if n & 1:
+            return self.myPow(x*x, n/2) * x
+        else:
+            return self.myPow(x*x, n/2) 
+        
+
+.. code-block:: python
+
+    class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        if n == 0:
+            return 1
+        if n < 0:
+            return 1 / self.myPow(x, -n)
+        if n & 1:  # n 为 奇数
+            return x * self.myPow(x*x, n>>1)
+        else:
+            return self.myPow(x*x, n>>1)
+
+    # iterative
+    class Solution(object):
+        def myPow(self, x, n):
+            """
+            :type x: float
+            :type n: int
+            :rtype: float
+            """
+            if n < 0:
+                x = 1 / x
+                n = -n
+            res = 1
+            while n:
+                if n & 1:
+                    res *= x
+                x *= x
+                n >>= 1
+            return res
 
 
 34. Search for a Range

@@ -163,6 +163,67 @@ Here are few examples.
 
 
 
+.. code-block:: python
+
+        
+    # O(n) time 
+    def searchInsert1(self, nums, target):
+        i = 0
+        while i < len(nums):
+            while i < len(nums) and nums[i] < target:
+                i += 1
+            return i
+
+    # O(lgn) time         
+    def searchInsert(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            if l == r:
+                if target <= nums[l]:
+                    return l
+                else:
+                    return l+1
+            mid = (l+r) >> 1
+            if nums[mid] > target:
+                r = mid 
+            elif nums[mid] < target:
+                l = mid + 1 
+            else:
+                return mid  
+        
+        
+    A shorter version and a recursive version just for reference:
+
+    # O(lgn) time         
+    def searchInsert3(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            mid = (l+r) >> 1
+            if nums[mid] >= target:
+                r = mid - 1
+            elif nums[mid] < target:
+                l = mid + 1 
+        return l
+        
+    # O(lgn) time, recursively
+    def searchInsert(self, nums, target):
+        return self.helper(nums, 0, len(nums)-1, target)
+        
+    def helper(self, nums, l, r, target):
+        if l == r:
+            if nums[l] >= target:
+                return l
+            else:
+                return l+1
+        mid = l + (r-l)//2
+        if nums[mid] > target:
+            return self.helper(nums, l, mid, target)
+        elif nums[mid] < target:
+            return self.helper(nums, mid+1, r, target)
+        else:
+            return mid  
+        
+
 658. Find K Closest Elements
 ----------------------------
 
