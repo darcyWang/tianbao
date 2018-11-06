@@ -252,7 +252,40 @@ For example:
     A = [3,2,1,0,4], return false. 
 
 
+.. code-block:: python
 
+    # DP (like Word Break I) LTE
+    def canJump1(self, nums):
+        dp = [True] * len(nums)
+        for i in xrange(1, len(nums)):
+            for j in xrange(i):
+                dp[i] = dp[j] and nums[j] >= i-j
+        return dp[-1]
+      
+    def canJump2(self, nums):
+        maxReach = 0
+        for i in xrange(len(nums)):
+            if i > maxReach:
+                return False
+            maxReach = max(maxReach, i+nums[i])
+        return True
+        
+    def canJump3(self, nums):
+        remain = 0
+        for i in xrange(len(nums)):
+            remain = max(remain-1, nums[i])
+            if remain == 0 and i < len(nums)-1:
+                return False
+        return True
+        
+    def canJump(self, nums):
+        maxReach = 0
+        i = 0
+        while i < len(nums) and i <= maxReach:
+            maxReach = max(maxReach, i+nums[i])
+            i += 1
+        return i == len(nums)
+        
 
 
 54. Spiral Matrix 

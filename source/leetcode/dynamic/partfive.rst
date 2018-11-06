@@ -2,6 +2,15 @@
 =====================================================================
 
 
+198. House Robber 
+-----------------
+
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+
+
 
 
 
@@ -14,28 +23,101 @@ After robbing those houses on that street, the thief has found himself a new pla
 
 Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
 
-Credits:
-Special thanks to @Freezen for adding this problem and creating all test cases.
+
+337. House Robber III
+---------------------
+
+
+The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the "root." Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that "all houses in this place forms a binary tree". It will automatically contact the police if two directly-linked houses were broken into on the same night.
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+
+Example 1:
+::
+         3
+        / \
+       2   3
+        \   \ 
+         3   1
+
+    Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.
+
+Example 2:
+::
+         3
+        / \
+       4   5
+      / \   \ 
+     1   3   1
+
+    Maximum amount of money the thief can rob = 4 + 5 = 9. 
+
 
 
 152. Maximum Product Subarray 
 -----------------------------
 
 
- Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+Find the contiguous subarray within an array (containing at least one number) which has the largest product.
 
 For example, given the array [2,3,-2,4],
 the contiguous subarray [2,3] has the largest product = 6. 
 
 
-https://aaronice.gitbooks.io/lintcode/content/dynamic_programming/maximum_product_subarray.html
+.. code-block:: python
 
+    # O(2*n) space
+    def maxProduct1(self, nums):
+        if not nums:
+            return 
+        locMin = [0] * len(nums)
+        locMax = [0] * len(nums)
+        locMin[0] = locMax[0] = gloMax = nums[0]
+        for i in xrange(1, len(nums)):
+            if nums[i] < 0:
+                locMax[i] = max(locMin[i-1]*nums[i], nums[i])
+                locMin[i] = min(locMax[i-1]*nums[i], nums[i])
+            else:
+                locMax[i] = max(locMax[i-1]*nums[i], nums[i])
+                locMin[i] = min(locMin[i-1]*nums[i], nums[i])
+            gloMax = max(gloMax, locMax[i])
+        return gloMax
+
+    # O(1) space    
+    def maxProduct2(self, nums):
+        if not nums:
+            return 
+        locMin = locMax = gloMax = nums[0]
+        for i in xrange(1, len(nums)):
+            if nums[i] < 0:
+                tmp = locMax
+                locMax = max(locMin*nums[i], nums[i])
+                locMin = min(tmp*nums[i], nums[i])
+            else:
+                locMax = max(locMax*nums[i], nums[i])
+                locMin = min(locMin*nums[i], nums[i])
+            gloMax = max(gloMax, locMax)
+        return gloMax
+     
+    # O(1) space    
+    def maxProduct(self, nums):
+        if not nums:
+            return 
+        locMin = locMax = gloMax = nums[0]
+        for i in xrange(1, len(nums)):
+            tmp = locMin
+            locMin = min(locMin*nums[i], nums[i], locMax*nums[i])
+            locMax = max(tmp*nums[i], nums[i], locMax*nums[i])
+            gloMax = max(gloMax, locMax)
+        return gloMax
+        
 
 
 139. Word Break 
 ---------------
 
- Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words. You may assume the dictionary does not contain duplicate words.
+
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words. You may assume the dictionary does not contain duplicate words.
 
 For example, given
 s = "leetcode",
