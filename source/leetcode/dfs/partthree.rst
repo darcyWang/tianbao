@@ -235,6 +235,94 @@ Note: you can assume that no duplicate edges will appear in edges. Since all edg
 
 
 
+.. code-block:: python
+
+    def validTree(self, n, edges):
+        dic = {i: set() for i in xrange(n)}
+        for i, j in edges:
+            dic[i].add(j)
+            dic[j].add(i)
+        visited = set()
+        queue = collections.deque([dic.keys()[0]])
+        while queue:
+            node = queue.popleft()
+            if node in visited:
+                return False
+            visited.add(node)
+            for neighbour in dic[node]:
+                queue.append(neighbour)
+                dic[neighbour].remove(node)
+            dic.pop(node)
+        return not dic
+
+
+    class Solution:
+    # @param {integer} n
+    # @param {integer[][]} edges
+    # @return {boolean}
+    def validTree(self, n, edges):
+        graph = {i:set() for i in xrange(n)}
+        for p, q in edges:
+            graph[p].add(q)
+            graph[q].add(p)
+        while len(graph) > 0:
+            leaves = list()
+            for node, neighbors in graph.iteritems():
+                if len(neighbors) <= 1:
+                    leaves.append(node)
+            if len(leaves) == 0:
+                return False # a cycle exists
+            for n in leaves:
+                if len(graph[n]) == 0:
+                    # must be one connected component
+                    return len(graph) == 1 
+                nei = graph[n].pop()
+                graph[nei].remove(n)
+                del graph[n]
+        return True
+
+
+    def validTree(self, n, edges):
+        dic = {i: set() for i in xrange(n)}
+        for i, j in edges:
+            dic[i].add(j)
+            dic[j].add(i)
+        stack = [dic.keys()[0]]
+        visited = set()
+        while stack:
+            node = stack.pop()
+            if node in visited:
+                return False
+            visited.add(node)
+            for neighbour in dic[node]:
+                stack.append(neighbour)
+                dic[neighbour].remove(node)
+            dic.pop(node)
+        return not dic
+
+
+    def validTree(self, n, edges):
+        nums = [-1] * n
+        for edge in edges:
+            if not self.union(nums, edge[0], edge[1]):
+                return False
+        return len(edges) == n-1
+
+    def union(self, nums, x, y):
+        xx = self.find(nums, x)
+        yy = self.find(nums, y)
+        if xx == yy:  # cycle detected 
+            return False
+        nums[xx] = yy
+        return True
+        
+    def find(self, nums, i):
+        if nums[i] == -1:
+            return i
+        return self.find(nums, nums[i])
+
+
+
 
 473. Matchsticks to Square
 --------------------------
