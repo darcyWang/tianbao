@@ -1,4 +1,4 @@
-题目序号 210、207、200、199、133、129、117、116、114、109、106、105、98
+题目序号 210、207、200、199、133、129、117、116、114、109、106、105
 ============================================================================
 
 
@@ -566,34 +566,6 @@ Note:
 You may assume that duplicates do not exist in the tree. 
 
 
-
-98. Validate Binary Search Tree
--------------------------------
-
-
- Given a binary tree, determine if it is a valid binary search tree (BST).
-
-Assume a BST is defined as follows:
-
-    The left subtree of a node contains only nodes with keys less than the node's key.
-    The right subtree of a node contains only nodes with keys greater than the node's key.
-    Both the left and right subtrees must also be binary search trees.
-
-Example 1:
-
-    2
-   / \
-  1   3
-
-Binary tree [2,1,3], return true.
-
-Example 2:
-
-    1
-   / \
-  2   3
-
-Binary tree [1,2,3], return false. 
 
 
 

@@ -425,7 +425,7 @@ Length of the given string and k will in the range [1, 10000]
     };
 
 
-.. code-lock:: python
+.. code-block:: python
     
     class Solution(object):
         def reverseStr(self, s, k):
