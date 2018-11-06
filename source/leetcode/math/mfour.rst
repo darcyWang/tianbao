@@ -11,6 +11,33 @@ Given an array of integers, every element appears twice except for one. Find tha
 Note:
 Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory? 
 
+
+
+.. code-block:: python
+
+    def singleNumber1(self, nums):
+        dic = {}
+        for num in nums:
+            dic[num] = dic.get(num, 0)+1
+        for key, val in dic.items():
+            if val == 1:
+                return key
+
+    def singleNumber2(self, nums):
+        res = 0
+        for num in nums:
+            res ^= num
+        return res
+        
+    def singleNumber3(self, nums):
+        return 2*sum(set(nums))-sum(nums)
+        
+    def singleNumber4(self, nums):
+        return reduce(lambda x, y: x ^ y, nums)
+        
+    def singleNumber(self, nums):
+        return reduce(operator.xor, nums)   
+
 给定一个整数数组，除一个元素只出现一次外，其余各元素均出现两次。找出那个只出现一次的元素。
 
 对数组元素执行异或运算，最终结果即为所求。

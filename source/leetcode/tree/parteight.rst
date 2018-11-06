@@ -2,9 +2,6 @@
 ==============================================================
 
 
-
-
-
 102. Binary Tree Level Order Traversal
 --------------------------------------
 
@@ -60,6 +57,79 @@ Example 2:
 
 .. code-block:: python
 
+    # recursively
+    def isValidBST1(self, root):
+        Min, Max = -(1<<31)-1, (1<<31)
+        return self.helper(root, Min, Max)
+        
+    def helper(self, root, Min, Max):
+        if not root: # root is None
+            return True
+        if not root.left and not root.right: # root has no leaf
+            if Min < root.val < Max:
+                return True
+            else:
+                return False
+        if not root.left and root.right: # root only has right leaf
+            return root.val < root.right.val and self.helper(root.right, root.val, Max)
+        elif root.left and not root.right: # root only has left leaf
+            return root.val > root.left.val and self.helper(root.left, Min, root.val)
+        else: # root has both left and right leaves
+            return root.left.val < root.val < root.right.val and self.helper(root.left, Min, root.val) and self.helper(root.right, root.val, Max)
+
+    # iteratively, in-order traversal
+    # O(n) time and O(n)+O(lgn) space
+    def isValidBST(self, root):
+        stack, res = [], []
+        while True:
+            while root:
+                stack.append(root)
+                root = root.left
+            # if root is None or all the nodes have 
+            # been traversed and have no confliction 
+            if not stack:
+                return True
+            node = stack.pop()
+            # res stores the current values in in-order 
+            # traversal order, node.val should larger than
+            # the last element in res
+            if res and node.val <= res[-1]:
+                return False
+            res.append(node.val)
+            root = node.right
+
+
+
+    A recursive version of the in-order traversal solution, one pass:
+
+    def isValidBST(self, root):
+        res, self.flag = [], True
+        self.helper(root, res)
+        return self.flag
+        
+    def helper(self, root, res):
+        if root:
+            self.helper(root.left, res)
+            if res and root.val <= res[-1]:
+                self.flag = False
+                return
+            res.append(root.val)
+            self.helper(root.right, res)
+    A shorter recursive solution:
+
+    def isValidBST(self, root):
+        return self.helper(root, float("-inf"), float("inf"))
+        
+    def helper(self, root, low, high):
+        if not root:
+            return True
+        if not root.left and not root.right:
+            return low < root.val < high
+        return low < root.val < high and self.helper(root.left, low, root.val) and self.helper(root.right, root.val, high)
+
+
+
+.. code-block:: python
         
     # recursively
     def isValidBST1(self, root):
