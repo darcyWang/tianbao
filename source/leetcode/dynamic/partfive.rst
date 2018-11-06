@@ -12,7 +12,85 @@ Given a list of non-negative integers representing the amount of money of each h
 
 
 
+.. code-block:: python
 
+    # O(n) space
+    def rob1(self, nums):
+        if not nums:
+            return 0
+        if len(nums) <= 2:
+            return max(nums)
+        res = [0] * len(nums)
+        res[0], res[1] = nums[0], max(nums[0], nums[1])
+        for i in xrange(2, len(nums)):
+            res[i] = max(nums[i]+res[i-2], res[i-1])
+        return res[-1]
+
+    def rob2(self, nums):
+        if not nums:
+            return 0
+        res = [0] * len(nums)
+        for i in xrange(len(nums)):
+            if i == 0:
+                res[0] = nums[0]
+            elif i == 1:
+                res[1] = max(nums[0], nums[1])
+            else:
+                res[i] = max(nums[i]+res[i-2], res[i-1])
+        return res[-1]
+      
+    # Constant space  
+    def rob(self, nums):
+        if not nums:
+            return 0
+        if len(nums) <= 2:
+            return max(nums)
+        a, b = nums[0], max(nums[0], nums[1])
+        for i in xrange(2, len(nums)):
+            tmp = b
+            b = max(nums[i]+a, b)
+            a = tmp
+        return b
+
+
+.. code-block:: python
+
+    def rob(self, nums):
+        if len(nums) == 1:
+            return nums[0]
+        return max(self.helper(nums[:-1]), self.helper(nums[1:]))
+        
+    def helper(self, nums):
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0:2])
+        for i in xrange(2, len(nums)):
+            dp[i] = max(dp[i-1], nums[i]+dp[i-2])
+        return dp[-1]
+        
+
+    A version which uses less momery:
+
+    def rob(self, nums):
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        return max(self.helper(nums[:-1]), self.helper(nums[1:]))
+        
+    def helper(self, nums):
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        a, b = nums[0], max(nums[:2])
+        for i in xrange(2, len(nums)):
+            a, b = b, max(b, a+nums[i])
+        return b
 
 213. House Robber II
 --------------------
@@ -22,6 +100,59 @@ Note: This is an extension of House Robber.
 After robbing those houses on that street, the thief has found himself a new place for his thievery so that he will not get too much attention. This time, all houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, the security system for these houses remain the same as for those in the previous street.
 
 Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+
+
+.. code-block:: python
+    
+    # O(n) space
+    def rob1(self, nums):
+        if not nums:
+            return 0
+        if len(nums) <= 2:
+            return max(nums)
+        res = [0] * len(nums)
+        res[0], res[1] = nums[0], max(nums[0], nums[1])
+        for i in xrange(2, len(nums)):
+            res[i] = max(nums[i]+res[i-2], res[i-1])
+        return res[-1]
+
+    def rob2(self, nums):
+        if not nums:
+            return 0
+        res = [0] * len(nums)
+        for i in xrange(len(nums)):
+            if i == 0:
+                res[0] = nums[0]
+            elif i == 1:
+                res[1] = max(nums[0], nums[1])
+            else:
+                res[i] = max(nums[i]+res[i-2], res[i-1])
+        return res[-1]
+      
+    # Constant space  
+    def rob(self, nums):
+        if not nums:
+            return 0
+        if len(nums) <= 2:
+            return max(nums)
+        a, b = nums[0], max(nums[0], nums[1])
+        for i in xrange(2, len(nums)):
+            tmp = b
+            b = max(nums[i]+a, b)
+            a = tmp
+        return b
+
+    def rob(self, nums):
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        cur = nums[0]
+        pre = max(nums[:2])
+        for i in xrange(2, len(nums)):
+            cur = max(cur+nums[i], pre)
+            cur, pre = pre, cur
+        return pre
 
 
 337. House Robber III
