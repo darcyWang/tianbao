@@ -72,17 +72,78 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
 
 Example:
+:: 
+    Input: "babad"
 
-Input: "babad"
+    Output: "bab"
 
-Output: "bab"
+    Note: "aba" is also a valid answer.
 
-Note: "aba" is also a valid answer.
 Example:
+::
+    Input: "cbbd"
 
-Input: "cbbd"
+    Output: "bb"
 
-Output: "bb"
+
+.. code-block:: python
+
+        
+    def longestPalindrome(self, s):
+        res = ""
+        for i in xrange(len(s)):
+            # odd case, like "aba"
+            tmp = self.helper(s, i, i)
+            if len(tmp) > len(res):
+                res = tmp
+            # even case, like "abba"
+            tmp = self.helper(s, i, i+1)
+            if len(tmp) > len(res):
+                res = tmp
+        return res
+     
+    # get the longest palindrome, l, r are the middle indexes   
+    # from inner to outer
+    def helper(self, s, l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1; r += 1
+        return s[l+1:r] 
+        
+        
+        
+    Actually this method is very slow, but easy to understand. The main part can be rewriten as:
+
+    def longestPalindrome(self, s):
+        res = ""
+        for i in xrange(len(s)):
+            for k in xrange(2):
+                tmp = self.helper(s, i, i+k)
+                if len(tmp) > len(res):
+                    res = tmp
+        return res  
+        
+        
+        
+    class Solution(object):
+        def longestPalindrome(self, s):
+            """
+            :type s: str
+            :rtype: str
+            """
+
+            res = ""
+            for i in range(len(s)):
+                res = max(self.helper(s,i,i), self.helper(s,i,i+1), res, key=len)
+
+            return res
+           
+            
+        def helper(self,s,l,r):
+            
+            while 0<=l and r < len(s) and s[l]==s[r]:
+                    l-=1; r+=1
+            return s[l+1:r] 
+        
 
 
 17. Letter Combinations of a Phone Number 

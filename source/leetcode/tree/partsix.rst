@@ -1,9 +1,5 @@
-题目序号 366、298、285、255、250、156、236、230、222、199
+题目序号 366、298、285、255、250、156、236、199
 ============================================================
-
-
-
-
 
 
 
@@ -181,34 +177,6 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
          7   4
 
 For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
-
-
-
-
-230. Kth Smallest Element in a BST
-----------------------------------
-
-
-
-Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
-
-Note:
-You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
-
-Follow up:
-What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
-
-
-
-
-222. Count Complete Tree Nodes
-------------------------------
-
-Given a complete binary tree, count the number of nodes.
-
-Definition of a complete binary tree from Wikipedia:
-In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
-
 
 
 

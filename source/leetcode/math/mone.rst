@@ -208,6 +208,74 @@ Input is guaranteed to be within the range from 1 to 3999.
 
 .. code-block:: python
 
+                
+    def romanToInt1(self, s):
+        dic = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M":1000}
+        res = dic[s[-1]]
+        for i in xrange(len(s)-1):
+            if dic[s[i]] < dic[s[i+1]]:
+                res -= dic[s[i]]
+            else:
+                res += dic[s[i]]
+        return res
+
+    def romanToInt(self, s):
+        dic = [0]*256
+        dic[ord("I")] = 1; dic[ord("V")] = 5; dic[ord("X")] = 10; dic[ord("L")] = 50;
+        dic[ord("C")] = 100; dic[ord("D")] = 500; dic[ord("M")] = 1000;
+        res = dic[ord(s[-1])]
+        for i, ch in enumerate(s[:-1:]):
+            if dic[ord(ch)] < dic[ord(s[i+1])]:
+                res -= dic[ord(ch)]
+            else:
+                res += dic[ord(ch)]
+        return res          
+                
+
+    def romanToInt(self, s):
+        roman = ["I", "V", "X", "L", "C", "D", "M"] # or roman = "IVXLCDM"
+        integer = [1, 5, 10, 50, 100, 500, 1000]
+        res = integer[roman.index(s[-1])]
+        for i in xrange(len(s)-1):
+            if integer[roman.index(s[i])] < integer[roman.index(s[i+1])]:
+                res -= integer[roman.index(s[i])]
+            else:
+                res += integer[roman.index(s[i])]
+        return res          
+                
+                
+    def intToRoman1(self, num):
+        values = [ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ]
+        numerals = [ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" ]
+        res, i = "", 0
+        while num:
+            res += (num//values[i]) * numerals[i]
+            num %= values[i]
+            i += 1
+        return res
+        
+    def intToRoman(self, num):
+        values = [ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ]
+        numerals = [ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" ]
+        res = ""
+        for i, v in enumerate(values):
+            res += (num//v) * numerals[i]
+            num %= v
+        return res          
+                    
+    def intToRoman(self, num):
+        values = [ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ]
+        numerals = [ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" ]
+        res = ""
+        for i, v in zip(numerals, values):
+            res += (num // v) * i
+            num %= v
+        return res      
+
+
+
+.. code-block:: python
+
     class Solution(object):
         def intToRoman(self, num):
             """

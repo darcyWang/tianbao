@@ -1,4 +1,4 @@
-题目序号 314、311、288、249、244、187、166、138、94、49、36、18、3
+题目序号 314、311、288、249、244、187、166、138、49、36、18、3
 ===================================================================
 
 
@@ -203,28 +203,6 @@ For example,
 A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
 
 Return a deep copy of the list. 
-
-
-94. Binary Tree Inorder Traversal
----------------------------------
-
-
-Given a binary tree, return the inorder traversal of its nodes' values.
-
-For example:
-::
-    Given binary tree [1,null,2,3],
-
-       1
-        \
-         2
-        /
-       3
-
-    return [1,3,2].
-
-Note: Recursive solution is trivial, could you do it iteratively?
-
 
 
 49. Group Anagrams

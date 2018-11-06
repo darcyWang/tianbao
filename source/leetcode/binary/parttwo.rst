@@ -75,29 +75,6 @@ Special thanks to @pbrother for adding this problem and creating all test cases.
 
 
 
-378. Kth Smallest Element in a Sorted Matrix
---------------------------------------------
-
-Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
-
-Note that it is the kth smallest element in the sorted order, not the kth distinct element.
-
-Example:
-
-matrix = [
-   [ 1,  5,  9],
-   [10, 11, 13],
-   [12, 13, 15]
-],
-k = 8,
-
-return 13.
-
-Note:
-You may assume k is always valid, 1 ≤ k ≤ n2.
-
-
-
 300. Longest Increasing Subsequence
 -----------------------------------
 
@@ -181,6 +158,118 @@ What if the BST is modified (insert/delete operations) often and you need to fin
 
 Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
+
+
+.. code-block:: python
+
+    def kthSmallest(self, root, k):
+        # stack records the node whether visited or not
+        stack = [(root, False)]
+        while stack:
+            curr, visited = stack.pop()
+            if curr:
+                if visited:
+                    # if visited is True, it means a "small" node is found
+                    k -= 1
+                    # if k == 0, it means k small nodes has been checked,
+                    # the current node is the kth one
+                    if k == 0:
+                        return curr.val
+                else:
+                    # Add from right to left
+                    stack.append((curr.right, False))
+                    stack.append((curr, True))
+                    stack.append((curr.left, False))    
+        
+    Easier idea based on inorder traversal:
+
+    # Recursively
+    def kthSmallest1(self, root, k):
+        res = []
+        self.inorder(root, res)
+        return res[k-1]
+        
+    def inorder(self, root, res):
+        if root:
+            self.inorder(root.left, res)
+            res.append(root.val)
+            self.inorder(root.right, res)
+     
+    # Iteratively         
+    def kthSmallest(self, root, k):
+        res, stack = [], []
+        while True:
+            while root:
+                stack.append(root)
+                root = root.left
+            if not stack:
+                return res[k-1]
+            node = stack.pop()
+            res.append(node.val)
+            root = node.right   
+        
+        
+    # averaged time complexity: log(n) + k
+    def kthSmallest(self, root, k):
+        self.k = k
+        self.res = 0
+        self.helper(root)
+        return self.res
+        
+    def helper(self, root):
+        if root:
+            self.helper(root.left)
+            self.k -= 1
+            if self.k == 0:
+                self.res = root.val
+                return 
+            self.helper(root.right) 
+        
+        
+    Here is an iterative version with comments:
+
+    # log(n) + k
+    def kthSmallest(self, root, k):
+        stack = []
+        while True:
+            while root:
+                stack.append(root)
+                root = root.left
+            if not stack:
+                return 
+            # the order of pop is the same as
+            # BST order, so the first time will 
+            # pop the smallest element, and so on, 
+            # we track this pop operation, after k 
+            # times, we get the answer
+            node = stack.pop()
+            k -= 1
+            if k == 0:
+                return node.val
+            root = node.right   
+        
+        
+
+378. Kth Smallest Element in a Sorted Matrix
+--------------------------------------------
+
+Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
+
+Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+
+Example:
+::
+    matrix = [
+       [ 1,  5,  9],
+       [10, 11, 13],
+       [12, 13, 15]
+    ],
+    k = 8,
+
+    return 13.
+
+Note:
+You may assume k is always valid, 1 ≤ k ≤ n2.
 
 
 
