@@ -287,3 +287,70 @@ You may assume that all words are consist of lowercase letters a-z.
                 if not node:
                     return 
                 self.dfs(node, word[1:])
+
+
+
+24. Swap Nodes in Pairs
+-----------------------
+
+Given a linked list, swap every two adjacent nodes and return its head.
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+Note:
+
+Your algorithm should use only constant extra space.
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+
+.. code-block:: python
+
+    # Iteratively
+    def swapPairs1(self, head):
+        dummy = p = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            tmp = head.next
+            head.next = tmp.next
+            tmp.next = head
+            p.next = tmp
+            head = head.next
+            p = tmp.next
+        return dummy.next
+     
+    # Recursively    
+    def swapPairs(self, head):
+        if head and head.next:
+            tmp = head.next
+            head.next = self.swapPairs(tmp.next)
+            tmp.next = head
+            return tmp
+        return head 
+        
+    # iteratively
+    def swapPairs1(self, head):
+        if not head or not head.next:
+            return head
+        second = head.next 
+        pre = ListNode(0)
+        while head and head.next:
+            nxt = head.next
+            head.next = nxt.next
+            nxt.next = head
+            pre.next = nxt
+            head = head.next
+            pre = nxt.next
+        return second
+
+    # recursively    
+    def swapPairs(self, head):
+        if not head or not head.next:
+            return head
+        second = head.next
+        head.next = self.swapPairs(second.next)
+        second.next = head
+        return second   
+
+

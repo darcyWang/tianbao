@@ -16,7 +16,7 @@ Rules for a valid pattern:
     The order of keys used matters.
 
 Explanation:
-	
+  
 
 | 1 | 2 | 3 |
 | 4 | 5 | 6 |
@@ -183,7 +183,7 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 264. Ugly Number II 
 -------------------
 
- Write a program to find the n-th ugly number.
+Write a program to find the n-th ugly number.
 
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.
 
@@ -193,22 +193,57 @@ Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
 
 
+.. code-block:: python
 
+    # dynamic programming
+    def nthUglyNumber(self, n):
+        ugly = [0] * n
+        nxt = ugly[0] = 1
+        i2 = i3 = i5 = 0
+        nxt2, nxt3, nxt5 = ugly[i2]*2, ugly[i3]*3, ugly[i5]*5
+        for i in xrange(1, n):
+            nxt = min(nxt2, nxt3, nxt5)
+            ugly[i] = nxt
+            if nxt == nxt2:
+                i2 += 1
+                nxt2 = ugly[i2]*2
+            if nxt == nxt3:
+                i3 += 1
+                nxt3 = ugly[i3]*3
+            if nxt == nxt5:
+                i5 += 1
+                nxt5 = ugly[i5]*5
+        return nxt # ugly[-1]
+
+
+     def nthUglyNumber(self, n):
+        if n <= 0:
+            return 0
+        ugly = [1] * n
+        i2 = i3 = i5 = 0
+        for i in xrange(1, n):
+            ugly[i] = min(ugly[i2]*2, ugly[i3]*3, ugly[i5]*5)
+            if ugly[i] == ugly[i2]*2:
+                i2 += 1
+            if ugly[i] == ugly[i3]*3:
+                i3 += 1
+            if ugly[i] == ugly[i5]*5:
+                i5 += 1
+        return ugly[-1]
 
 221. Maximal Square 
 -------------------
 
-
- Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
 
 For example, given the following matrix:
+::
+    1 0 1 0 0
+    1 0 1 1 1
+    1 1 1 1 1
+    1 0 0 1 0
 
-1 0 1 0 0
-1 0 1 1 1
-1 1 1 1 1
-1 0 0 1 0
-
-Return 4.
+    Return 4.
 
 Credits:
 Special thanks to @Freezen for adding this problem and creating all test cases.

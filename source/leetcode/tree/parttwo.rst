@@ -107,9 +107,11 @@ Example:
 -------------------------------------
 
 Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
+
 Note:
 Given target value is a floating point.
 You are guaranteed to have only one unique value in the BST that is closest to the target.
+
 Tags: Tree Binary Search
 Similar Problems: (M) Count Complete Tree Nodes, (H) Closest Binary Search Tree Value II
 
@@ -127,6 +129,49 @@ Similar Problems: (M) Count Complete Tree Nodes, (H) Closest Binary Search Tree 
 
 思路
 记录一个最近的值，然后沿着二叉搜索的路径一路比较下去，并更新这个最近值就行了。因为我们知道离目标数最接近的数肯定在二叉搜索的路径上。
+
+
+.. code-block:: python
+
+    # works for normal binary tree
+    def closestValue1(self, root, target):
+        if not root:
+            return 0
+        self.res = root.val
+        self.findClosest(root, target)
+        return self.res
+        
+    def findClosest(self, root, target):
+        if root:
+            if abs(root.val-target) == 0:
+                self.res = root.val
+                return  # backtracking 
+            if abs(root.val-target) < abs(self.res - target):
+                self.res = root.val
+            self.findClosest(root.left, target)
+            self.findClosest(root.right, target)
+
+    # works for normal binary tree    
+    def closestValue2(self, root, target):
+        if not root:
+            return sys.maxint
+        if not root.left and not root.right:
+            return root.val
+        l = self.closestValue(root.left, target)
+        r = self.closestValue(root.right, target)
+        return min([root.val, l, r], key=lambda x:abs(x-target))
+
+    # works for binary search tree
+    def closestValue(self, root, target):
+        if not root:
+            return sys.maxint
+        if not root.left and not root.right:
+            return root.val
+        node = root.right if target > root.val else root.left
+        if not node:
+            return root.val
+        tmp = self.closestValue(node, target)
+        return min((tmp, root.val), key=lambda x:abs(x-target))
 
 
 Closest Binary Search Tree Value II

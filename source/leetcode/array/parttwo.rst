@@ -1,4 +1,4 @@
-题目序号 532、643、644、605、624、66、1、167、448
+题目序号 532、643、644、605、66、1、167、448
 ============================================================
 
 
@@ -193,6 +193,9 @@ Note:
     #. Each given array will have at least 1 number. There will be at least two non-empty arrays.
     #. The total number of the integers in all the m arrays will be in the range of [2, 10000].
     #. The integers in the m arrays will be in the range of [-10000, 10000].
+
+
+
 
 .. caution ::
     对于这道题目，我想的是把数组里面的子数组都合并成一个数组，然后对合并后的数组进行排序，最后两个值相减就得到最大距离了
