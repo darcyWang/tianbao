@@ -95,6 +95,27 @@ Returns the index of the first occurrence of needle in haystack, or -1 if needle
 https://www.youtube.com/watch?v=GTJr8OvyEVQ
 
 
+.. code-block:: python
+    
+    # brutal force O(mn)
+    def strStr1(self, haystack, needle):
+        l1, l2 = len(haystack), len(needle)
+        for i in xrange(l1 - l2 + 1):
+            if needle == haystack[i:i+l2]:
+                return i
+        return -1
+        
+    # brutal force O(mn)
+    def strStr(self, haystack, needle):
+        l1, l2 = len(haystack), len(needle)
+        for i in xrange(l1 - l2 + 1):
+            j = 0
+            while j < l2 and needle[j] == haystack[i+j]:
+                j += 1
+            if j == l2:
+                return i
+        return -1   
+
 
 19. Remove Nth Node From End of List
 -------------------------------------

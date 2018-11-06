@@ -295,6 +295,60 @@ For example:
 
 .. code-block:: python
 
+    def zigzagLevelOrder(self, root):
+        res, queue = [], [(root, 0)]
+        while queue:
+            curr, level = queue.pop(0)
+            if curr:
+                if len(res) < level+1:
+                    res.append([])
+                if level % 2 == 0:
+                    res[level].append(curr.val)
+                else:
+                    res[level].insert(0, curr.val)
+                queue.append((curr.left, level+1))
+                queue.append((curr.right, level+1))
+        return res  
+        
+        
+    def zigzagLevelOrder(self, root):
+        # write your code here
+        res = []
+        self.dfs(root, 0, res)
+        return res
+        
+    def dfs(self, root, level, res):
+        if root:
+            if len(res) < level + 1:
+                res.append([])
+            if level % 2 == 0:
+                res[level].append(root.val)
+            else:
+                res[level].insert(0, root.val)
+            self.dfs(root.left, level+1, res)
+            self.dfs(root.right, level+1, res)
+
+    # dfs + stack
+    def zigzagLevelOrder(self, root):
+        # write your code here
+        res, stack = [], [(root, 0)]
+        while stack:
+            cur, level = stack.pop()
+            if cur:
+                if len(res) < level + 1:
+                    res.append([])
+                if level % 2 == 0:
+                    res[level].append(cur.val)
+                else:
+                    res[level].insert(0, cur.val)
+                stack.append((cur.right, level+1))
+                stack.append((cur.left, level+1))
+        return res  
+        
+
+
+.. code-block:: python
+
     class Solution(object):
         def zigzagLevelOrder(self, root):
             """

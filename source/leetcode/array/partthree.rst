@@ -17,6 +17,17 @@ For example:
     Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
 
+.. code-block:: python
+
+    def removeDuplicates(self, nums):
+        i = 0
+        while i < (len(nums) - 1):
+            if nums[i] == nums[i+1]:
+                del nums[i] # or nums.pop(i)
+            else:
+                i += 1
+        return len(nums)    
+        
 
 
 .. code-block:: JavaScript

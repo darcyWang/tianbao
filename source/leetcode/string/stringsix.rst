@@ -1,5 +1,5 @@
-题目序号 536、3、5、17、521、522、28
-============================================================
+题目序号 536、3、5、17、521、522
+====================================
 
 
 536. Construct Binary Tree from String
@@ -143,7 +143,7 @@ Example:
             while 0<=l and r < len(s) and s[l]==s[r]:
                     l-=1; r+=1
             return s[l+1:r] 
-        
+
 
 
 17. Letter Combinations of a Phone Number 
@@ -265,13 +265,4 @@ Answertwo
                     return len(c)
             return -1
 
-28. Implement strStr()
-----------------------
-
-Implement strStr().
-
-Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
-
-还没来得及仔细看答案
-https://www.youtube.com/watch?v=GTJr8OvyEVQ
 

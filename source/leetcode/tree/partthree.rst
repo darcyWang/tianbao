@@ -1,17 +1,5 @@
-题目序号 111、110、108、107、104、101、100、684、666
+题目序号 110、108、107、104、101、100、684、666
 ============================================================
-
-
-
-
-111. Minimum Depth of Binary Tree
----------------------------------
-
-
-Given a binary tree, find its minimum depth.
-
-The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
-
 
 
 110. Balanced Binary Tree 
