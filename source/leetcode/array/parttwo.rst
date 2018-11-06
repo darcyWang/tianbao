@@ -318,6 +318,8 @@ Example:
     Because nums[0] + nums[1] = 2 + 7 = 9,
     return [0, 1].
 
+
+
 .. code-block :: Javascript
 
     var twoSum = function(nums, target) {
@@ -368,6 +370,42 @@ For example,
     find(4) -> true
     find(7) -> false
 
+
+
+.. code-block:: python
+
+    class TwoSum:
+
+        def __init__(self):
+            self.ctr = {}
+
+        def add(self, number):
+            if number in self.ctr:
+                self.ctr[number] += 1
+            else:
+                self.ctr[number] = 1
+
+        def find(self, value):
+            ctr = self.ctr
+            for num in ctr:
+                if value - num in ctr and (value - num != num or ctr[num] > 1):
+                    return True
+            return False    
+        
+        
+    class TwoSum:
+
+        def __init__(self):
+            self.ctr = collections.defaultdict(int)
+
+        def add(self, number):
+            self.ctr[number] += 1
+
+        def find(self, value):
+            ctr = self.ctr
+            return any(value - num in ctr and (value - num != num or ctr[num] > 1)
+                       for num in ctr)  
+         
 
 
 
