@@ -448,6 +448,58 @@ For example
                  6
 
 
+.. code-block:: python
+
+    def flatten(self, root):
+        while root:
+            if root.left:
+                self.flatten(root.left)
+                tail = root.left
+                while tail.right:
+                    tail = tail.right
+                tail.right = root.right
+                root.right = root.left
+                root.left = None
+            root = root.right   
+
+    # recusively       
+    def flatten1(self, root):
+        self.helper(root)
+        
+    def helper(self, root):
+        if not root:
+            return
+        l = self.helper(root.left)
+        r = self.helper(root.right)
+        if l:
+            root.right = l
+            while l and l.right:
+                l = l.right
+            l.right = r
+            root.left = None # take care here
+        return root
+        
+    # recusively
+    def flatten(self, root):
+        if not root:
+            return 
+        # flatten left child 
+        self.flatten(root.left)
+        # flatten right child
+        self.flatten(root.right)
+        # insert left child to the middle of 
+        # root and right child
+        tail = root.left
+        if tail:
+            while tail and tail.right:
+                tail = tail.right
+            tail.right = root.right
+            root.right = root.left
+            root.left = None    
+        
+
+
+
 If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
 
 

@@ -231,5 +231,199 @@ Output: 2->3
 	        return head.next if is_head_dup else head
 
 
+141. Linked List Cycle
+----------------------
+
+Given a linked list, determine if it has a cycle in it.
+
+Follow up:
+Can you solve it without using extra space?
+
+
+.. code-block:: python
+
+	# Definition for singly-linked list.
+	# class ListNode:
+	#     def __init__(self, x):
+	#         self.val = x
+	#         self.next = None
+
+	class Solution:
+	    # @param head, a ListNode
+	    # @return a boolean
+	    def hasCycle(self, head):
+	        if not head:
+	            return False
+
+	        slow = fast = head
+	        while fast and fast.next:
+	            slow = slow.next
+	            fast = fast.next.next
+	            if slow is fast:
+	                return True
+
+	        return False
+
+
+
+用个字典记录某个点是否被访问过，时间，空间复杂度都是O（n）
+.. code-block:: python
+	
+	class Solution(object):
+	    def hasCycle(self, head):
+	        """
+	        :type head: ListNode
+	        :rtype: bool
+	        """
+	        if not head: 
+	            return False
+	        lookup = {}
+	        while head:
+	            if head in lookup:
+	                return True
+	            lookup[head] = 1
+	            head = head.next
+	        return False
+
+时间复杂度: O(N) 空间复杂度: O(1) 
+
+.. code-block:: python
+
+	class Solution(object):
+	    def hasCycle(self, head):
+	        """
+	        :type head: ListNode
+	        :rtype: bool
+	        """
+	        slow = head
+	        fast = head
+	        while fast and fast.next:
+	            slow = slow.next
+	            fast = fast.next.next
+	            if slow == fast:
+	                return True
+	        return False
+
+
+142. Linked List Cycle II
+-------------------------
+
+
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+Note: Do not modify the linked list.
+
+Follow up:
+Can you solve it without using extra space?
+
+
+
+.. code-block:: python
+
+	def detectCycle(self, head):
+	    fast = slow = head
+	    while fast and fast.next:
+	        fast = fast.next.next
+	        slow = slow.next
+	        # if there is a cycle
+	        if slow is fast:
+	            # the head and slow nodes move step by step
+	            while head:
+	                if head == slow:
+	                    return head
+	                head = head.next
+	                slow = slow.next
+	    return None
+		
+		
+		
+	def detectCycle1(self, head):
+	    dic = {}
+	    while head:
+	        if head in dic:
+	            return head
+	        dic[head] = 0
+	        head = head.next
+	    return None
+	    
+	def detectCycle(self, head):
+	    if not head:
+	        return None
+	    fast = slow = head
+	    while fast and fast.next:
+	        fast = fast.next.next
+	        slow = slow.next
+	        if fast is slow:
+	            fast = head
+	            while fast and fast != slow:
+	                fast = fast.next
+	                slow = slow.next
+	            return fast
+	    return None	
+			
+			
+	def detectCycle(self, head):
+	    fast = slow = head
+	    while fast and fast.next:
+	        fast = fast.next.next
+	        slow = slow.next
+	        # if there is a cycle
+	        if slow is fast:
+	            # the head and slow nodes move step by step
+	            while head:
+	                if head == slow:
+	                    return head
+	                head = head.next
+	                slow = slow.next
+	    return None
+
+	Python solutions using dictionary and two-pointer:
+
+	def detectCycle1(self, head):
+	    dic = {}
+	    while head:
+	        if head in dic:
+	            return head
+	        dic[head] = 0
+	        head = head.next
+	    return None
+	    
+	def detectCycle(self, head):
+	    if not head:
+	        return None
+	    fast = slow = head
+	    while fast and fast.next:
+	        fast = fast.next.next
+	        slow = slow.next
+	        if fast is slow:
+	            fast = head
+	            while fast and fast != slow:
+	                fast = fast.next
+	                slow = slow.next
+	            return fast
+	    return None
+		
+	def detectCycle(self, head):
+	    slow = fast = head
+	    while fast and fast.next:
+	        slow = slow.next
+	        fast = fast.next.next
+	        if slow == fast:
+	            break
+	    else:
+	        return None
+	    while head != slow:
+	        slow = slow.next
+	        head = head.next
+	    return head
+
+
+
+
+
+
+
+
+
 
 

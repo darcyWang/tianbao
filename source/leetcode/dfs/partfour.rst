@@ -1,4 +1,4 @@
-题目序号 210、207、200、133、117、116、114
+题目序号 210、207、200、133、117、116
 ========================================
 
 
@@ -428,7 +428,7 @@ Note:
 
 For example,
 Given the following perfect binary tree,
-
+::
          1
        /  \
       2    3
@@ -436,51 +436,12 @@ Given the following perfect binary tree,
     4  5  6  7
 
 After calling your function, the tree should look like:
-
+::
          1 -> NULL
        /  \
       2 -> 3 -> NULL
      / \  / \
     4->5->6->7 -> NULL
-
-
-
-
-114. Flatten Binary Tree to Linked List
----------------------------------------
-
-
-
-Given a binary tree, flatten it to a linked list in-place.
-
-For example,
-Given
-
-         1
-        / \
-       2   5
-      / \   \
-     3   4   6
-
-The flattened tree should look like:
-
-   1
-    \
-     2
-      \
-       3
-        \
-         4
-          \
-           5
-            \
-             6
-
-click to show hints.
-Hints:
-
-If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
-
 
 
 
