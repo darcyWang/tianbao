@@ -269,22 +269,123 @@ course schedule II 在I的基础上改了3行代码过了
 Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
 
 Example 1:
+::
+    11110
+    11010
+    11000
+    00000
 
-11110
-11010
-11000
-00000
-
-Answer: 1
+    Answer: 1
 
 Example 2:
+::
+    11000
+    11000
+    00100
+    00011
 
-11000
-11000
-00100
-00011
+    Answer: 3
 
-Answer: 3
+
+.. code-block:: python
+
+    # BFS
+    def numIslands(self, grid):
+        if not grid:
+            return 0
+        row, col = len(grid), len(grid[0])
+        s = set([(i, j) for i in xrange(row) for j in xrange(col) if grid[i][j] == "1"])
+        num = 0
+        while s:
+            num += 1
+            from collections import deque
+            queue = deque([s.pop()])
+            while queue:
+                i, j = queue.popleft()
+                for item in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:
+                    if item in s:
+                        s.remove(item)
+                        queue.append(item)
+        return num
+                
+                
+    # DFS 
+    def numIslands(self, grid):
+        if not grid:
+            return 0
+        num = 0
+        row, col = len(grid), len(grid[0])
+        for i in xrange(row):
+            for j in xrange(col):
+                if self.visit(grid, i, j):
+                    num += 1
+        return num
+                
+    def visit(self, grid, i, j):
+        if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) or grid[i][j] != "1":
+            return False
+        grid[i][j] = "0"
+        self.visit(grid, i-1, j)
+        self.visit(grid, i+1, j)
+        self.visit(grid, i, j-1)
+        self.visit(grid, i, j+1)
+        return True 
+
+
+
+    # overwrite original grid
+    def numIslands1(self, grid):
+        count = 0
+        for r in xrange(len(grid)):
+            for c in xrange(len(grid[0])):
+                if grid[r][c] == "1":
+                    count += 1
+                    self.dfs(grid, r, c)
+        return count
+        
+    def dfs1(self, grid, r, c):
+        if not (0 <= r < len(grid)) or not (0 <= c < len(grid[0])) or grid[r][c] == "0":
+            return 
+        grid[r][c] = "0"
+        self.dfs(grid, r+1, c)
+        self.dfs(grid, r-1, c)
+        self.dfs(grid, r, c+1)
+        self.dfs(grid, r, c-1)
+
+    # add visited flags   
+    def numIslands(self, grid):
+        if not grid:
+            return 0XFFFFF
+        count = 0
+        r, c = len(grid), len(grid[0])
+        visited = [[False for _ in xrange(c)] for _ in xrange(r)]
+        for i in xrange(r):
+            for j in xrange(c):
+                if grid[i][j] == "1" and not visited[i][j]:
+                    count += 1
+                    self.dfs(grid, i, j, visited)
+        return count
+        
+    def dfs(self, grid, i, j, visited):
+        if not (0 <= i < len(grid)) or not (0 <= j < len(grid[0])) or grid[i][j] == "0" or visited[i][j]:
+            return 
+        visited[i][j] = True
+        self.dfs(grid, i+1, j, visited)
+        self.dfs(grid, i-1, j, visited)
+        self.dfs(grid, i, j+1, visited)
+        self.dfs(grid, i, j-1, visited)
+
+
+
+    def numIslands(self, grid):
+        def sink(i, j):
+            if 0 <= i < len(grid) and 0 <= j < len(grid[i]) and grid[i][j] == '1':
+                grid[i][j] = '0'
+                map(sink, (i+1, i-1, i, i), (j, j, j+1, j-1))
+                return 1
+            return 0
+        return sum(sink(i, j) for i in range(len(grid)) for j in range(len(grid[i])))
+        
 
 
 
@@ -374,6 +475,58 @@ Visually, the graph looks like the following:
                 self.dfs(neighbor, dic)
             else:
                 dic[node].neighbors.append(dic[neighbor])
+
+
+.. code-block:: python
+
+    def cloneGraph(self, node):
+        if not node:
+            return None
+        dic, queue = dict(), collections.deque([node])
+        while queue:
+            curr = queue.popleft()
+            if curr.label not in dic:
+                newNode = UndirectedGraphNode(curr.label)
+                dic[curr.label] = newNode
+            else:
+                newNode = dic[curr.label]
+                
+            for neighbor in curr.neighbors:
+                if neighbor.label not in dic:
+                    queue.append(neighbor)
+                    tmp = UndirectedGraphNode(neighbor.label)
+                    dic[tmp.label] = tmp
+                    newNode.neighbors.append(tmp)
+                else:
+                    newNode.neighbors.append(dic[neighbor.label])
+        return dic[node.label]  
+                
+                
+                
+    def __init__(self):
+        self.di = {}
+        
+    def cloneGraph(self, node):
+        if node == None:
+            return node
+        if node.label in self.di:
+            return self.di[node.label]
+        self.di[node.label] = UndirectedGraphNode(node.label)
+        self.di[node.label].neighbors = [self.cloneGraph(n) for n in node.neighbors]
+        return self.di[node.label]  
+                
+                
+    def subsets(self, nums):
+        res = []
+        nums.sort()
+        self.dfs(nums, 0, [], res)
+        return res
+        
+    def dfs(self, nums, index, subSet, res):
+        res.append(subSet) 
+        for i in xrange(index, len(nums)):
+            self.dfs(nums, i+1, subSet + [nums[i]], res)        
+                
 
 
 117. Populating Next Right Pointers in Each Node II

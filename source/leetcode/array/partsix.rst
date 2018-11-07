@@ -75,6 +75,71 @@ A solution set is:
       [1, 1, 6]
     ]
 
+.. code-block:: python
+
+    def combine(self, n, k):
+        res = []
+        self.dfs(xrange(1,n+1), k, 0, [], res)
+        return res
+        
+    def dfs(self, nums, k, index, path, res):
+        #if k < 0:  #backtracking
+            #return 
+        if k == 0:
+            res.append(path)
+            return # backtracking 
+        for i in xrange(index, len(nums)):
+            self.dfs(nums, k-1, i+1, path+[nums[i]], res)       
+                
+                
+    def combinationSum3(self, k, n):
+        res = []
+        self.dfs(xrange(1,10), k, n, 0, [], res)
+        return res
+        
+    def dfs(self, nums, k, n, index, path, res):
+        if k < 0 or n < 0: # backtracking 
+            return 
+        if k == 0 and n == 0: 
+            res.append(path)
+        for i in xrange(index, len(nums)):
+            self.dfs(nums, k-1, n-nums[i], i+1, path+[nums[i]], res)        
+                
+                
+    def combinationSum2(self, candidates, target):
+        res = []
+        candidates.sort()
+        self.dfs(candidates, target, 0, [], res)
+        return res
+        
+    def dfs(self, candidates, target, index, path, res):
+        if target < 0:
+            return  # backtracking
+        if target == 0:
+            res.append(path)
+            return  # backtracking 
+        for i in xrange(index, len(candidates)):
+            if i > index and candidates[i] == candidates[i-1]:
+                continue
+            self.dfs(candidates, target-candidates[i], i+1, path+[candidates[i]], res)  
+
+    def combinationSum(self, candidates, target):
+        res = []
+        candidates.sort()
+        self.dfs(candidates, target, 0, [], res)
+        return res
+        
+    def dfs(self, nums, target, index, path, res):
+        if target < 0:
+            return  # backtracking
+        if target == 0:
+            res.append(path)
+            return 
+        for i in xrange(index, len(nums)):
+            self.dfs(nums, target-nums[i], i, path+[nums[i]], res)          
+        
+
+
 34. Search for a Range 
 ----------------------
 
