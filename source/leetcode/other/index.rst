@@ -9,3 +9,4 @@
 
    partone.rst
    parttwo.rst
+   partthree.rst

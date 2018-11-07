@@ -236,20 +236,53 @@ For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another exa
 226. Invert Binary Tree 
 -----------------------
 
+Invert a binary tree
+
+Example:
 ::
-        Invert a binary tree.
+    Input:
 
-             4
-           /   \
-          2     7
-         / \   / \
-        1   3 6   9
+         4
+       /   \
+      2     7
+     / \   / \
+    1   3 6   9
 
-        to
+    Output:
 
-             4
-           /   \
-          7     2
-         / \   / \
-        9   6 3   1
+         4
+       /   \
+      7     2
+     / \   / \
+    9   6 3   1
 
+.. code-block:: python
+
+    def invertTree1(self, root):
+        if root:
+            root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+            return root
+
+
+    def invertTree(self, root):
+        queue = []
+        queue.append(root)
+        while queue:
+            curr = queue.pop(0)
+            if curr:
+                curr.left, curr.right = curr.right, curr.left
+                queue.append(curr.left); queue.append(curr.right)
+        return root
+
+    class Solution(object):
+        def invertTree(self, root):
+            """
+            :type root: TreeNode
+            :rtype: TreeNode
+            """
+            if not root:
+                return root
+            root.left, root.right = root.right, root.left
+            self.invertTree(root.left)
+            self.invertTree(root.right)
+            return root

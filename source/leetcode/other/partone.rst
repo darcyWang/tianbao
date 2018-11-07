@@ -1,4 +1,4 @@
-题目序号 71、93、208、211、24、179
+题目序号 71、93、208、211、24、179、228
 ============================================================
 
 
@@ -492,6 +492,69 @@ and strictly positive if x > y.
         nums[low], nums[r] = nums[r], nums[low]
         return low  
         
+
+228. Summary Ranges
+-------------------
+
+
+Given a sorted integer array without duplicates, return the summary of its ranges.
+
+Example 1:
+::
+    Input:  [0,1,2,4,5,7]
+    Output: ["0->2","4->5","7"]
+    Explanation: 0,1,2 form a continuous range; 4,5 form a continuous range.
+
+Example 2:
+::
+    Input:  [0,2,3,4,6,8,9]
+    Output: ["0","2->4","6","8->9"]
+    Explanation: 2,3,4 form a continuous range; 8,9 form a continuous range.
+
+
+Just collect the ranges, then format and return them.
+
+.. code-block:: python
+
+    class Solution(object):
+        def summaryRanges(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: List[str]
+            """
+            ranges = []
+            for i in nums:
+                if not ranges or i > ranges[-1][-1] + 1:
+                    ranges += [],
+                ranges[-1][1:] = i,
+            return ['->'.join(map(str, r)) for r in ranges]     
+
+.. code-block:: python
+
+    def summaryRanges(self, nums):
+        if not nums:
+            return []
+        res, i, start = [], 0, 0
+        while i < len(nums)-1:
+            if nums[i]+1 != nums[i+1]:
+                res.append(self.printRange(nums[start], nums[i]))
+                start = i+1
+            i += 1
+        res.append(self.printRange(nums[start], nums[i]))
+        return res
+
+    def printRange(self, l, r):
+        if l == r:
+            return str(l)
+        else:
+            return str(l) + "->" + str(r)
+            
+
+
+
+
+
+
 
 
 

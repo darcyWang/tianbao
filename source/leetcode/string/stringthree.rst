@@ -2,10 +2,6 @@
 ============================================================
 
 
-
-
-
-
 58. Length of Last Word
 -----------------------
 
@@ -52,6 +48,45 @@ For example,
     a = "11"
     b = "1"
     Return "100".
+
+
+.. code-block:: python
+
+    def addBinary(self, a, b):
+        res = ""
+        carry = 0
+        i, j = len(a)-1, len(b)-1
+        while i >=0  or j >=0 or carry:
+            val = carry
+            if i >=0:
+                val += int(a[i])
+                i -= 1
+            if j >=0:
+                val += int(b[j])
+                j -= 1
+            res = str(val%2) + res
+            carry = val//2
+        return res
+        
+    string addBinary(string a, string b) {
+        int i = a.size()-1, j = b.size()-1;
+        int carry = 0;
+        string ret = "";
+        while (i >= 0 || j >= 0 || carry!=0) {
+            if (i >= 0) {
+                carry += a[i]=='0'?0:1;
+                i--;
+            }
+            if (j >= 0) {
+                carry += b[j]=='0'?0:1;
+                j--;
+            }
+            ret = ((carry%2)==0?"0":"1") + ret;
+            carry /= 2;
+        }
+        return ret;
+    }   
+
 
 用字符串模拟二进制整数加法。写了一个更通用的算法，修改self.radix即可将代码改为如八进制整数加法、十进制整数加法等。
 
