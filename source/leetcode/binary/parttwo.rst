@@ -159,6 +159,56 @@ What if the BST is modified (insert/delete operations) often and you need to fin
 Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
 
+The idea here is checking nodes by in order traversal, if we checked k "small" nodes, the current node then will be kth smallest one:
+
+.. code-block:: python
+    
+    def kthSmallest(self, root, k):
+        # stack records the node whether visited or not
+        stack = [(root, False)]
+        while stack:
+            curr, visited = stack.pop()
+            if curr:
+                if visited:
+                    # if visited is True, it means a "small" node is found
+                    k -= 1
+                    # if k == 0, it means k small nodes has been checked,
+                    # the current node is the kth one
+                    if k == 0:
+                        return curr.val
+                else:
+                    # Add from right to left
+                    stack.append((curr.right, False))
+                    stack.append((curr, True))
+                    stack.append((curr.left, False))    
+            
+            
+    Easier idea based on inorder traversal:
+
+    # Recursively
+    def kthSmallest1(self, root, k):
+        res = []
+        self.inorder(root, res)
+        return res[k-1]
+        
+    def inorder(self, root, res):
+        if root:
+            self.inorder(root.left, res)
+            res.append(root.val)
+            self.inorder(root.right, res)
+     
+    # Iteratively         
+    def kthSmallest(self, root, k):
+        res, stack = [], []
+        while True:
+            while root:
+                stack.append(root)
+                root = root.left
+            if not stack:
+                return res[k-1]
+            node = stack.pop()
+            res.append(node.val)
+            root = node.right   
 
 .. code-block:: python
 
