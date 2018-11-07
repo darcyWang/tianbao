@@ -12,6 +12,45 @@ For this problem, a height-balanced binary tree is defined as a binary tree in w
 
 
 
+.. code-block:: python
+
+    # BFS
+    def isBalanced(self, root):
+        queue = []
+        queue.append(root)
+        while queue:
+            curr = queue.pop(0)
+            if curr:
+                if abs(self.height(curr.left) - self.height(curr.right)) > 1:
+                    return False
+                if curr.left:
+                    queue.append(curr.left)
+                if curr.right:
+                    queue.append(curr.right)
+        return True 
+      
+    # DFS  
+    def isBalanced(self, root):
+        stack = []
+        stack.append(root)
+        while stack:
+            curr = stack.pop()
+            if curr:
+                if abs(self.height(curr.left) - self.height(curr.right)) > 1:
+                    return False
+                if curr.right:
+                    stack.append(curr.right)
+                if curr.left:
+                    stack.append(curr.left)
+        return True
+        
+    def height(self, root):
+        if not root:
+            return 0
+        return max(self.height(root.left), self.height(root.right)) + 1
+
+
+
 
 108. Convert Sorted Array to Binary Search Tree
 -----------------------------------------------
@@ -50,7 +89,6 @@ return its bottom-up level order traversal as:
 104. Maximum Depth of Binary Tree
 ---------------------------------
 
-
 Given a binary tree, find its maximum depth.
 
 The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
@@ -61,26 +99,77 @@ The maximum depth is the number of nodes along the longest path from the root no
 101. Symmetric Tree
 -------------------
 
+
 Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 
 For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
-
-    1
-   / \
-  2   2
- / \ / \
-3  4 4  3
+::
+        1
+       / \
+      2   2
+     / \ / \
+    3  4 4  3
 
 But the following [1,2,2,null,3,null,3] is not:
-
-    1
-   / \
-  2   2
-   \   \
-   3    3
+::
+        1
+       / \
+      2   2
+       \   \
+       3    3
 
 Note:
 Bonus points if you could solve it both recursively and iteratively. 
+
+
+
+.. code-block:: python
+
+    def isSymmetric(self, root):
+        if not root:
+            return True
+        queue = []
+        queue.append((root.left, root.right))
+        while queue:
+            l, r = queue.pop(0)
+            if not l and not r:
+                continue
+            if not l or not r:
+                return False
+            if l.val != r.val:
+                return False
+            queue.append((l.left, r.right))
+            queue.append((l.right, r.left))
+        return True
+        
+    def isSymmetric(self, root):
+        if not root:
+            return True
+        return self.dfs(root.left, root.right)
+        
+    def dfs(self, l, r):
+        if l and r:
+            return l.val == r.val and self.dfs(l.left, r.right) and self.dfs(l.right, r.left)
+        return l == r   
+        
+    An iterative version:
+
+    def isSymmetric(self, root):
+        if not root:
+            return True
+        stack = [(root.left, root.right)]
+        while stack:
+            l, r = stack.pop()
+            if not l and not r:
+                continue
+            if not l or not r:
+                return False
+            if l.val != r.val:
+                return False
+            stack.append((l.left, r.right))
+            stack.append((l.right, r.left))
+        return True 
+        
 
 
 100. Same Tree

@@ -128,6 +128,40 @@ For example,
 
             return sum_str
 
+
+时间复杂度: O(N) 空间复杂度: O(N) 
+
+*. 对于每一位数进行加法，如有进位单独计算
+*. 注意需使用字符串进行存储，整型无法计算大型数据
+
+.. code-block:: javascript
+
+    /**
+     * @param {string} a
+     * @param {string} b
+     * @return {string}
+     */
+    var addBinary = function(a, b) {
+        var tempA = a.split('');
+        var tempB = b.split('');
+        var result =[];
+        var aLen=tempA.length,bLen=tempB.length;
+        var carry = 0;
+        while(aLen>0||bLen>0){
+            var charA=0,charB=0;
+            if(aLen>0)
+                charA = tempA[--aLen]-0;
+            if(bLen>0)
+                charB = tempB[--bLen]-0;
+            var temp = charA + charB + carry;
+            carry = temp>1?1:0;
+            result.unshift(temp%2);
+        }
+        if(carry===1)
+            result.unshift(1);
+        return result.toString().replace(/,/g,'');
+    };
+
 125. Valid Palindrome
 ---------------------
 

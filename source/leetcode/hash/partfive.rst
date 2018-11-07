@@ -236,12 +236,107 @@ The Sudoku board could be partially filled, where empty cells are filled with th
 http://sudoku.com.au/TheRules.aspx
 
 
+.. image:: sudoku.png
 
 A partially filled sudoku which is valid.
 
 Note:
 A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated. 
 
+
+
+.. code-block:: python
+
+    def isValidSudoku(self, board):
+        r, c = len(board), len(board[0])
+        for i in xrange(r):
+            for j in xrange(c):
+                if not self.isValid(i, j, board):
+                    return False
+        return True
+
+    def isValid(self, x, y, board):
+        if board[x][y] == ".":
+            return True
+        tmp = board[x][y]; board[x][y] = "#"
+        r, c = len(board), len(board[0])
+        for i in xrange(r):
+            if board[i][y] == tmp:
+                return False
+        for j in xrange(c):
+            if board[x][j] == tmp:
+                return False
+        for i in xrange(x/3*3, x/3*3+3):
+            for j in xrange(y/3*3, y/3*3+3):
+                if board[i][j] == tmp:
+                    return False
+        board[x][y] = tmp
+        return True
+        
+    def isValidSudoku(self, board):
+        return self.checkRows(board) and self.checkColums(board) and self.checkSquares(board)
+        
+    def checkRows(self, board):
+        r, c = len(board), len(board[0])
+        for i in xrange(r):
+            dic = dict()
+            for j in xrange(c):
+                if board[i][j] != ".":
+                    if board[i][j] in dic:
+                        return False
+                    dic[board[i][j]] = 0
+        return True
+        
+    def checkColums(self, board):
+        r, c = len(board), len(board[0])
+        for j in xrange(c):
+            dic = dict()
+            for i in xrange(r):
+                if board[i][j] != ".":
+                    if board[i][j] in dic:
+                        return False
+                    dic[board[i][j]] = 0
+        return True
+        
+    def checkSquares(self, board):
+        m, n = [0, 3, 6], [0, 3, 6]
+        for p in m:
+            for q in n:
+                dic = dict()
+                for i in xrange(p, p+3):
+                    for j in xrange(q, q+3):
+                        if board[i][j] != ".":
+                            if board[i][j] in dic:
+                                return False
+                        dic[board[i][j]] = 0
+        return True
+        
+        
+        
+    def isValidSudoku(self, board):
+        return self.checkRowCol(board) and self.checkRowCol(zip(*board)) and self.checkSquare(board)
+        
+    def checkRowCol(self, board):
+        for row in board:
+            dic = {}
+            for i in row:
+                if i != "." and i in dic:
+                    return False
+                dic[i] = 0
+        return True
+        
+    def checkSquare(self, board):
+        for i in xrange(3):
+            for j in xrange(3):
+                dic = {}
+                for m in xrange(3):
+                    for n in xrange(3):
+                        val = board[i*3+m][j*3+n]
+                        if val != "." and val in dic:
+                            return False
+                        dic[val] = 0
+        return True
+        
 
 
 18. 4Sum

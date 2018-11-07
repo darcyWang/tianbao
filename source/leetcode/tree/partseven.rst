@@ -24,15 +24,16 @@ Note: next() and hasNext() should run in average O(1) time and uses O(h) memory,
 Given a binary tree, return the preorder traversal of its nodes' values.
 
 For example:
-Given binary tree {1,#,2,3},
+::
+    Given binary tree {1,#,2,3},
 
-   1
-    \
-     2
-    /
-   3
+       1
+        \
+         2
+        /
+       3
 
-return [1,2,3].
+    return [1,2,3].
 
 Note: Recursive solution is trivial, could you do it iteratively?
 
@@ -60,6 +61,60 @@ The root-to-leaf path 1->3 represents the number 13.
 
 Return the sum = 12 + 13 = 25. 
 
+
+
+.. code-block:: python
+
+    # DFS recursively
+    def sumNumbers1(self, root):
+        if not root:
+            return 0
+        res = []
+        self.dfs(root, root.val, res)
+        return sum(res)
+        
+    def dfs(self, root, num, res):
+        if root:
+            if not root.left and not root.right:
+                res.append(num)
+            if root.left:
+                self.dfs(root.left, num*10+root.left.val, res)
+            if root.right:
+                self.dfs(root.right, num*10+root.right.val, res)
+
+    # BFS with queue         
+    def sumNumbers3(self, root):
+        if not root:
+            return 0
+        queue = []
+        queue.append((root, root.val))
+        res = 0
+        while queue:
+            curr, val = queue.pop(0)
+            if not curr.left and not curr.right:
+                res += val
+            if curr.left:
+                queue.append((curr.left, val*10+curr.left.val))
+            if curr.right:
+                queue.append((curr.right, val*10+curr.right.val))
+        return res
+        
+    # DFS with explicit stack
+    def sumNumbers4(self, root):
+        if not root:
+            return 0
+        stack = [(root, root.val)]
+        res = 0
+        while stack:
+            curr, val = stack.pop()
+            if not curr.left and not curr.right:
+                res += val
+            if curr.right:
+                stack.append((curr.right, val*10+curr.right.val))
+            if curr.left:
+                stack.append((curr.left, val*10+curr.left.val))
+        return res
+        
 
 .. code-block:: python
   
