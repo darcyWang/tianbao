@@ -260,6 +260,74 @@ UPDATE (2017/1/4):
 The wordDict parameter had been changed to a list of strings (instead of a set of strings). Please reload the code definition to get the latest changes. 
 
 
+.. code-block:: python
+
+    def exist(self, board, word):
+        if not board:
+            return False
+        r, c = len(board), len(board[0])
+        visited = [[False for i in xrange(c)] for j in xrange(r)]
+        for i in xrange(r):
+            for j in xrange(c):
+                if self.dfs(board, word, visited, i, j):
+                    return True
+        return False
+        
+    def dfs(self, board, word, visited, i, j):
+        if not word:
+            return True
+        if i < 0 or i == len(board) or j < 0 or j == len(board[0]) \
+        or visited[i][j] or word[0] != board[i][j]:
+            return False
+        visited[i][j] = True
+        res = self.dfs(board, word[1:], visited, i+1, j) or \
+              self.dfs(board, word[1:], visited, i-1, j) or \
+              self.dfs(board, word[1:], visited, i, j-1) or \
+              self.dfs(board, word[1:], visited, i, j+1)
+        visited[i][j] = False
+        return res
+
+    def wordBreak(self, s, wordDict):
+        dp = [False] * (len(s)+1)
+        dp[0] = True
+        for i in xrange(1, len(s)+1):
+            for j in xrange(i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+                    break
+        return dp[-1]
+        
+    def wordBreak(self, s, wordDict):
+        res = []
+        self.dfs(s, wordDict, '', res)
+        return res
+
+    def dfs(self, s, dic, path, res):
+    # Before we do dfs, we check whether the remaining string 
+    # can be splitted by using the dictionary,
+    # in this way we can decrease unnecessary computation greatly.
+        if self.check(s, dic): # prunning
+            if not s:
+                res.append(path[:-1])
+                return # backtracking
+            for i in xrange(1, len(s)+1):
+                if s[:i] in dic:
+                    # dic.remove(s[:i])
+                    self.dfs(s[i:], dic, path+s[:i]+" ", res)
+
+    # DP code to check whether a string can be splitted by using the 
+    # dic, this is the same as word break I.                
+    def check(self, s, dic):
+        dp = [False for i in xrange(len(s)+1)]
+        dp[0] = True
+        for i in xrange(1, len(s)+1):
+            for j in xrange(i):
+                if dp[j] and s[j:i] in dic:
+                    dp[i] = True
+        return dp[-1]
+        
+
+
 120. Triangle
 -------------
 
