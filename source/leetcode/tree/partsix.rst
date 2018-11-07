@@ -184,21 +184,116 @@ For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another exa
 199. Binary Tree Right Side View
 --------------------------------
 
-
 Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
 
 For example:
-Given the following binary tree,
+::
+    Given the following binary tree,
 
-   1            <---
- /   \
-2     3         <---
- \     \
-  5     4       <---
+       1            <---
+     /   \
+    2     3         <---
+     \     \
+      5     4       <---
 
-You should return [1, 3, 4].
+    You should return [1, 3, 4].
 
 Credits:
 Special thanks to @amrsaqr for adding this problem and creating all test cases.
+
+
+.. code-block:: python
+
+    # DFS recursively
+    def rightSideView(self, root):
+        res = []
+        self.dfs(root, 0, res)
+        return [x[0] for x in res]
+        
+    def dfs(self, root, level, res):
+        if root:
+            if len(res) < level+1:
+                res.append([])
+            res[level].append(root.val)
+            self.dfs(root.right, level+1, res)
+            self.dfs(root.left, level+1, res)
+
+    # DFS + stack
+    def rightSideView2(self, root):
+        res, stack = [], [(root, 0)]
+        while stack:
+            curr, level = stack.pop()
+            if curr:
+                if len(res) < level+1:
+                    res.append([])
+                res[level].append(curr.val)
+                stack.append((curr.right, level+1))
+                stack.append((curr.left, level+1))
+        return [x[-1] for x in res]
+            
+    # BFS + queue
+    def rightSideView(self, root):
+        res, queue = [], [(root, 0)]
+        while queue:
+            curr, level = queue.pop(0)
+            if curr:
+                if len(res) < level+1:
+                    res.append([])
+                res[level].append(curr.val)
+                queue.append((curr.left, level+1))
+                queue.append((curr.right, level+1))
+        return [x[-1] for x in res]
+
+
+    The solution above is level order traversal indeed, here is the revised version. The return value only includes the elements we need:
+
+    # DFS recursively
+    def rightSideView1(self, root):
+        res = []
+        self.dfs(root, 0, res)
+        return res
+        
+    def dfs(self, root, level, res):
+        if root:
+            if len(res) == level:
+                res.append(root.val)
+            self.dfs(root.right, level+1, res)
+            self.dfs(root.left, level+1, res)
+
+    # DFS + stack
+    def rightSideView2(self, root):
+        res, stack = [], [(root, 0)]
+        while stack:
+            curr, level = stack.pop()
+            if curr:
+                if len(res) == level:
+                    res.append(curr.val)
+                stack.append((curr.left, level+1))
+                stack.append((curr.right, level+1))
+        return res
+            
+    # BFS + queue
+    def rightSideView3(self, root):
+        res, queue = [], [(root, 0)]
+        while queue:
+            curr, level = queue.pop(0)
+            if curr:
+                if len(res) == level:
+                    res.append(curr.val)
+                queue.append((curr.right, level+1))
+                queue.append((curr.left, level+1))
+        return res
+        
+
+
+
+
+
+
+
+
+
+
+
 
 

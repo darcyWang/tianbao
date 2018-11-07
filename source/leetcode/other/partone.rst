@@ -304,6 +304,22 @@ Note:
 Your algorithm should use only constant extra space.
 You may not modify the values in the list's nodes, only nodes itself may be changed.
 
+Good solution, here is a solution uses only one pointer:
+.. code-block:: python
+
+    def swapPairs(self, head):
+        dummy = p = ListNode(0)
+        dummy.next = head
+        while p.next and p.next.next:
+            tmp = head.next
+            head.next = head.next.next
+            tmp.next = head
+            p.next = tmp
+            # p = p.next.next
+            # p = tmp.next
+            p = head
+            head = head.next
+        return dummy.next
 
 .. code-block:: python
 

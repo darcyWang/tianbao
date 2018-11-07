@@ -1,4 +1,4 @@
-题目序号 110、108、107、104、101、100、684、666
+题目序号 110、107、104、101、100、684、666
 ============================================================
 
 
@@ -49,14 +49,6 @@ For this problem, a height-balanced binary tree is defined as a binary tree in w
             return 0
         return max(self.height(root.left), self.height(root.right)) + 1
 
-
-
-
-108. Convert Sorted Array to Binary Search Tree
------------------------------------------------
-
-
-Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 
 
 

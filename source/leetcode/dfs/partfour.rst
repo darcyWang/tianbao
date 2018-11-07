@@ -1,4 +1,4 @@
-题目序号 210、207、200、199、133、117、116、114、109、106、105
+题目序号 210、207、200、133、117、116、114、106、105
 ============================================================================
 
 
@@ -288,30 +288,6 @@ Answer: 3
 
 
 
-
-199. Binary Tree Right Side View
---------------------------------
-
-
-Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
-
-For example:
-Given the following binary tree,
-
-   1            <---
- /   \
-2     3         <---
- \     \
-  5     4       <---
-
-You should return [1, 3, 4].
-
-Credits:
-Special thanks to @amrsaqr for adding this problem and creating all test cases.
-
-
-
-
 133. Clone Graph
 ----------------
 
@@ -510,11 +486,6 @@ If you notice carefully in the flattened tree, each node's right child points to
 
 
 
-
-109. Convert Sorted List to Binary Search Tree
-----------------------------------------------
-
-Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
 
 

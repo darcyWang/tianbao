@@ -16,6 +16,116 @@ Note: next() and hasNext() should run in average O(1) time and uses O(h) memory,
 
 
 
+.. code-block:: python
+
+    # Definition for a  binary tree node
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+
+    class BSTIterator:
+        # @param root, a binary search tree's root node
+        def __init__(self, root):
+            self.nodes = []
+            while root:
+                self.nodes.append(root)
+                root = root.left
+
+        # @return a boolean, whether we have a next smallest number
+        def hasNext(self):
+            return len(self.nodes) > 0
+
+        # @return an integer, the next smallest number
+        def next(self):
+            ret = self.nodes.pop()
+            cur = ret.right
+            while cur:
+                self.nodes.append(cur)
+                cur = cur.left
+
+            return ret.val
+            
+
+    # Your BSTIterator will be called like this:
+    # i, v = BSTIterator(root), []
+    # while i.hasNext(): v.append(i.next()) 
+            
+            
+            
+    # @param root, a binary search tree's root node
+    def __init__(self, root):
+        self.nodes = []
+        self.count = 0
+        while root:
+            self.nodes.append(root)
+            self.count += 1
+            root = root.left
+
+    # @return a boolean, whether we have a next smallest number
+    def hasNext(self):
+        return self.count > 0
+
+    # @return an integer, the next smallest number
+    def next(self):
+        ret = self.nodes.pop()
+        self.count -= 1
+        cur = ret.right
+        while cur:
+            self.nodes.append(cur)
+            self.count += 1
+            cur = cur.left
+        return ret.val  
+            
+    class BSTIterator:
+    # @param root, a binary search tree's root node
+    def __init__(self, root):
+        self.q=[]
+        self.allLeftIntoStack(root)
+
+    # @return a boolean, whether we have a next smallest number
+    def hasNext(self):
+        if not self.q:return False
+        return True
+
+    def hasNext(self):
+        return self.q != []
+
+    # @return an integer, the next smallest number
+    def next(self):
+        cur = self.q.pop()
+        self.allLeftIntoStack(cur.right)
+        return cur.val
+
+    def allLeftIntoStack(self,root):
+        while root:
+            self.q.append(root)
+            root=root.left
+            
+            
+    class BSTIterator:
+        # @param root, a binary search tree's root node
+        def __init__(self, root):
+            self.stack = list()
+            self.pushAll(root)
+
+        # @return a boolean, whether we have a next smallest number
+        def hasNext(self):
+            return self.stack
+
+        # @return an integer, the next smallest number
+        def next(self):
+            tmpNode = self.stack.pop()
+            self.pushAll(tmpNode.right)
+            return tmpNode.val
+            
+        def pushAll(self, node):
+            while node is not None:
+                self.stack.append(node)
+                node = node.left    
+        
+
 
 144. Binary Tree Preorder Traversal
 -----------------------------------
@@ -37,6 +147,72 @@ For example:
 
 Note: Recursive solution is trivial, could you do it iteratively?
 
+.. code-block:: python
+
+    def inorderTraversal(self, root):
+        stack, curr, res = [], root, []
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            curr = stack.pop()
+            res.append(curr.val)
+            curr= curr.right
+        return res
+            
+    # recursively
+    def preorderTraversal1(self, root):
+        res = []
+        self.dfs(root, res)
+        return res
+        
+    def dfs(self, root, res):
+        if root:
+            res.append(root.val)
+            self.dfs(root.left, res)
+            self.dfs(root.right, res)
+
+    # iteratively
+    def preorderTraversal(self, root):
+        stack, res = [root], []
+        while stack:
+            node = stack.pop()
+            if node:
+                res.append(node.val)
+                stack.append(node.right)
+                stack.append(node.left)
+        return res  
+            
+    class Solution:
+    # @param {TreeNode} root
+    # @return {integer[]}
+
+    def preorderTraversal(self, root):
+        # Recursion: AC in 52 ms
+        # ----------------------
+        #
+        if root == None:
+            return []
+
+        retval = [root.val]
+        retval += self.preorderTraversal(root.left)
+        retval += self.preorderTraversal(root.right)
+        return retval
+            
+            
+    def preorderTraversal(self, root):
+        if not root:
+            return []
+        stack, res = [root], []
+        while stack:
+            curr = stack.pop()
+            res.append(curr.val)
+            if curr.right:
+                stack.append(curr.right)
+            if curr.left:
+                stack.append(curr.left)
+        return res  
+            
 
 
 

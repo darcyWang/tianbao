@@ -1,4 +1,4 @@
-题目序号 690、339、257、112、111、108
+题目序号 690、339、257、112、111、108、109
 =================================================
 
 
@@ -433,6 +433,31 @@ Example:
 Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 
 
+.. code-block:: python
+
+    def sortedArrayToBST(self, nums):
+        if len(nums)==0:
+            return None
+        mid=len(nums)//2
+        node=TreeNode(nums[mid])
+        node.left=self.sortedArrayToBST(nums[0:mid])
+        node.right=self.sortedArrayToBST(nums[mid+1:len(nums)])
+        return node
+            
+            
+    def sortedArrayToBST(self, nums):
+        if nums:
+            mid=len(nums)/2
+            node=TreeNode(nums[mid])
+            node.left=self.sortedArrayToBST(nums[:mid])
+            node.right=self.sortedArrayToBST(nums[mid+1:])
+            return node
+            
+        
 
 
+109. Convert Sorted List to Binary Search Tree
+----------------------------------------------
+
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
 
