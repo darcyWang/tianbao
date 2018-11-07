@@ -196,6 +196,28 @@ Given an array of integers, find if the array contains any duplicates. Your func
 
 Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k. 
 
+This one is easier to understand while complexity is O(k*n):
+
+.. code-block:: python
+    
+    def containsNearbyDuplicate(self, nums, k):
+        for i in xrange(max(len(nums)-k+1, 1)):
+            dic = {}
+            for j in xrange(i, min(i+k+1, len(nums))):
+                if nums[j] in dic:
+                    return True
+                dic[nums[j]] = 0
+        return False
+        
+        
+    def containsNearbyDuplicate(self, nums, k):
+        dic = {}
+        for i, v in enumerate(nums):
+            if v in dic and i - dic[v] <= k:
+                return True
+            dic[v] = i
+        return False
+        
 
 .. code-block:: javascript
 
