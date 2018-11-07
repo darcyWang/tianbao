@@ -1,5 +1,5 @@
-题目序号 210、207、200、133、117、116、114、106、105
-============================================================================
+题目序号 210、207、200、133、117、116、114
+========================================
 
 
 
@@ -451,7 +451,7 @@ After calling your function, the tree should look like:
 
 
 
- Given a binary tree, flatten it to a linked list in-place.
+Given a binary tree, flatten it to a linked list in-place.
 
 For example,
 Given
@@ -480,37 +480,6 @@ click to show hints.
 Hints:
 
 If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
-
-
-
-
-
-
-
-
-
-
-
-106. Construct Binary Tree from Inorder and Postorder Traversal
----------------------------------------------------------------
-
-
-Given inorder and postorder traversal of a tree, construct the binary tree.
-
-Note:
-You may assume that duplicates do not exist in the tree. 
-
-
-
-
-105. Construct Binary Tree from Preorder and Inorder Traversal
---------------------------------------------------------------
-
-
-Given preorder and inorder traversal of a tree, construct the binary tree.
-
-Note:
-You may assume that duplicates do not exist in the tree. 
 
 
 

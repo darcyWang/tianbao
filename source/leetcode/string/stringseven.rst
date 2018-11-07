@@ -223,6 +223,38 @@ Could you do this in one pass?
             return dummy.next
 
 
+.. code-block:: python
+
+    def removeNthFromEnd(self, head, n):
+        dummy = ListNode(0)
+        dummy.next = head
+        fast = slow = dummy
+        for _ in xrange(n):
+            fast = fast.next
+        while fast and fast.next:
+            fast = fast.next
+            slow = slow.next
+        slow.next = slow.next.next
+        return dummy.next
+        
+    def removeNthFromEnd(self, head, n):
+        pre = head
+        length = 0
+        while(pre):
+            length += 1
+            pre = pre.next
+       
+        if length == n :
+            return head.next
+        else:
+            cur = head
+            for i in range(length - n-1):
+                cur = cur.next
+            
+            cur.next = cur.next.next
+            return head 
+        
+
 206. Reverse Linked List
 --------------------------
 

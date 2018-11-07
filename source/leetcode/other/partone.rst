@@ -370,6 +370,57 @@ Good solution, here is a solution uses only one pointer:
         return second   
 
 
+.. code-block:: python
+
+    # Iteratively
+    def swapPairs1(self, head):
+        dummy = p = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            tmp = head.next
+            head.next = tmp.next
+            tmp.next = head
+            p.next = tmp
+            head = head.next
+            p = tmp.next
+        return dummy.next
+     
+    # Recursively    
+    def swapPairs(self, head):
+        if head and head.next:
+            tmp = head.next
+            head.next = self.swapPairs(tmp.next)
+            tmp.next = head
+            return tmp
+        return head
+        
+        
+        
+    # iteratively
+    def swapPairs1(self, head):
+        if not head or not head.next:
+            return head
+        second = head.next 
+        pre = ListNode(0)
+        while head and head.next:
+            nxt = head.next
+            head.next = nxt.next
+            nxt.next = head
+            pre.next = nxt
+            head = head.next
+            pre = nxt.next
+        return second
+
+    # recursively    
+    def swapPairs(self, head):
+        if not head or not head.next:
+            return head
+        second = head.next
+        head.next = self.swapPairs(second.next)
+        second.next = head
+        return second
+        
+
 179. Largest Number
 -------------------
 

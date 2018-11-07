@@ -497,6 +497,28 @@ Given preorder and inorder traversal of a tree, construct the binary tree.
 Note: You may assume that duplicates do not exist in the tree. 
 
 
+.. code-block:: python
+
+    # O(n)
+    def buildTree(self, preorder, inorder):
+        if not preorder:
+            return None
+        dic = {}
+        for i, val in enumerate(inorder):
+            dic[val] = i
+        # the root node index in preorder array
+        self.indPre = 0
+        return self.help_fun(preorder, 0, len(preorder)-1, dic)
+        
+    def help_fun(self, preorder, start, end, dic):
+        if start > end or self.indPre == len(preorder):
+            return None
+        root = TreeNode(preorder[self.indPre])
+        self.indPre += 1
+        index = dic[root.val]
+        root.left = self.help_fun(preorder, start, index-1, dic)
+        root.right = self.help_fun(preorder, index+1, end, dic)
+        return root
 
 
 103. Binary Tree Zigzag Level Order Traversal
