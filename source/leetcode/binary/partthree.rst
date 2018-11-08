@@ -28,7 +28,85 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 
 
+.. code-block:: python
 
+    # O(n) time
+    def findPeakElement1(self, nums):
+        i = 0
+        while i <= len(nums)-1:
+            while i < len(nums)-1 and nums[i] < nums[i+1]:
+                i += 1
+            return i 
+
+    # O(lgn) time     
+    def findPeakElement2(self, nums):
+        l, r = 0, len(nums)-1
+        while l < r:
+            mid = l + (r-l)//2
+            if nums[mid] > nums[mid+1]:
+                r = mid
+            else:
+                l = mid + 1
+        return l 
+        
+    # Recursively
+    def findPeakElement(self, nums):
+        return self.helper(nums, 0, len(nums)-1)
+
+    def helper(self, nums, l, r):
+        if l == r:
+            return l
+        mid = l + (r-l)//2
+        if nums[mid] > nums[mid+1]:
+            return self.helper(nums, l, mid)
+        else:
+            return self.helper(nums, mid+1, r)
+
+    # O(n) time
+    def findPeakElement(self, nums):
+        if not nums:
+            return 0
+        nums.insert(0, -(sys.maxint+1))
+        nums.append(-(sys.maxint+1))
+        for i in xrange(1, len(nums)-1):
+            if nums[i-1] < nums[i] > nums[i+1]:
+                return i-1
+        
+    # O(lgn) time
+    def findPeakElement(self, nums):
+        if not nums:
+            return 0
+        l, r = 0, len(nums)-1
+        while l <= r:
+            if l == r:
+                return l
+            mid = l + (r-l)//2
+            # due to "mid" is always the left one if the length of the list is even,
+            # so "mid+1" is always valid.
+            if (mid-1 < 0 or nums[mid-1] < nums[mid]) and nums[mid] > nums[mid+1]:
+                return mid
+            elif nums[mid] > nums[mid+1]:
+                r = mid
+            else:
+                l = mid + 1         
+                
+                
+    class Solution:
+        # @param nums, an integer[]
+        # @return an integer
+        def findPeakElement(self, nums):
+            for i in range(1, len(nums)):
+                if nums[i] < nums[i - 1]:
+                    return i - 1
+            return len(nums) - 1 
+    Or we can even cheat it. Of course, it is "bad" :-)
+
+    class Solution:
+        # @param nums, an integer[]
+        # @return an integer
+        def findPeakElement(self, nums):
+            return nums.index(max(nums))            
+        
 
 
 153. Find Minimum in Rotated Sorted Array

@@ -282,6 +282,199 @@ Try to solve it in linear time/space.
 
 
 
+79. Word Search
+---------------
+
+
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+Example:
+::
+    board =
+    [
+      ['A','B','C','E'],
+      ['S','F','C','S'],
+      ['A','D','E','E']
+    ]
+
+    Given word = "ABCCED", return true.
+    Given word = "SEE", return true.
+    Given word = "ABCB", return false.
+
+
+.. code-block:: python
+
+    Really nice way to build trie(). For space saving purpose, I rewrite your code in which way we don't need the "self.used" global variable:
+
+    def findWords(self, board, words):
+        trie = {}
+        for w in words:
+            t = trie
+            for c in w:
+                if c not in t:
+                    t[c] = {}
+                t = t[c]
+            t['#'] = '#'
+        res = []
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                self.find(board, i, j, trie, '', res)
+        return list(set(res))
+
+    def find(self, board, i, j, trie, path, res):
+        if '#' in trie:
+            res.append(path)
+        if i<0 or i>=len(board) or j<0 or j>=len(board[0]) or board[i][j] not in trie:
+            return
+        tmp = board[i][j]
+        board[i][j] ="@"
+        self.find(board, i+1, j, trie[tmp], path+tmp, res)
+        self.find(board, i, j+1, trie[tmp], path+tmp, res)
+        self.find(board, i-1, j, trie[tmp], path+tmp, res)
+        self.find(board, i, j-1, trie[tmp], path+tmp, res)
+        board[i][j] = tmp
+
+
+
+    class Solution(object):
+        def findWords(self, board, words):
+            res = []
+            trie = Trie()
+            node = trie.root
+            for w in words:
+                trie.insert(w)
+            for i in xrange(len(board)):
+                for j in xrange(len(board[0])):
+                    self.dfs(board, node, i, j, "", res)
+            return res
+
+    class Solution:
+        # @param {character[][]} board
+        # @param {string[]} words
+        # @return {string[]}
+        def findWords(self, board, words):
+        #make trie
+            trie={}
+            for w in words:
+                t=trie
+                for c in w:
+                    if c not in t:
+                        t[c]={}
+                    t=t[c]
+                t['#']='#'
+            self.res=set()
+            self.used=[[False]*len(board[0]) for _ in range(len(board))]
+            for i in range(len(board)):
+                for j in range(len(board[0])):
+                    self.find(board,i,j,trie,'')
+            return list(self.res)
+        
+        def find(self,board,i,j,trie,pre):
+            if '#' in trie:
+                self.res.add(pre)
+            if i<0 or i>=len(board) or j<0 or j>=len(board[0]):
+                return
+            if not self.used[i][j] and board[i][j] in trie:
+                self.used[i][j]=True
+                self.find(board,i+1,j,trie[board[i][j]],pre+board[i][j])
+                self.find(board,i,j+1,trie[board[i][j]],pre+board[i][j])
+                self.find(board,i-1,j,trie[board[i][j]],pre+board[i][j])
+                self.find(board,i,j-1,trie[board[i][j]],pre+board[i][j])
+                self.used[i][j]=False
+
+
+
+127. Word Ladder
+----------------
+
+Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+
+Only one letter can be changed at a time.
+Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+Note:
+
+Return 0 if there is no such transformation sequence.
+All words have the same length.
+All words contain only lowercase alphabetic characters.
+You may assume no duplicates in the word list.
+You may assume beginWord and endWord are non-empty and are not the same.
+Example 1:
+
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+Example 2:
+
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: 0
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+
+
+.. code-block:: python
+    
+    class Solution(object):
+        def ladderLength(self, beginWord, endWord, wordList):
+            """
+            :type beginWord: str
+            :type endWord: str
+            :type wordList: List[str]
+            :rtype: int
+            """
+            distance, stack, visited, lookup = 0, [beginWord], set([beginWord]), set(wordList)
+            while stack:
+                next_stack = []
+                for word in stack:
+                    if word == endWord:
+                        return distance + 1
+                    for i in range(len(word)):
+                        for char in 'abcdefghijklmnopqrstuvwxyz':
+                            trans_word = word[:i] + char + word[i+1:]
+                            if trans_word not in visited and trans_word in lookup:
+                                next_stack.append(trans_word)
+                                visited.add(trans_word)
+                distance += 1
+                stack = next_stack
+            return 0
+
+
+.. code-block:: python
+
+    def ladderLength(self, beginWord, endWord, wordList):
+        # wordList.add(endWord)
+        queue = collections.deque([(beginWord, 1)])
+        ls = string.ascii_lowercase
+        visited = set()
+        while queue:
+            word, dist = queue.popleft()
+            if word == endWord:
+                return dist
+            for i in xrange(len(word)):
+                for j in ls:
+                    if j != word[i]:
+                        newWord = word[:i]+j+word[i+1:]
+                        if newWord not in visited and newWord in wordList:
+                            queue.append((newWord, dist+1))
+                            visited.add(newWord)  # wordList.remove(newWord)
+        return 0
+
+
+
+
+
+
 
 
 

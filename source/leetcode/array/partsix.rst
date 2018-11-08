@@ -167,6 +167,131 @@ You are given a target value to search. If found in the array return its index, 
 You may assume no duplicate exists in the array.
 
 
+This problem is more or less the same as Find Minimum in Rotated Sorted Array. And one key difference is as stated in the solution tag. That is, due to duplicates, we may not be able to throw one half sometimes. And in this case, we could just apply linear search and the time complexity will become O(n).
+
+The idea to solve this problem is still to use invariants. We set l to be the left pointer and r to be the right pointer. Since duplicates exist, the invatiant is nums[l] >= nums[r] (if it does not hold, then nums[l] will simply be the minimum). We then begin binary search by comparing nums[l], nums[r] with nums[mid].
+
+If nums[l] = nums[r] = nums[mid], simply apply linear search within nums[l..r].
+If nums[mid] <= nums[r], then the mininum cannot appear right to mid, so set r = mid;
+If nums[mid] > nums[r], then mid is in the first larger half and r is in the second smaller half, so the minimum is to the right of mid: set l = mid + 1.
+The code is as follows.
+
+.. code-block:: python
+
+    def search(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            mid = l + (r-l)//2
+            if nums[mid] == target:
+                return True
+            while l < mid and nums[l] == nums[mid]: # tricky part
+                l += 1
+            # the first half is ordered
+            if nums[l] <= nums[mid]:
+                # target is in the first half
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            # the second half is ordered
+            else:
+                # target is in the second half
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+        return False
+        
+        
+    def search(self, nums, target):
+        if not nums:
+            return False
+        l, r = 0, len(nums)-1
+        while l < r:
+            mid = l + (r-l)//2
+            if nums[mid] == target:
+                return True
+            if nums[mid] < nums[r]:
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+            elif nums[mid] > nums[r]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            else:
+                r -= 1
+        return nums[l] == target
+
+    def search(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            mid = l + (r-l)//2
+            if nums[mid] == target:
+                return mid
+            if nums[l] <= nums[mid]:  # here should include "==" case
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            else:
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+        return -1   
+
+    def search(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            mid = l + (r-l)//2
+            if nums[mid] == target:
+                return True
+            while l < mid and nums[l] == nums[mid]: # tricky part
+                l += 1
+            # the first half is ordered
+            if nums[l] <= nums[mid]:
+                # target is in the first half
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            # the second half is ordered
+            else:
+                # target is in the second half
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+        return False            
+                
+                
+    Here is another version which moves the right pointer one step forward when nums[mid] == nums[r], as we don't know target is in left part or in right part:
+
+    def search(self, nums, target):
+        if not nums:
+            return False
+        l, r = 0, len(nums)-1
+        while l < r:
+            mid = l + (r-l)//2
+            if nums[mid] == target:
+                return True
+            if nums[mid] < nums[r]:
+                if nums[mid] < target <= nums[r]:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+            elif nums[mid] > nums[r]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            else:
+                r -= 1
+        return nums[l] == target            
+
 
 31. Next Permutation 
 --------------------

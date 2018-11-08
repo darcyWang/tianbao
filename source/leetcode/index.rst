@@ -17,3 +17,4 @@ Leetcode
    math/index.rst
    dynamic/index.rst
    other/index.rst
+   hard/index.rst
