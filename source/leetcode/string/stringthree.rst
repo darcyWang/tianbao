@@ -17,6 +17,84 @@ For example,
     Given s = "Hello World",
     return 5.
 
+
+.. code-block:: python
+
+    def lengthOfLastWord1(self, s):
+        res, s = 0, s.rstrip()
+        while res < len(s) and s[-(res+1)].isalpha():
+            res += 1
+        return res
+        
+    def lengthOfLastWord2(self, s):
+        return len(s.split()[-1]) if s.split() else 0 
+        
+    def lengthOfLastWord(self, s):
+        return len(s.rstrip().split(' ')[-1])   
+
+
+.. code-block:: python
+    
+    class Solution(object):
+        def lengthOfLastWord(self, s):
+            """
+            :type s: str
+            :rtype: int
+            """
+            s = s[::-1].strip()
+            return s.find(' ') if s.find(' ') != -1 else len(s)
+
+    # 作弊式做法：
+    class Solution(object):
+        def lengthOfLastWord(self, s):
+            """
+            :type s: str
+            :rtype: int
+            """
+            lst = s.split()
+            if len(lst) >= 1:
+                return len(lst[-1])
+            return 0
+
+    # 一行解法：
+    class Solution(object):
+        def lengthOfLastWord(self, s):
+            """
+            :type s: str
+            :rtype: int
+            """
+            return len(s.strip().split(" ")[-1])
+
+.. code-block:: java
+
+    int lengthOfLastWord(string s) {
+        int l = s.size()-1, count = 0;
+        while (l>=0 && isspace(s[l]))
+            l--;
+        while (l>=0 && isalpha(s[l])) {
+            count++;
+            l--;
+        }
+        return count;
+    }
+
+时间复杂度: O(N) 空间复杂度: O(N)
+
+*. 将数组以空格分割，找到最后一个字符串输出长度
+*. 注意以空格结尾以及输入空字符串
+.. code-block:: javascript
+
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    var lengthOfLastWord = function(s) {
+        var temp = s.split(' ').filter(function (value) {
+            return value!='';
+        });
+        return temp.length>0?temp.pop().length:0;
+    };
+
 293. Flip Game
 --------------
 
