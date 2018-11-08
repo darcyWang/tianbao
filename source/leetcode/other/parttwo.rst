@@ -290,6 +290,368 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
             return traversal[::-1]  
     
 
+241. Different Ways to Add Parentheses
+--------------------------------------
+
+Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *.
+
+Example 1:
+::
+    Input: "2-1-1"
+    Output: [0, 2]
+    Explanation: 
+    ((2-1)-1) = 0 
+    (2-(1-1)) = 2
+
+Example 2:
+::
+    Input: "2*3-4*5"
+    Output: [-34, -14, -10, -10, 10]
+    Explanation: 
+    (2*(3-(4*5))) = -34 
+    ((2*3)-(4*5)) = -14 
+    ((2*(3-4))*5) = -10 
+    (2*((3-4)*5)) = -10 
+    (((2*3)-4)*5) = 10
+
+
+.. code-block:: python
+
+    def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i in xrange(len(input)):
+            if input[i] in "-+*":
+                res1 = self.diffWaysToCompute(input[:i])
+                res2 = self.diffWaysToCompute(input[i+1:])
+                for j in res1:
+                    for k in res2:
+                        res.append(self.helper(j, k, input[i]))
+        return res
+        
+    def helper(self, m, n, op):
+        if op == "+":
+            return m+n
+        elif op == "-":
+            return m-n
+        else:
+            return m*n
+
+
+
+     def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [eval(input)]
+        res = []
+        for i, s in enumerate(input):
+            if s in "+-*":
+                l = self.diffWaysToCompute(input[:i])
+                r = self.diffWaysToCompute(input[i+1:])
+                res.extend(self.compute(l, r, s))
+        return res 
+                
+    def compute(self, l, r, op):
+        return [eval(str(m)+op+str(n)) for m in l for n in r]
+
+
+
+    def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [int(input)]
+        res = []        
+        for i in xrange(len(input)):
+            if input[i] in "-+*":
+                res1 = self.diffWaysToCompute(input[:i])
+                res2 = self.diffWaysToCompute(input[i+1:])
+                res += [eval(str(k)+input[i]+str(j)) for k in res1 for j in res2]            
+        return res
+
+
+        
+    def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i in xrange(len(input)):
+            if input[i] in "-+*":
+                res1 = self.diffWaysToCompute(input[:i])
+                res2 = self.diffWaysToCompute(input[i+1:])
+                for j in res1:
+                    for k in res2:
+                        res.append(self.helper(j, k, input[i]))
+        return res
+        
+    def helper(self, m, n, op):
+        if op == "+":
+            return m+n
+        elif op == "-":
+            return m-n
+        else:
+            return m*n  
+
+.. code-block:: python
+
+    def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [int(input)]
+        res = []
+        for i in xrange(len(input)):
+            if input[i] in "-+*":
+                res1 = self.diffWaysToCompute(input[:i])
+                res2 = self.diffWaysToCompute(input[i+1:])
+                for j in res1:
+                    for k in res2:
+                        res.append(self.helper(j, k, input[i]))
+        return res
+        
+    def helper(self, m, n, op):
+        if op == "+":
+            return m+n
+        elif op == "-":
+            return m-n
+        else:
+            return m*n  
+        
+        
+    An even shorter version:
+
+     def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [eval(input)]
+        res = []
+        for i, s in enumerate(input):
+            if s in "+-*":
+                l = self.diffWaysToCompute(input[:i])
+                r = self.diffWaysToCompute(input[i+1:])
+                res.extend(self.compute(l, r, s))
+        return res 
+                
+    def compute(self, l, r, op):
+        return [eval(str(m)+op+str(n)) for m in l for n in r]   
+        
+        
+    def diffWaysToCompute(self, input):
+        if input.isdigit():
+            return [int(input)]
+        res = []        
+        for i in xrange(len(input)):
+            if input[i] in "-+*":
+                res1 = self.diffWaysToCompute(input[:i])
+                res2 = self.diffWaysToCompute(input[i+1:])
+                res += [eval(str(k)+input[i]+str(j)) for k in res1 for j in res2]            
+        return res  
+
+
+
+130. Surrounded Regions
+-----------------------
+
+Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+Example:
+::
+    X X X X
+    X O O X
+    X X O X
+    X O X X
+    After running your function, the board should be:
+
+    X X X X
+    X X X X
+    X X X X
+    X O X X
+
+Explanation:
+
+Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+
+
+.. code-block:: python
+
+    # BFS
+    def solve(self, board):
+        queue = collections.deque([])
+        for r in xrange(len(board)):
+            for c in xrange(len(board[0])):
+                if (r in [0, len(board)-1] or c in [0, len(board[0])-1]) and board[r][c] == "O":
+                    queue.append((r, c))
+        while queue:
+            r, c = queue.popleft()
+            if 0<=r<len(board) and 0<=c<len(board[0]) and board[r][c] == "O":
+                board[r][c] = "D"
+                queue.append((r-1, c)); queue.append((r+1, c))
+                queue.append((r, c-1)); queue.append((r, c+1))
+            
+        for r in xrange(len(board)):
+            for c in xrange(len(board[0])):
+                if board[r][c] == "O":
+                    board[r][c] = "X"
+                elif board[r][c] == "D":
+                    board[r][c] = "O"
+
+
+        
+    # BFS
+    def solve(self, board):
+        if not board:
+            return 
+        r, c = len(board), len(board[0])
+        for i in xrange(r):
+            self.bfs(board, i, 0); self.bfs(board, i, c-1)
+        for j in xrange(1, c-1):
+            self.bfs(board, 0, j); self.bfs(board, r-1, j)
+        # recover the board at second time
+        for i in xrange(r):
+            for j in xrange(c):
+                if board[i][j] == "D":
+                    board[i][j] = "O"
+                else:
+                    board[i][j] = "X"
+        
+    def bfs(self, board, i, j):
+        queue = collections.deque()
+        if board[i][j] == "O":
+            queue.append((i, j)); board[i][j] = "D"
+        while queue:
+            r, c = queue.popleft()
+            if r > 0 and board[r-1][c] == "O": # up
+                queue.append((r-1, c)); board[r-1][c] = "D"
+            if r < len(board)-1 and board[r+1][c] == "O": # down
+                queue.append((r+1, c)); board[r+1][c] = "D"
+            if c > 0 and board[r][c-1] == "O": # left
+                queue.append((r, c-1)); board[r][c-1] = "D"
+            if c < len(board[0])-1 and board[r][c+1] == "O": # right
+                queue.append((r, c+1)); board[r][c+1] = "D"
+        
+        
+    Here is a version which bfs function is embedded inside solve function:
+
+    # BFS 
+    def solve(self, board):
+        if not board:
+            return 
+        row, col = len(board), len(board[0])
+        queue = collections.deque()
+        for i in xrange(row):
+            if board[i][0] == "O":
+                queue.append((i, 0))
+            if board[i][col-1] == "O":
+                queue.append((i, col-1))
+        for j in xrange(1, col-1): 
+            if board[0][j] == "O":
+                queue.append((0, j))
+            if board[row-1][j] == "O":
+                queue.append((row-1, j))
+        while queue:
+            r, c = queue.popleft()
+            board[r][c] = "D"
+            if r > 0 and board[r-1][c] == "O": # up
+                queue.append((r-1, c))
+            if r < row-1 and board[r+1][c] == "O": # down
+                queue.append((r+1, c))
+            if c > 0 and board[r][c-1] == "O": # left
+                queue.append((r, c-1))
+            if c < col-1 and board[r][c+1] == "O": # right
+                queue.append((r, c+1))
+        # recover the board at second time
+        for i in xrange(row):
+            for j in xrange(col):
+                if board[i][j] == "D":
+                    board[i][j] = "O"
+                else:
+                    board[i][j] = "X"
+        
+        
+
+150. Evaluate Reverse Polish Notation
+-------------------------------------
+
+Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+
+Note:
+
+Division between two integers should truncate toward zero.
+The given RPN expression is always valid. That means the expression would always evaluate to a result and there won't be any divide by zero operation.
+Example 1:
+
+Input: ["2", "1", "+", "3", "*"]
+Output: 9
+Explanation: ((2 + 1) * 3) = 9
+Example 2:
+
+Input: ["4", "13", "5", "/", "+"]
+Output: 6
+Explanation: (4 + (13 / 5)) = 6
+Example 3:
+
+Input: ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]
+Output: 22
+Explanation: 
+  ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
+= ((10 * (6 / (12 * -11))) + 17) + 5
+= ((10 * (6 / -132)) + 17) + 5
+= ((10 * 0) + 17) + 5
+= (0 + 17) + 5
+= 17 + 5
+= 22
+
+.. code-block:: python
+
+    def evalRPN(self, tokens):
+        stack = []
+        for t in tokens:
+            if t not in ["+", "-", "*", "/"]:
+                stack.append(int(t))
+            else:
+                r, l = stack.pop(), stack.pop()
+                if t == "+":
+                    stack.append(l+r)
+                elif t == "-":
+                    stack.append(l-r)
+                elif t == "*":
+                    stack.append(l*r)
+                else:
+                    # here take care of the case like "1/-22",
+                    # in Python 2.x, it returns -1, while in 
+                    # Leetcode it should return 0
+                    if l*r < 0 and l % r != 0:
+                        stack.append(l/r+1)
+                    else:
+                        stack.append(l/r)
+        return stack.pop()  
+        
+        
+    class Solution:
+    # @param tokens, a list of string
+    # @return an integer
+    def evalRPN(self, tokens):
+        stack  = [] 
+        for i in tokens:
+            try:
+                temp = int(i)
+                stack.append(temp)
+            except Exception, e:         
+                b,a=stack[-1],stack[-2]
+                stack.pop()
+                stack.pop()
+                if i == '+':    a = a+b
+                elif i=='-':    a = a-b
+                elif i=='*':    a = a*b
+                elif i=='/':    a = int(a*1.0/b)
+                stack.append(a)
+               
+        return stack[-1]    
+
+
+
+
+
+
 
 	
 	

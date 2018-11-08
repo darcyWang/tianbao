@@ -80,6 +80,46 @@ Hope this clarification helps :)
 
 
 
+.. code-block:: python
+
+    class Solution:
+        def read(self, buf, n):
+            idx = 0
+            while True:
+                buf4 = [""]*4
+                curr = min(read4(buf4),n-idx)  # curr is the number of chars that reads
+                for i in xrange(curr):
+                    buf[idx] = buf4[i]
+                    idx+=1
+                if curr!=4 or idx==n:  # return if it reaches the end of file or reaches n
+                    return idx  
+        
+        
+        
+    class Solution:
+    # @param buf, Destination buffer (a list of characters)
+    # @param n,   Maximum number of characters to read (an integer)
+    # @return     The number of characters read (an integer)
+    def __init__(self):
+        self.queue = []
+
+    def read(self, buf, n):
+        idx = 0
+        while True:
+            buf4 = [""]*4
+            l = read4(buf4)
+            self.queue.extend(buf4)
+            curr = min(len(self.queue), n-idx)
+            for i in xrange(curr):
+                buf[idx] = self.queue.pop(0)
+                idx+=1
+            if curr == 0:
+                break 
+        return idx  
+        
+        
+        
+
 158. Read N Characters Given Read4 II - Call multiple times
 -----------------------------------------------------------
 
@@ -142,6 +182,28 @@ For example
     Given s = "the sky is blue",
     return "blue is sky the".
 
+
+..code-block:: python
+
+    # in-place
+    def reverseWords(self, s):
+        # reverse the whole list
+        self.reverse(s, 0, len(s)-1)
+        r = 0
+        while r < len(s):
+            l = r 
+            while r < len(s) and s[r] != " ":
+                r += 1
+            # reverse each sublist
+            self.reverse(s, l, r-1)
+            r += 1
+        
+    def reverse(self, s, l, r):
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l +=1 ; r -= 1  
+        
+        
 
 .. code-block:: python
 

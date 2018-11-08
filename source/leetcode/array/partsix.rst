@@ -183,6 +183,65 @@ Here are some examples. Inputs are in the left-hand column and its corresponding
     3,2,1 → 1,2,3
     1,1,5 → 1,5,1
 
+
+.. code-block:: python
+
+    def nextPermutation(self, nums):
+        i = j = len(nums)-1
+        while i > 0 and nums[i-1] >= nums[i]:
+            i -= 1
+        if i == 0:   # nums are in descending order
+            nums.reverse()
+            return 
+        k = i - 1    # find the last "ascending" position
+        while nums[j] <= nums[k]:
+            j -= 1
+        nums[k], nums[j] = nums[j], nums[k]  
+        l, r = k+1, len(nums)-1  # reverse the second part
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l +=1 ; r -= 1
+
+            
+        
+    def nextPermutation(self, nums):
+        i = l = len(nums)-1
+        while i > 0:
+            # find the right most pair where nums[i] > nums[i-1]
+            if nums[i] > nums[i-1]:
+                tmp = 0
+                for j in xrange(l, i-1, -1):
+                    if nums[j] > nums[i-1]:
+                        tmp = j
+                        break
+                # exchange nums[i-1] and the right most element which larger than nums[i-1] 
+                nums[i-1], nums[tmp] = nums[tmp], nums[i-1]
+                # reverse from i to the end
+                for j in xrange(i, 1+i+(l-i)/2):
+                    nums[j], nums[l+i-j] = nums[l+i-j], nums[j]
+                break
+            i -= 1
+        # if nums are in descending order
+        if i == 0:
+            nums.reverse()
+        
+        
+        
+    def nextPermutation(self, nums):
+        i = j = len(nums)-1
+        while i > 0 and nums[i] <= nums[i-1]:
+            i -= 1
+        if i > 0:
+            while nums[j] <= nums[i-1]:
+                j -= 1
+            nums[i-1], nums[j] = nums[j], nums[i-1]
+        nums[i:] = reversed(nums[i:])
+        
+        
+
+
+
+
 18. 4Sum
 --------
 
