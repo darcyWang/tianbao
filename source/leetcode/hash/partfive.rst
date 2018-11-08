@@ -262,7 +262,78 @@ For example,
     Given numerator = 2, denominator = 3, return "0.(6)".
 
 
+.. code-block:: python
 
+    def fractionToDecimal(self, numerator, denominator):
+        num, den = numerator, denominator
+        if not den:  # denominator is 0
+            return 
+        if not num:  # numerator is 0
+            return "0"
+        res = []
+        if (num < 0) ^ (den < 0):
+            res.append("-")  # add the sign
+        num, den = abs(num), abs(den)
+        res.append(str(num//den))
+        rmd = num % den
+        if not rmd:
+            return "".join(res)  # only has integral part
+        res.append(".")  # has frational part
+        dic = {}
+        while rmd:
+            if rmd in dic:   # the remainder recurs
+                res.insert(dic[rmd], "(")
+                res.append(")")
+                break
+            dic[rmd] = len(res) 
+            div, rmd = divmod(rmd*10, den)
+            res.append(str(div))
+        return "".join(res) 
+
+
+思路 1 - 时间复杂度: hard to say - 空间复杂度: O(1)******
+
+先处理正负号
+再处理整数部分
+最后处理小数部分，利用字典来判断是否循环
+note：对于小数处理部分，必须先进行将没有处理过的r加入到m中去
+
+这是因为：
+
+例如输入为4, 333
+如果我们将已经处理过的r加入到m中去的话，重复数字当次就被加入m中了，下一次循环判断的时候r肯定已经在里面了
+
+.. code-block:: python
+
+    class Solution(object):
+        def fractionToDecimal(self, numerator, denominator):
+            """
+            :type numerator: int
+            :type denominator: int
+            :rtype: str
+            """
+            if numerator == 0: # zero numerator
+                return '0'
+            res = ''
+            if numerator * denominator < 0: # determine the sign
+                res += '-'
+            numerator, denominator = abs(numerator), abs(denominator) # remove sign of operands
+            res += str(numerator / denominator) # append integer part
+            if numerator % denominator == 0: # in case no fractional part
+                return res
+            res += '.'
+            r = numerator % denominator
+            m = {}
+            while r: # simulate the division process
+                if r in m: # meet a known remainder
+                    res = res[:m[r]] + '(' + res[m[r]:] + ')' # so we reach the end of the repeating part
+                    break
+                m[r] = len(res) # if the remainder is first seen, remember next r/denominator index in res
+                r *= 10
+                res += str(r/denominator) # append the quotient digit
+                r %= denominator
+               
+            return res
 
 
 138. Copy List with Random Pointer

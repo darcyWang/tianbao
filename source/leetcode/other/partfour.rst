@@ -496,10 +496,230 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 
 
 
+51. N-Queens
+------------
+
+
+https://leetcode.com/problems/n-queens/description/
+
+.. code-block:: python
+
+    def solveNQueens(self, n):
+        res = []
+        self.dfs([-1]*n, 0, [], res)
+        return res
+     
+    # nums is a one-dimension array, like [1, 3, 0, 2] means
+    # first queen is placed in column 1, second queen is placed
+    # in column 3, etc.
+    def dfs(self, nums, index, path, res):
+        if index == len(nums):
+            res.append(path)
+            return  # backtracking
+        for i in xrange(len(nums)):
+            nums[index] = i
+            if self.valid(nums, index):  # pruning
+                tmp = "."*len(nums)
+                self.dfs(nums, index+1, path+[tmp[:i]+"Q"+tmp[i+1:]], res)
+
+    # check whether nth queen can be placed in that column
+    def valid(self, nums, n):
+        for i in xrange(n):
+            if abs(nums[i]-nums[n]) == n -i or nums[i] == nums[n]:
+                return False
+        return True 
+
+52. N-Queens II
+---------------
+
+https://leetcode.com/problems/n-queens-ii/
+
+.. code-block:: python
+    
+    def totalNQueens(self, n):
+        self.res = 0
+        self.dfs([-1]*n, 0)
+        return self.res
+        
+    def dfs(self, nums, index):
+        if index == len(nums):
+            self.res += 1
+            return 
+        for i in xrange(len(nums)):
+            nums[index] = i
+            if self.valid(nums, index):
+                self.dfs(nums, index+1)
+        
+    def valid(self, nums, n):
+        for i in xrange(n):
+            if nums[i] == nums[n] or abs(nums[n]-nums[i]) == n-i:
+                return False
+        return True 
+
+
+4. Median of Two Sorted Arrays
+------------------------------
+
+
+https://leetcode.com/problems/median-of-two-sorted-arrays/description/
 
 
 
+.. code-block:: python
 
+    def findMedianSortedArrays(self, nums1, nums2):
+        l = len(nums1) + len(nums2)
+        if l % 2:  # the length is odd
+            return self.findKthSmallest(nums1, nums2, l//2+1)
+        else:
+            return (self.findKthSmallest(nums1, nums2, l//2) +
+            self.findKthSmallest(nums1, nums2, l//2+1))*0.5
+        
+    def findKthSmallest(self, nums1, nums2, k):
+        # force nums1 is not longer than nums2
+        if len(nums1) > len(nums2):
+            return self.findKthSmallest(nums2, nums1, k)
+        if not nums1:
+            return nums2[k-1]
+        if k == 1:
+            return min(nums1[0], nums2[0])
+        pa = min(k/2, len(nums1)); pb = k-pa  # take care here
+        if nums1[pa-1] <= nums2[pb-1]:
+            return self.findKthSmallest(nums1[pa:], nums2, k-pa)
+        else:
+            return self.findKthSmallest(nums1, nums2[pb:], k-pb)    
+        
+        
+    class Solution:
+    # @return a float
+    def findMedianSortedArrays(self, A, B):
+        l=len(A)+len(B)
+        return self.findKth(A,B,l//2) if l%2==1 else (self.findKth(A,B,l//2-1)+self.findKth(A,B,l//2))/2.0
+
+
+    def findKth(self,A,B,k):
+        if len(A)>len(B):
+            A,B=B,A
+        if not A:
+            return B[k]
+        if k==len(A)+len(B)-1:
+            return max(A[-1],B[-1])
+        i=len(A)//2
+        j=k-i
+        if A[i]>B[j]:
+            return self.findKth(A[:i],B[j:],i)
+        else:
+            return self.findKth(A[i:],B[:j],j)
+        
+        
+253. Meeting Rooms II
+---------------------
+
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+
+Example 1:
+
+Input: [[0, 30],[5, 10],[15, 20]]
+Output: 2
+Example 2:
+
+Input: [[7,10],[2,4]]
+Output: 1
+
+时间复杂度: O(N) 空间复杂度: O(N) 
+
+想象一下，现实生活中，先开始的会议还没结束前我们就又要开始一个会议的话，此时我们需要一个新的会议室
+
+如果前面一堆先开始的会议都先于我们的新会议开始之前结束了，我们不需要新会议室
+
+换句话说，如果前面一堆新开始的会议中结束最早的那个会议如果在新开始的会议之前结束了的话，我们不需要会议室
+
+所以我们的思路是，先按照会议开始的时间排序，然后维护一个会议结束时间的最小堆，堆顶就是前面结束最早的那个会议的结束时间
+
+那么对于一个新的会议出现时：
+
+如果堆顶元素比新会议的开始时间更小的话，我们不需要新会议室。同时因为后面出现的新会议的开始时间更大了， 所以目前最先结束的会议永远不可能比后面新出现的会议的开始时间更大，因此我们可以pop目前最先结束的会议，即pop堆顶元素，并且将新会议的结束时间放进堆中
+如果堆顶元素比新会议的开始时间更大的话，我们知道我们需要一个新的会议室，此时直接将新会议的结束时间放进堆中
+最终堆的size就是我们需要的会议室数量
+
+
+.. code-block:: python
+
+    from heapq import heappush, heappop
+    class Solution(object):
+        def minMeetingRooms(self, intervals):
+            """
+            :type intervals: List[Interval]
+            :rtype: int
+            """
+            if not intervals:
+                return 0
+
+            intervals.sort(key = lambda x:x.start)
+            end = []
+            for it in intervals:
+                # if the first finished meeting m1 ends before the next meeting
+                # we can directly pop m1, because there is no need to add a new room
+                if end and end[0] <= it.start: 
+                    heappop(end)
+                heappush(end, it.end)
+                
+            return len(end)
+
+.. code-block:: python
+
+    def minMeetingRooms(self, intervals):
+        intervals.sort(key=lambda x:x.start)
+        heap = []  # stores the end time of intervals
+        for i in intervals:
+            if heap and i.start >= heap[0]: 
+                # means two intervals can use the same room
+                heapq.heapreplace(heap, i.end)
+            else:
+                # a new room is allocated
+                heapq.heappush(heap, i.end)
+        return len(heap)
+
+
+163. Missing Ranges
+-------------------
+
+Given a sorted integer array nums, where the range of elements are in the inclusive range [lower, upper], return its missing ranges.
+
+
+Example:
+
+Input: nums = [0, 1, 3, 50, 75], lower = 0 and upper = 99,
+Output: ["2", "4->49", "51->74", "76->99"]
+
+
+.. code-block:: python
+
+    def findMissingRanges1(self, nums, lower, upper):
+        nums.insert(0, lower-1)
+        nums.append(upper+1)
+        res = []
+        for i in xrange(len(nums)-1):
+            res.append(self.generateRange(nums[i], nums[i+1]))
+        return [x for x in res if x]
+        
+    def generateRange(self, l, r):
+        if l == r or l+1 == r:
+            return ""
+        if l+2 == r:
+            return str(l+1)
+        return str(l+1)+"->"+str(r-1)
+
+    def findMissingRanges(self, nums, lower, upper):
+        nums.insert(0, lower-1)
+        nums.append(upper+1)
+        res = []
+        for i in xrange(len(nums)-1):
+            if nums[i+1]-nums[i] == 2:
+                res.append(str(nums[i]+1))
+            elif nums[i+1]-nums[i] > 2:
+                res.append(str(nums[i]+1)+"->"+str(nums[i+1]-1))
+        return res  
 
 
 

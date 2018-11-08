@@ -257,7 +257,17 @@ Hint:
 #. If each character occurs even number of times, then it must be a palindrome. How about character which occurs odd number of times?
 
 
+.. code-block:: python
+    
+    Use collections.Counter and itertools.permutations
 
+    class Solution(object):
+        def generatePalindromes(self, s):
+            d = collections.Counter(s)
+            m = tuple(k for k, v in d.iteritems() if v % 2)
+            p = ''.join(k*(v/2) for k, v in d.iteritems())
+            return [''.join(i + m + i[::-1]) for i in set(itertools.permutations(p))] if len(m) < 2 else [] 
+        
 
 242. Valid Anagram
 ------------------

@@ -52,6 +52,45 @@ The cost of painting each house with a certain color is represented by a n x 3 c
 Note: All costs are positive integers.
 
 
+.. code-block:: python
+
+	# O(n*3) space
+	def minCost1(self, costs):
+	    if not costs:
+	        return 0
+	    r, c = len(costs), len(costs[0])
+	    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
+	    dp[0] = costs[0]
+	    for i in xrange(1, r):
+	        dp[i][0] = costs[i][0] + min(dp[i-1][1:3])
+	        dp[i][1] = costs[i][1] + min(dp[i-1][0], dp[i-1][2])
+	        dp[i][2] = costs[i][2] + min(dp[i-1][:2])
+	    return min(dp[-1])
+	 
+	# change original matrix   
+	def minCost2(self, costs):
+	    if not costs:
+	        return 0
+	    for i in xrange(1, len(costs)):
+	        costs[i][0] += min(costs[i-1][1:3])
+	        costs[i][1] += min(costs[i-1][0], costs[i-1][2])
+	        costs[i][2] += min(costs[i-1][:2])
+	    return min(costs[-1])
+
+	# O(1) space    
+	def minCost3(self, costs):
+	    if not costs:
+	        return 0
+	    dp = costs[0]
+	    for i in xrange(1, len(costs)):
+	        pre = dp[:] # here should take care
+	        dp[0] = costs[i][0] + min(pre[1:3])
+	        dp[1] = costs[i][1] + min(pre[0], pre[2])
+	        dp[2] = costs[i][2] + min(pre[:2])
+	    return min(dp)	
+		
+
+
 265. Paint House II 
 -------------------
 
@@ -66,7 +105,56 @@ Note: All costs are positive integers.
 Follow up: Could you solve it in O(nk) runtime?
 
 
+.. code-block:: python
 
+	# dp, O(nk) space
+	def minCostII1(self, costs):
+	    if not costs:
+	        return 0
+	    r, c = len(costs), len(costs[0])
+	    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
+	    dp[0] = costs[0]
+	    for i in xrange(1, r):
+	        for j in xrange(c):
+	            dp[i][j] = costs[i][j] + min(dp[i-1][:j]+dp[i-1][j+1:])
+	    return min(dp[-1])
+	    
+	# dp, O(k) space
+	def minCostII(self, costs):
+	    if not costs:
+	        return 0
+	    r, c = len(costs), len(costs[0])
+	    cur = costs[0]
+	    for i in xrange(1, r):
+	        pre = cur[:]  # take care here
+	        for j in xrange(c):
+	            cur[j] = costs[i][j] + min(pre[:j]+pre[j+1:])
+	    return min(cur)	
+		
+		
+		
+	class Solution:
+	    # @param {integer[][]} costs
+	    # @return {integer}
+	    def minCostII(self, costs):
+	        return min(reduce(lambda x, y: self.combine(y, x), costs)) if costs else 0
+
+	    def combine(self, house, tmp):
+	        m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
+	        tmp = [m]*i + [min(tmp[0:i]+tmp[i+1:])] + [m]*(n-i-1)
+	        return [sum(i) for i in zip(house, tmp)]	
+		
+		
+		
+	class Solution:
+	    def minCostII(self, costs):
+	        return min(reduce(self.combine, costs)) if costs else 0
+
+	    def combine(self, tmp, house):
+	        m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
+	        tmp, tmp[i] = [m]*n, min(tmp[:i]+tmp[i+1:])
+	        return map(sum, zip(house, tmp))	
+		
 
 
 70. Climbing Stairs 

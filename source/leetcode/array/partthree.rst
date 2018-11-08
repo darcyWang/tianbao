@@ -555,6 +555,72 @@ Note:
 You may assume that word1 does not equal to word2, and word1 and word2 are both in the list.
 
 
+.. code-block:: python
+
+    # O(n*n) time
+    def shortestDistance(self, words, word1, word2):
+        res = len(words)
+        for i in xrange(len(words)):
+            if words[i] == word1:
+                res = min(res, self.helper(words, i, word2))
+        return res
+
+    # go from middle point to both sides, 
+    # like: https://leetcode.com/problems/longest-palindromic-substring/
+    def helper(self, words, i, word2):
+        j = 0
+        while (i-j<0 or words[i-j]!=word2) and (i+j>=len(words) or words[i+j]!=word2):
+            j += 1
+        return j    
+        
+        
+    # O(n*n) time, O(n) space   
+    def shortestDistance(self, words, word1, word2):
+        ind1, ind2 = [], []
+        for i, w in enumerate(words):
+            if w == word1:
+                ind1.append(i)
+            elif w == word2:
+                ind2.append(i)
+        # return min(map(lambda x: abs(x[0]-x[1]), itertools.product(ind1, ind2)))
+        # return min(map(lambda x: abs(x[0]-x[1]), ((i, j) for i in ind1 for j in ind2)))
+        return min(abs(i-j) for i in ind1 for j in ind2)    
+        
+        
+    def __init__(self, words):
+        self.dic, self.l = {}, len(words)
+        for i, w in enumerate(words):
+            self.dic[w] = self.dic.get(w, []) + [i]
+
+    # @param {string} word1
+    # @param {string} word2
+    # @return {integer}
+    # Adds a word into the data structure.
+    def shortest(self, word1, word2):
+        l1, l2 = self.dic[word1], self.dic[word2]
+        i = j = 0
+        res = self.l
+        # O(m+n) time complexity
+        while i < len(l1) and j < len(l2):
+            res = min(res, abs(l1[i]-l2[j]))
+            if l1[i] < l2[j]:
+                i += 1
+            else:
+                j += 1
+        return res  
+        
+        
+    class WordDistance:
+        def __init__(self, words):
+            self.dic = {}
+            for index, w in enumerate(words):
+                self.dic[w] = self.dic.get(w, []) + [index]
+
+        def shortest(self, word1, word2):
+            return min(abs(i1 - i2) for i1 in self.dic[word1] for i2 in self.dic[word2])    
+        
+
+
 
 561. Array Partition I
 ----------------------
@@ -585,5 +651,21 @@ Given nums = [0, 1, 3] return 2.
 
 Note:
 Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+.. code-block:: python
+
+    # bit manipulation
+    def missingNumber1(self, nums):
+        res = 0
+        for i in xrange(len(nums)+1):
+            res ^= i
+        for num in nums:
+            res ^= num
+        return res
+      
+    # math  
+    def missingNumber(self, nums):
+        return len(nums)*(len(nums)+1)/2 - sum(nums)
+
 
 

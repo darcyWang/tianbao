@@ -378,7 +378,28 @@ For example, the numbers "69", "88", and "818" are all strobogrammatic.
 最后，如果这个number是奇数个，我们需要对中间位再判断，只有为8、0或者1才行。否则输出false；最后，存活过这些false判断就输出为true；
 
 
+.. code-block:: python
 
+    def isStrobogrammatic1(self, num):
+        deque = collections.deque(map(int, list(num)))
+        while len(deque) >= 2:
+            l, r = deque.popleft(), deque.pop()
+            for i in [2,3,4,5,7]:
+                if i in [l, r]:
+                    return False  
+            if (l, r) in [(6,6), (9,9)] or (l != r and (l, r) not in [(6,9), (9,6)]):
+                return False
+        return not deque or deque.pop() in [0,1,8]
+        
+    def isStrobogrammatic(self, num):
+        dic = {"0":"0", "1":"1", "6":"9", "8":"8", "9":"6"}
+        l, r = 0, len(num)-1
+        while l <= r:
+            if num[l] not in dic or dic[num[l]] != num[r]:
+                return False
+            l += 1
+            r -= 1
+        return True 
 
 247. Strobogrammatic Number II
 ------------------------------
@@ -402,7 +423,33 @@ For example, Given n = 2, return ["11","69","88","96"].
 这样，当深度优先搜索时遇到这些情况，则要相应的跳过
 
 
+.. code-block:: java
 
+    public List<String> findStrobogrammatic(int n) {
+        return helper(n, n);
+    }
+
+    List<String> helper(int n, int m) {
+        if (n == 0) return new ArrayList<String>(Arrays.asList(""));
+        if (n == 1) return new ArrayList<String>(Arrays.asList("0", "1", "8"));
+        
+        List<String> list = helper(n - 2, m);
+        
+        List<String> res = new ArrayList<String>();
+        
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i);
+            
+            if (n != m) res.add("0" + s + "0");
+            
+            res.add("1" + s + "1");
+            res.add("6" + s + "9");
+            res.add("8" + s + "8");
+            res.add("9" + s + "6");
+        }
+        
+        return res;
+    }
 
 248. Strobogrammatic Number III
 -------------------------------
