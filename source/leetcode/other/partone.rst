@@ -603,6 +603,52 @@ and strictly positive if x > y.
         return low  
         
 
+.. code-block:: python
+
+    def partition(self, head, x):
+        h1 = l1 = ListNode(0)
+        h2 = l2 = ListNode(0)
+        while head:
+            if head.val < x:
+                l1.next = head
+                l1 = l1.next
+            else:
+                l2.next = head
+                l2 = l2.next
+            head = head.next
+        l2.next = None
+        l1.next = h2.next
+        return h1.next  
+
+
+        
+
+
+    # choose the right-most element as pivot   
+    def partition(self, nums, l, r):
+        low = l
+        while l < r:
+            if nums[l] < nums[r]:
+                nums[l], nums[low] = nums[low], nums[l]
+                low += 1
+            l += 1
+        nums[low], nums[r] = nums[r], nums[low]
+        return low
+     
+    # Lomuto partition scheme   
+    def partition(self, nums, l, r):
+        pivot = nums[r]
+        lo = l 
+        for i in xrange(l, r):
+            if nums[i] < pivot:
+                nums[i], nums[lo] = nums[lo], nums[i]
+                lo += 1
+        nums[lo], nums[r] = nums[r], nums[lo]
+        return lo
+
+
+
+
 228. Summary Ranges
 -------------------
 

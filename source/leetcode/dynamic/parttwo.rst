@@ -273,13 +273,13 @@ Given an integer maxChoosableInteger and another integer desiredTotal, determine
 You can always assume that maxChoosableInteger will not be larger than 20 and desiredTotal will not be larger than 300.
 
 Example
+::
+    Input:
+    maxChoosableInteger = 10
+    desiredTotal = 11
 
-Input:
-maxChoosableInteger = 10
-desiredTotal = 11
-
-Output:
-false
+    Output:
+    false
 
 Explanation:
 No matter which integer the first player choose, the first player will lose.
@@ -288,3 +288,7 @@ If the first player choose 1, the second player can only choose integers from 2 
 The second player will win by choosing 10 and get a total = 11, which is >= desiredTotal.
 Same with other integers chosen by the first player, the second player will always win.
 
+.. code-block:: python
+
+    def canWin(self, s):
+        return any(not self.canWin(s[:i]+"--"+s[i+2:]) for i in xrange(len(s)-1) if s[i:i+2] == "++")   

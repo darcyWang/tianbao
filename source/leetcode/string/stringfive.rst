@@ -1,4 +1,4 @@
-题目序号   227、8、635、165、161、544、609、539、537、72
+题目序号   227、8、635、165、161、544、609、539、537、71
 ============================================================
 
 
@@ -176,7 +176,40 @@ https://segmentfault.com/a/1190000003803133
 https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/165md.html
 
 
+.. cod-block:: python
 
+	def compareVersion(self, version1, version2):
+	    v1, v2 = self.helper(version1), self.helper(version2)
+	    return 1 if v1 > v2 else (-1 if v1 < v2 else 0)
+	        
+	def helper(self, v):
+	    v = map(int, v.split("."))
+	    # tackle tailing 0 case: 1.0.0 vs 1
+	    i = len(v)-1
+	    while i >= 0 and v[i] == 0:
+	        i -= 1
+	    return v[:i+1]	
+
+.. code-block:: java
+
+	int compareVersion(string version1, string version2) {
+	    istringstream v1(version1+"."), v2(version2+'.');
+	    char dot = '.';
+	    int val1 = 0, val2 = 0;
+	    while (true) {
+	        void* p1 = (v1>>val1>>dot), *p2= (v2>>val2>>dot);
+	        if (! p1 && !p2)
+	            return 0;
+	        if (! p1) 
+	            val1 = 0;
+	        if (! p2)
+	            val2 = 0;
+	        if (val1>val2)
+	            return 1;
+	        else if (val1<val2)
+	            return -1;
+	    }
+	}	
 
 161. One Edit Distance
 ----------------------

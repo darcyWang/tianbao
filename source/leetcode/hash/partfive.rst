@@ -171,14 +171,82 @@ All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, fo
 Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.
 
 For example,
+::
+    Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
 
-Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
-
-Return:
-["AAAAACCCCC", "CCCCCAAAAA"].
-
+    Return: ["AAAAACCCCC", "CCCCCAAAAA"].
 
 
+.. code-block:: python
+
+    # Time O(n) one pass, Space O(10*n)
+    def findRepeatedDnaSequences1(self, s):
+        res, dic = [], {}
+        for i in xrange(len(s)-9):
+            if s[i:i+10] not in dic:
+                dic[s[i:i+10]] = 1
+            elif dic[s[i:i+10]] == 1:
+                res.append(s[i:i+10])
+                dic[s[i:i+10]] = 2
+        return res
+        
+    # Time O(n) one pass, Space O(4*n)   
+    def findRepeatedDnaSequences(self, s):
+        res = []
+        dic = {"A":1, "C":2, "G":3, "T":4}
+        dicDNA = {}
+        num = 1
+        for i in xrange(len(s)):
+            num = (num*4 + dic[s[i]]) & 0XFFFFF
+            if i < 9:
+                continue
+            if num not in dicDNA:
+                dicDNA[num] = 1
+            elif dicDNA[num] == 1:
+                res.append(s[i-9:i+1])
+                dicDNA[num] = 2
+        return res
+
+    def findRepeatedDnaSequences(self, s):
+        dic, res, l = {}, [], 10
+        for i in xrange(len(s)-l+1):
+            if s[i:i+l] in dic and dic[s[i:i+l]] == 1:
+                res.append(s[i:i+l])
+            dic[s[i:i+l]] = dic.get(s[i:i+l], 0) + 1
+        return res
+
+
+
+    The first method stores all the 10-letter-long sequences in dic, so the needed space is O(10n), every single letter needs 1 byte if using ASCII code, while the second method translates a 10-letter-long sequence to a 20-bit long integer, if integer is 4 bytes, then the space needed is O(4n). Two methods operate one pass, so time complexity is O(n).
+
+    # Time O(n) one pass, Space O(10*n)
+    def findRepeatedDnaSequences1(self, s):
+        res, dic = [], {}
+        for i in xrange(len(s)-9):
+            if s[i:i+10] not in dic:
+                dic[s[i:i+10]] = 1
+            elif dic[s[i:i+10]] == 1:
+                res.append(s[i:i+10])
+                dic[s[i:i+10]] = 2
+        return res
+        
+    # Time O(n) one pass, Space O(4*n)   
+    def findRepeatedDnaSequences(self, s):
+        res = []
+        dic = {"A":1, "C":2, "G":3, "T":4}
+        dicDNA = {}
+        num = 1
+        for i in xrange(len(s)):
+            num = (num*4 + dic[s[i]]) & 0XFFFFF
+            if i < 9:
+                continue
+            if num not in dicDNA:
+                dicDNA[num] = 1
+            elif dicDNA[num] == 1:
+                res.append(s[i-9:i+1])
+                dicDNA[num] = 2
+        return res  
+        
 
 166. Fraction to Recurring Decimal
 ----------------------------------

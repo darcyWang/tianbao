@@ -268,6 +268,63 @@ This one is easier to understand while complexity is O(k*n):
     如果数组里面有很多重复的元素，该怎么搞
 
 
+
+220. Contains Duplicate III
+---------------------------
+
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k.
+
+Example 1:
+
+Input: nums = [1,2,3,1], k = 3, t = 0
+Output: true
+Example 2:
+
+Input: nums = [1,0,1,1], k = 1, t = 2
+Output: true
+Example 3:
+
+Input: nums = [1,5,9,1,5,9], k = 2, t = 3
+Output: false
+
+
+.. code-block:: python
+
+    class Solution:
+        # @param {integer[]} nums
+        # @param {integer} k
+        # @param {integer} t
+        # @return {boolean}
+        def containsNearbyAlmostDuplicate(self, nums, k, t):
+            ind = sorted(range(len(nums)), key = lambda x: nums[x])
+            for i in range(len(nums)-1):
+                j = i + 1
+                while j < len(nums) and nums[ind[j]] - nums[ind[i]] <= t:
+                    if abs(ind[i]-ind[j]) <= k:
+                        return True
+                    j += 1
+            return False
+
+
+    class Solution:
+
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        if k < 1 or t < 0:
+            return False
+        dic = collections.OrderedDict()
+        for n in nums:
+            key = n if not t else n // t
+            for m in (dic.get(key - 1), dic.get(key), dic.get(key + 1)):
+                if m is not None and abs(n - m) <= t:
+                    return True
+            if len(dic) == k:
+                dic.popitem(False)
+            dic[key] = n
+        return False
+
+
+
+
 283. Move Zeroes 
 ----------------
 
@@ -305,7 +362,18 @@ For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums sh
       return arr.filter(function(x) {return x !== 0}).concat(arr.filter(function(x) {return x === 0;}));
     }
 
-还是没有看到Python的写法
+
+
+.. code-block:: python
+
+    # in-place
+    def moveZeroes(self, nums):
+        zero = 0  # records the position of "0"
+        for i in xrange(len(nums)):
+            if nums[i] != 0:
+                nums[i], nums[zero] = nums[zero], nums[i]
+                zero += 1
+
 
 
 

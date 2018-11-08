@@ -250,6 +250,33 @@ The digits are stored such that the most significant digit is at the head of the
     print test.plusOne(num1)
 
 
+.. code-block:: python
+
+    class Solution:
+        # @param {integer[]} digits
+        # @return {integer[]}
+        def plusOne(self, digits):
+            return map(int,list(str(int(''.join(map(str,digits)))+1)))
+        
+        
+    def plusOne(self, digits):
+        return map(int, list(str(reduce(lambda x, y: 10*x+y, digits)+1)))   
+        
+        
+    def plusOne(self, digits):
+        return map(int,str(int(''.join(map(str,digits)))+1))    
+        
+    def plusOne1(self, digits):
+        return map(int, list(str(reduce(lambda x, y: 10*x+y, digits)+1)))
+        
+    def plusOne(self, digits):
+        carry = 1
+        for i in xrange(len(digits)-1, -1, -1):
+            carry, digits[i] = divmod(digits[i] + carry, 10)
+        if carry:
+            digits.insert(0, carry)
+        return digits   
+
 
 .. code-block:: Python
 
