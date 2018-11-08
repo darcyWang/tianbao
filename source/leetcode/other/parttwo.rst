@@ -115,83 +115,181 @@ For example, the numbers "69", "88", and "818" are all strobogrammatic.
             res.append("9"+i+"6")
         return res
 
+60. Permutation Sequence
+------------------------
+
+The set [1,2,3,...,n] contains a total of n! unique permutations.
+
+By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+::
+    "123"
+    "132"
+    "213"
+    "231"
+    "312"
+    "321"
+    Given n and k, return the kth permutation sequence.
+
+Note:
+
+Given n will be between 1 and 9 inclusive.
+Given k will be between 1 and n! inclusive.
+Example 1:
+
+Input: n = 3, k = 3
+Output: "213"
+Example 2:
+
+Input: n = 4, k = 9
+Output: "2314"
+
+.. code-block:: python
+
+    # TLE
+    def getPermutation(self, n, k):
+        nums = range(1, n+1)
+        for i in xrange(k-1):
+            self.nextPermutation(nums)
+        return "".join(map(str, nums))
+            
+    def nextPermutation(self, nums):
+        l = d = m = len(nums)-1
+        while l > 0 and nums[l] <= nums[l-1]:
+            l -= 1
+        if l == 0:
+            nums.reverse()
+            return 
+        k = l-1
+        while nums[k] >= nums[d]:
+            d -= 1
+        nums[k], nums[d] = nums[d], nums[k]
+        while l < m:
+            nums[l], nums[m] = nums[m], nums[l]
+            l += 1; m -= 1
+
+    # AC
+    def getPermutation(self, n, k):
+        res, nums = "",  range(1, n+1)
+        k -= 1
+        while n:
+            n -= 1
+            index, k = divmod(k, math.factorial(n))
+            res += str(nums.pop(index))
+        return res
 
 
+145. Binary Tree Postorder Traversal 二叉树的后序遍历
+-----------------------------------------------------------
 
-https://leetcode.com/problems/binary-tree-postorder-traversal/description/
-# recursively 
-def postorderTraversal1(self, root):
-    res = []
-    self.dfs(root, res)
-    return res
-    
-def dfs(self, root, res):
-    if root:
-        self.dfs(root.left, res)
-        self.dfs(root.right, res)
-        res.append(root.val)
 
-# iteratively        
-def postorderTraversal(self, root):
-    res, stack = [], [root]
-    while stack:
-        node = stack.pop()
-        if node:
-            res.append(node.val)
-            stack.append(node.left)
-            stack.append(node.right)
-    return res[::-1]	
-	
-	
-def postorderTraversal(self, root):
-    res = []
-    self.dfs(root, res)
-    return res[::-1]
+Given a binary tree, return the postorder traversal of its nodes' values.
 
-def dfs(self, root, res):
-    if root:
-        res.append(root.val)
-        self.dfs(root.right, res)
-        self.dfs(root.left, res)
-	
-	
-	
-The first is by postorder using a flag to indicate whether the node has been visited or not.
+Example:
+::
+    Input: [1,null,2,3]
+       1
+        \
+         2
+        /
+       3
 
-class Solution:
-    # @param {TreeNode} root
-    # @return {integer[]}
+    Output: [3,2,1]
+
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+
+给定一个二叉树，返回它的 后序 遍历。
+
+示例:
+
+输入: [1,null,2,3]  
+   1
+    \
+     2
+    /
+   3 
+
+输出: [3,2,1]
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+
+.. code-block:: python
+
+    # recursively 
+    def postorderTraversal1(self, root):
+        res = []
+        self.dfs(root, res)
+        return res
+        
+    def dfs(self, root, res):
+        if root:
+            self.dfs(root.left, res)
+            self.dfs(root.right, res)
+            res.append(root.val)
+
+    # iteratively        
     def postorderTraversal(self, root):
-        traversal, stack = [], [(root, False)]
-        while stack:
-            node, visited = stack.pop()
-            if node:
-                if visited:
-                    # add to result if visited
-                    traversal.append(node.val)
-                else:
-                    # post-order
-                    stack.append((node, True))
-                    stack.append((node.right, False))
-                    stack.append((node.left, False))
-
-        return traversal
-The 2nd uses modified preorder (right subtree first). Then reverse the result.
-
-class Solution:
-    # @param {TreeNode} root
-    # @return {integer[]}
-    def postorderTraversal(self, root):
-        traversal, stack = [], [root]
+        res, stack = [], [root]
         while stack:
             node = stack.pop()
             if node:
-                # pre-order, right first
-                traversal.append(node.val)
+                res.append(node.val)
                 stack.append(node.left)
                 stack.append(node.right)
+        return res[::-1]    
+        
+        
+    def postorderTraversal(self, root):
+        res = []
+        self.dfs(root, res)
+        return res[::-1]
 
-        # reverse result
-        return traversal[::-1]	
+    def dfs(self, root, res):
+        if root:
+            res.append(root.val)
+            self.dfs(root.right, res)
+            self.dfs(root.left, res)
+        
+        
+        
+    The first is by postorder using a flag to indicate whether the node has been visited or not.
+
+    class Solution:
+        # @param {TreeNode} root
+        # @return {integer[]}
+        def postorderTraversal(self, root):
+            traversal, stack = [], [(root, False)]
+            while stack:
+                node, visited = stack.pop()
+                if node:
+                    if visited:
+                        # add to result if visited
+                        traversal.append(node.val)
+                    else:
+                        # post-order
+                        stack.append((node, True))
+                        stack.append((node.right, False))
+                        stack.append((node.left, False))
+
+            return traversal
+    The 2nd uses modified preorder (right subtree first). Then reverse the result.
+
+    class Solution:
+        # @param {TreeNode} root
+        # @return {integer[]}
+        def postorderTraversal(self, root):
+            traversal, stack = [], [root]
+            while stack:
+                node = stack.pop()
+                if node:
+                    # pre-order, right first
+                    traversal.append(node.val)
+                    stack.append(node.left)
+                    stack.append(node.right)
+
+            # reverse result
+            return traversal[::-1]  
+    
+
+
 	
 	
