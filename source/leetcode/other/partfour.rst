@@ -723,7 +723,163 @@ Output: ["2", "4->49", "51->74", "76->99"]
 
 
 
+254. Factor Combinations
+------------------------
+
+Numbers can be regarded as product of its factors. For example,
+
+8 = 2 x 2 x 2;
+  = 2 x 4.
+Write a function that takes an integer n and return all possible combinations of its factors.
+
+Note:
+
+You may assume that n is always positive.
+Factors should be greater than 1 and less than n.
+Example 1:
+
+Input: 1
+Output: []
+Example 2:
+
+Input: 37
+Output:[]
+Example 3:
+
+Input: 12
+Output:
+[
+  [2, 6],
+  [2, 2, 3],
+  [3, 4]
+]
+Example 4:
+
+Input: 32
+Output:
+[
+  [2, 16],
+  [2, 2, 8],
+  [2, 2, 2, 4],
+  [2, 2, 2, 2, 2],
+  [2, 4, 4],
+  [4, 8]
+]
+
+
+.. code-block:: python
+
+    def getFactors(self, n):
+        res = []
+        self.dfs(self.factors(n)[1:-1], n, 0, [], res)
+        return res
+     
+    def dfs(self, nums, n, index, path, res):
+        tmp = reduce(lambda x,y:x*y, path, 1)
+        if tmp > n:
+            return  # backtracking
+        if tmp == n and path:
+            res.append(path)
+            return  # backtracking 
+        for i in xrange(index, len(nums)):
+            self.dfs(nums, n, i, path+[nums[i]], res)
+            
+    def factors(self, n):
+        res = []
+        for i in xrange(1, n+1):
+            if n % i == 0:
+                res.append(i)
+        return res  
+
+245. Shortest Word Distance III
+-------------------------------
+
+Given a list of words and two words word1 and word2, return the shortest distance between these two words in the list.
+
+word1 and word2 may be the same and they represent two individual words in the list.
+
+Example:
+Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
+
+Input: word1 = “makes”, word2 = “coding”
+Output: 1
+Input: word1 = "makes", word2 = "makes"
+Output: 3
+Note:
+You may assume word1 and word2 are both in the list.
+
+
+.. code-block:: python
+
+    def shortestWordDistance(self, words, word1, word2):
+        p1 = p2 = -1
+        res = len(words)
+        # first case: the same as Shortest Word Distance
+        if word1 != word2:
+            for i, w in enumerate(words):
+                if w == word1:
+                    p1 = i
+                if w == word2:
+                    p2 = i
+                if p1 > -1 and p2 > -1:
+                    res = min(res, abs(p1-p2))
+            return res
+        else:
+            # pre and i record previous and current word1 respectively
+            pre, i = -len(words), 0
+            while i < len(words):
+                while i < len(words) and words[i] != word1:
+                    i += 1
+                if i < len(words):
+                    res = min(res, i-pre)
+                pre = i
+                i += 1
+            return res
+
+
+147. Insertion Sort List
+------------------------
+
+Sort a linked list using insertion sort.
+
+.. image:: https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif
+
+A graphical example of insertion sort. The partial sorted list (black) initially contains only the first element in the list.
+With each iteration one element (red) is removed from the input data and inserted in-place into the sorted list
+ 
+
+Algorithm of Insertion Sort:
+
+Insertion sort iterates, consuming one input element each repetition, and growing a sorted output list.
+At each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there.
+It repeats until no input elements remain.
+
+Example 1:
+
+Input: 4->2->1->3
+Output: 1->2->3->4
+Example 2:
+
+Input: -1->5->3->4->0
+Output: -1->0->3->4->5
 
 
 
+.. code-block:: python
 
+    def insertionSortList(self, head):
+        dummy = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            while head and head.next and head.val <= head.next.val:
+                head = head.next
+            node = head.next
+            if not node:
+                break
+            head.next = node.next  # delete "node"
+            pre = dummy 
+            while node.val > pre.next.val:
+                pre = pre.next 
+            node.next = pre.next  # insert "node" in the right position
+            pre.next = node
+        return dummy.next
