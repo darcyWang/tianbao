@@ -179,6 +179,23 @@ Have you consider that the string might be empty? This is a good question to ask
 For the purpose of this problem, we define empty string as valid palindrome.
 
 
+.. code-block:: java
+
+    bool isPalindrome(string s) {
+        int l=0, r=s.size()-1;
+        while (l<r) {
+            while (l<r && !isalnum(s[l]))
+                l++;
+            while (l<r && !isalnum(s[r]))
+                r--;
+            if (tolower(s[l])!=tolower(s[r]))
+                return false;
+            l++;
+            r--;
+        }
+        return true;
+    }   
+
 
 .. attention::
 
@@ -223,6 +240,21 @@ O(n) extra space solution by using deque:
         while len(queue) >= 2:
             if queue.popleft().val != queue.pop().val:
                 return False
+        return True
+
+
+.. code-block:: python
+
+    def isPalindrome(self, s):
+        l, r = 0, len(s)-1
+        while l < r:
+            while l < r and not s[l].isalnum():
+                l += 1
+            while l <r and not s[r].isalnum():
+                r -= 1
+            if s[l].lower() != s[r].lower():
+                return False
+            l +=1; r -= 1
         return True
 
 468. Validate IP Address

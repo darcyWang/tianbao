@@ -231,6 +231,20 @@ Output: 2->3
             return head.next if is_head_dup else head
 
 
+    def deleteDuplicates(self, head):
+        dummy = pre = ListNode(0)
+        dummy.next = head
+        while head and head.next:
+            if head.val == head.next.val:
+                while head and head.next and head.val == head.next.val:
+                    head = head.next
+                head = head.next
+                pre.next = head
+            else:
+                pre = pre.next
+                head = head.next
+        return dummy.next   
+
 141. Linked List Cycle
 ----------------------
 
@@ -467,6 +481,73 @@ Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
 
 
 
+124. Binary Tree Maximum Path Sum
+---------------------------------
 
+
+Given a non-empty binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+
+Example 1:
+::
+    Input: [1,2,3]
+
+           1
+          / \
+         2   3
+
+    Output: 6
+
+Example 2:
+::
+    Input: [-10,9,20,null,null,15,7]
+
+       -10
+       / \
+      9  20
+        /  \
+       15   7
+
+    Output: 42
+
+
+.. code-block:: python
+
+    # Recursively 
+    def maxPathSum(self, root):
+        self.res = -sys.maxsize-1
+        self.oneSideSum(root)
+        return self.res
+        
+    # compute one side maximal sum, 
+    # (root+left children, or root+right children),
+    # root is the included top-most node 
+    def oneSideSum(self, root):
+        if not root:
+            return 0
+        l = max(0, self.oneSideSum(root.left))
+        r = max(0, self.oneSideSum(root.right))
+        self.res = max(self.res, l+r+root.val)
+        return max(l, r)+root.val
+
+
+
+    A little bit improvement, if the root is None we can output 0 instead of MinInt, and then we can set self.res to node.val .
+
+    def maxPathSum(self, root):
+        if not root:
+            return 0
+        self.res = root.val
+        self.oneSum(root)
+        return self.res
+        
+    def oneSum(self, node):
+        if not node:
+            return 0
+        l = max(0, self.oneSum(node.left))
+        r = max(0, self.oneSum(node.right))
+        self.res = max(self.res, node.val+l+r)
+        return node.val + max(l, r)
 
 

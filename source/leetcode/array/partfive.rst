@@ -1,27 +1,5 @@
-题号 74、73、64、63、62、59、56、55、54、48
+题号 73、64、63、62、59、56、55、54、48
 =============================================
-
-74. Search a 2D Matrix 
-----------------------
-
-Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
-
-Integers in each row are sorted from left to right.
-
-The first integer of each row is greater than the last integer of the previous row.
-
-For example,
-
-Consider the following matrix:
-
-::
-    [
-      [1,   3,  5,  7],
-      [10, 11, 16, 20],
-      [23, 30, 34, 50]
-    ]
-
-Given target = 3, return true.
 
 
 
@@ -331,6 +309,43 @@ Given the following matrix:
     ]
 
 You should return [1,2,3,6,9,8,7,4,5]. 
+
+.. code-block:: python
+
+    def spiralOrder(self, matrix):
+        res = []
+        while matrix:
+            res.extend(matrix.pop(0)) # left to right
+            if matrix and matrix[0]: # top to dwon
+                for row in matrix:
+                    res.append(row.pop())
+            if matrix: # right to left
+                res.extend(matrix.pop()[::-1])
+            if matrix and matrix[0]: # bottom to up
+                for row in matrix[::-1]:
+                    res.append(row.pop(0))
+        return res  
+        
+        
+    def spiralOrder(self, matrix):
+        if not matrix:
+            return []
+        left, right, top, down, res = 0, len(matrix[0])-1, 0, len(matrix)-1, []
+        while left <= right and top <= down:
+            res.extend(matrix[top][left:right+1]) # left to right
+            top += 1 
+            for i in xrange(top, down+1): # top to down
+                res.append(matrix[i][right])
+            right -= 1
+            if top <= down:
+                res.extend(matrix[down][left:right+1][::-1]) # right to left
+                down -= 1
+            if left <= right:
+                for i in xrange(down, top-1, -1): # bottom to up
+                    res.append(matrix[i][left])
+                left += 1
+        return res  
+        
 
 
 48. Rotate Image 

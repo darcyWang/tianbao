@@ -63,28 +63,89 @@ Write a function to determine if a given target is in the array.
 The array may contain duplicates.
 
 
-
-74. Search a 2D Matrix
+74. Search a 2D Matrix 
 ----------------------
 
 Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 
-    Integers in each row are sorted from left to right.
-    The first integer of each row is greater than the last integer of the previous row.
+Integers in each row are sorted from left to right.
+
+The first integer of each row is greater than the last integer of the previous row.
 
 For example,
 
 Consider the following matrix:
 
-[
-  [1,   3,  5,  7],
-  [10, 11, 16, 20],
-  [23, 30, 34, 50]
-]
+::
+    [
+      [1,   3,  5,  7],
+      [10, 11, 16, 20],
+      [23, 30, 34, 50]
+    ]
 
 Given target = 3, return true.
 
 
+.. code-block:: python
+
+    # O(m*n) space, O(lg(m*n)) time
+    def searchMatrix1(self, matrix, target):
+        if not matrix or target is None:
+            return False
+        ls = reduce(lambda x, y: x + y, [row for row in matrix], [])
+        l, r = 0, len(ls)-1
+        while l <= r:
+            mid = l + (r-l)//2
+            if ls[mid] < target:
+                l = mid + 1
+            elif ls[mid] > target:
+                r = mid - 1
+            else:
+                return True
+        return False
+        
+    # Iteratively
+    def searchMatrix(self, matrix, target):
+        if not matrix or target is None:
+            return False
+        l, r = 0, len(matrix) * len(matrix[0]) - 1
+        while l <= r:
+            mid = l + (r-l)//2
+            row, col = mid//len(matrix[0]), mid%(len(matrix[0]))
+            if matrix[row][col] < target:
+                l = mid + 1
+            elif matrix[row][col] > target:
+                r = mid - 1
+            else:
+                return True
+        return False
+     
+    # Recursively 
+    def searchMatrix3(self, matrix, target):
+        if not matrix or target is None:
+            return False
+        return self.helper(matrix, 0, 0, len(matrix)-1, len(matrix[0])-1, target)
+        
+    def helper(self, matrix, x1, y1, x2, y2, target):
+        while x1 <= x2 and y1 <= y2:
+            midx = x1 + (x2-x1)//2; midy = y1 + (y2-y1)//2
+            if target < matrix[midx][midy]:
+                return self.helper(matrix, x1, y1, midx-1, y2, target) or \
+                self.helper(matrix, midx, y1, midx, midy-1, target)
+            elif target > matrix[midx][midy]:
+                return self.helper(matrix, midx+1, y1, x2, y2, target) or \
+                self.helper(matrix, midx, midy+1, midx, y2, target)
+            else:
+                return True
+        return False    
+        
+        
+    It's nowhere near O(lg(mn)). It's not even O(mn). It's Θ(m2n), as the line
+
+    ls = reduce(lambda x, y: x + y, [row for row in matrix], [])
+    is really costly. And btw also a really complicated way to write
+
+    ls = sum(matrix, [])    
 
 50. Pow(x, n)
 -------------

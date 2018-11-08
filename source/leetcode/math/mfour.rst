@@ -163,6 +163,103 @@ Note:
 
 
 
+可能包含前面题目的答案
+
+.. code-block:: python
+
+    def singleNumber(self, nums):
+        bit = [0] * 32
+        for num in nums:
+            for i in xrange(32):
+                bit[i] += num >> i & 1
+        res = 0
+        for i, val in enumerate(bit):
+            # if the single numble is negative,
+            # this case should be considered separately 
+            if i == 31 and val%3:
+                res = -((1<<31)-res)
+            else:
+                res |= (val%3)*(1<<i)
+        return res  
+
+
+    # O(n) space, O(n) time
+    def singleNumber1(self, nums):
+        dic, res = {}, []
+        for num in nums:
+            dic[num] = dic.get(num, 0) + 1
+        for k, v in dic.items():
+            if v == 1:
+                res.append(k)
+        return res
+        
+    # Bit manipulation, O(1) space, O(n) time
+    def singleNumber(self, nums):
+        # "xor" all the nums 
+        tmp = 0
+        for num in nums:
+            tmp ^= num
+        # find the rightmost "1" bit
+        i = 0
+        while tmp & 1 == 0:
+            tmp >>= 1
+            i += 1
+        tmp = 1 << i
+        # compute in two seperate groups
+        first, second = 0, 0
+        for num in nums:
+            if num & tmp:
+                first ^= num
+            else:
+                second ^= num
+        return [first, second]  
+        
+        
+    A versoin shows how to use different kinds of dictionary in Python:
+
+    def singleNumber1(self, nums):
+        count = collections.Counter(nums)
+        return [k for k, v in count.iteritems() if v < 2]
+        
+    def singleNumber2(self, nums):
+        dic = collections.defaultdict(int)
+        for num in nums:
+            dic[num] += 1
+        return [k for k, v in dic.items() if v < 2]
+        
+    def singleNumber3(self, nums):
+        dic = {}
+        for num in nums:
+            dic[num] = dic.get(num, 0) + 1
+        return [k for k, v in dic.items() if v < 2]
+        
+    def singleNumber4(self, nums):
+        dic = collections.OrderedDict()
+        for num in nums:
+            dic[num] = dic.get(num, 0) + 1
+        return [k for k, v in dic.iteritems() if v < 2]
+        
+    def singleNumber(self, nums):
+        tmp = reduce(operator.xor, nums)
+        bit = tmp & (-tmp)
+        n1, n2 = 0, 0
+        for num in nums:
+            if num & bit:
+                n1 ^= num
+            else:
+                n2 ^= num
+        return [n1, n2] 
+        
+    class Solution:
+        # @param {integer[]} nums
+        # @return {integer[]}
+        def singleNumber(self, nums):
+            xor = reduce(operator.xor, nums)
+            ans = reduce(operator.xor, filter(lambda x : x & xor & -xor, nums))
+            return [ans, ans ^ xor] 
+        
+
+
 263. Ugly Number
 ----------------
 
@@ -174,6 +271,47 @@ Note that 1 is typically treated as an ugly number.
 
 Credits:
 Special thanks to @jianchao.li.fighter for adding this problem and creating all test cases.
+
+
+
+.. code-block:: python
+
+    # dynamic programming
+    def nthUglyNumber(self, n):
+        ugly = [0] * n
+        nxt = ugly[0] = 1
+        i2 = i3 = i5 = 0
+        nxt2, nxt3, nxt5 = ugly[i2]*2, ugly[i3]*3, ugly[i5]*5
+        for i in xrange(1, n):
+            nxt = min(nxt2, nxt3, nxt5)
+            ugly[i] = nxt
+            if nxt == nxt2:
+                i2 += 1
+                nxt2 = ugly[i2]*2
+            if nxt == nxt3:
+                i3 += 1
+                nxt3 = ugly[i3]*3
+            if nxt == nxt5:
+                i5 += 1
+                nxt5 = ugly[i5]*5
+        return nxt # ugly[-1]   
+        
+        
+     def nthUglyNumber(self, n):
+        if n <= 0:
+            return 0
+        ugly = [1] * n
+        i2 = i3 = i5 = 0
+        for i in xrange(1, n):
+            ugly[i] = min(ugly[i2]*2, ugly[i3]*3, ugly[i5]*5)
+            if ugly[i] == ugly[i2]*2:
+                i2 += 1
+            if ugly[i] == ugly[i3]*3:
+                i3 += 1
+            if ugly[i] == ugly[i5]*5:
+                i5 += 1
+        return ugly[-1]
+        
 
 
 258. Add Digits

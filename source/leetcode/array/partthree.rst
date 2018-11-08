@@ -236,6 +236,49 @@ Special thanks to @ts for adding this problem and creating all test cases.
 #. 位操作法 时间 O(N) 空间 O(1) 假设一个数是最多只有32位的二进制数，那么我们从第一位到第32位，对每一位都计算所有数字在这一位上1的个数，如果这一位1的个数大于一半，说明众数的这一位是1，如果小于一半，说明大多数的这一位是0。
 #. 投票法  时间 O(N) 空间 O(1) 记录一个candidate变量，还有一个counter变量，开始遍历数组。如果新数和candidate一样，那么counter加上1，否则的话，如果counter不是0，则counter减去1，如果counter已经是0，则将candidate更新为这个新的数。因为每一对不一样的数都会互相消去，最后留下来的candidate就是众数。
 
+
+.. code-block:: python
+
+    def majorityElement(self, nums):
+        if not nums:
+            return []
+        count1, count2, candidate1, candidate2 = 0, 0, 0, 0
+        for n in nums:
+            if n == candidate1:
+                count1 += 1
+            elif n == candidate2:
+                count2 += 1
+            elif count1 == 0:
+                candidate1, count1 = n, 1
+            elif count2 == 0:
+                candidate2, count2 = n, 1
+            else:
+                count1, count2 = count1 - 1, count2 - 1
+        return [n for n in (candidate1, candidate2) if nums.count(n) > len(nums) // 3]          
+                
+    class Solution:
+        # @param {integer[]} nums
+        # @return {integer[]}
+        def majorityElement(self, nums):
+            if not nums:  
+                return []
+            count1, count2, candidate1, candidate2 = 0, 0, 0, 0
+            for n in nums:
+                if n == candidate1:
+                    count1 += 1
+                elif n == candidate2:
+                    count2 += 1
+                elif count1 == 0:
+                    candidate1, count1 = n, 1
+                elif count2 == 0:
+                    candidate2, count2 = n, 1
+                else:
+                    count1, count2 = count1 - 1, count2 - 1
+            return [n for n in set([candidate1, candidate2]) if nums.count(n) > len(nums) // 3]         
+
+
+
+
 Majority Element II
 -------------------
 
@@ -250,6 +293,86 @@ Given an integer array of size n, find all elements that appear more than ⌊ n/
 
 上一题中，超过一半的数只可能有一个，所以我们只要投票出一个数就行了。而这题中，超过n/3的数最多可能有两个，所以我们要记录出现最多的两个数。同样的两个candidate和对应的两个counter，如果遍历时，某个候选数和到当前数相等，则给相应计数器加1。如果两个计数器都不为0，则两个计数器都被抵消掉1。如果某个计数器为0了，则将当前数替换相应的候选数，并将计数器初始化为1。最后我们还要遍历一遍数组，确定这两个出现最多的数，是否都是众数。
 
+
+.. code-block:: python
+
+    # two pass + dictionary
+    def majorityElement1(self, nums):
+        dic = {}
+        for num in nums:
+            dic[num] = dic.get(num, 0) + 1
+        for num in nums:
+            if dic[num] > len(nums)//2:
+                return num
+        
+    # one pass + dictionary
+    def majorityElement2(self, nums):
+        dic = {}
+        for num in nums:
+            if num not in dic:
+                dic[num] = 1
+            if dic[num] > len(nums)//2:
+                return num
+            else:
+                dic[num] += 1 
+
+    # TLE
+    def majorityElement3(self, nums):
+        for i in xrange(len(nums)):
+            count = 0
+            for j in xrange(len(nums)):
+                if nums[j] == nums[i]:
+                    count += 1
+            if count > len(nums)//2:
+                return nums[i]
+                
+    # Sotring            
+    def majorityElement4(self, nums):
+        nums.sort()
+        return nums[len(nums)//2]
+        
+    # Bit manipulation    
+    def majorityElement5(self, nums):
+        bit = [0]*32
+        for num in nums:
+            for j in xrange(32):
+                bit[j] += num >> j & 1
+        res = 0
+        for i, val in enumerate(bit):
+            if val > len(nums)//2:
+                # if the 31th bit if 1, 
+                # it means it's a negative number 
+                if i == 31:
+                    res = -((1<<31)-res)
+                else:
+                    res |= 1 << i
+        return res
+                
+    # Divide and Conquer
+    def majorityElement6(self, nums):
+        if not nums:
+            return None
+        if len(nums) == 1:
+            return nums[0]
+        a = self.majorityElement(nums[:len(nums)//2])
+        b = self.majorityElement(nums[len(nums)//2:])
+        if a == b:
+            return a
+        return [b, a][nums.count(a) > len(nums)//2]
+        
+    # the idea here is if a pair of elements from the
+    # list is not the same, then delete both, the last 
+    # remaining element is the majority number
+    def majorityElement(self, nums):
+        count, cand = 0, 0
+        for num in nums:
+            if num == cand:
+                count += 1
+            elif count == 0:
+                cand, count = num, 1
+            else:
+                count -= 1
+        return cand
 
 
 .. code-block:: python
