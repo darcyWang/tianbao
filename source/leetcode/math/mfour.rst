@@ -537,7 +537,26 @@ Given an integer, write a function to determine if it is a power of two.
 
 Count the number of prime numbers less than a non-negative number, n.
 
+Example:
+::
+    Input: 10
+    Output: 4
+    Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
 
+
+
+.. code-block:: python
+
+    def countPrimes(self, n):
+        if n <= 2:
+            return 0
+        res = [True] * n
+        res[0] = res[1] = False
+        for i in xrange(2, n):
+            if res[i] == True:
+                for j in xrange(2, (n-1)//i+1):
+                    res[i*j] = False
+        return sum(res)
 
 
 202. Happy Number 
@@ -554,4 +573,18 @@ Example: 19 is a happy number
     62 + 82 = 100
     12 + 02 + 02 = 1
 
+.. code-block:: python
 
+    def isHappy(self, n):
+        dic = {}
+        while n:
+            if 1 in dic:
+                return True
+            if n in dic:
+                return False
+            dic[n] = 0
+            tmp = 0
+            while n:
+                tmp += (n%10)**2
+                n //= 10
+            n = tmp

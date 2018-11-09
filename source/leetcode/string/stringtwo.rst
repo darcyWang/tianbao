@@ -246,6 +246,41 @@ The brackets must close in the correct order, "()" and "()[]{}" are all valid bu
 
 
 
+.. code-block:: python
+
+    def isValid(self, s):
+        left, right, stack= "({[", ")}]", []
+        for item in s:
+            if item in left:
+                stack.append(item)
+            else:
+                if not stack or left.find(stack.pop()) != right.find(item):
+                    return False
+        return not stack    
+        
+        
+    A recursive version for reference:
+
+    def isValid(self, s):
+        if not s:
+            return True
+        if len(s) & 1:
+            return False
+        for item in ["()", "[]", "{}"]:
+            if item in s:
+                return self.isValid(s.replace(item, ""))
+        return False
+
+
+    # An even shorter one:
+    def isValid(self, s):
+        if not s:
+            return True
+        for i in ["()", "[]", "{}"]:
+            idx = s.find(i)
+            if idx > -1:
+                return self.isValid(s[:idx]+s[idx+2:])
+        return False    
 
 
 
@@ -389,7 +424,25 @@ Example 2:
     Input: 4
     Output: "1211"
 
+.. code-block:: python
 
+    def countAndSay(self, n):
+        res = "1"
+        for _ in xrange(n-1):
+            res = self.helper(res)
+        return res
+        
+    def helper(self, n):
+        count, i, res = 1, 0, ""
+        while i < len(n) - 1:
+            if n[i] == n[i+1]:
+                count += 1
+            else:
+                res += str(count) + n[i]
+                count = 1
+            i += 1
+        res += str(count) + n[i]
+        return res  
 
 383. Ransom Note
 ----------------

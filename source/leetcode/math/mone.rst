@@ -381,6 +381,30 @@ Note:
 The input is assumed to be a 32-bit signed integer. Your function should return 0 when the reversed integer overflows. 
 
 
+.. code-block:: python
+
+    def reverse1(self, x):
+        if not x:
+            return x
+        sign = x/abs(x)
+        x *= sign
+        res = 0
+        while x:
+            res = res*10 + x%10
+            x /= 10
+        if res < 1<<31:
+            return res*sign
+        else:
+            return 0
+            
+    def reverse(self, x):
+        sign = cmp(x, 0)
+        res = int(str(sign*x)[::-1])
+        return (res < 1<<31)*res*sign   
+
+
+
+
 640. Solve the Equation 
 -----------------------
 

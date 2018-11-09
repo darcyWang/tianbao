@@ -388,6 +388,36 @@ babgbag
 
 
 
+233. Number of Digit One
+------------------------
+
+Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+
+Example:
+
+Input: 13
+Output: 6 
+Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 
 
+.. code-block:: python
+
+	def countDigitOne(self, n):
+	    if n <= 0:
+	        return 0
+	    if 1 <= n <= 9:
+	        return 1
+	    # compute the first bit
+	    head, level = n, 1
+	    while head > 9:
+	        level *= 10
+	        head //= 10
+	    # if the first bit is 1
+	    # like 191, divide it into (0-99), (0-91) and the first bit in (100, 101, 1.., 191)
+	    if head == 1:
+	        return  self.countDigitOne(level-1) + self.countDigitOne(n-level) + n-level +1
+	    # like 491, divide it into (0-99), (100-199), (200-299, 300-399) and (400-491)
+	    return (head) * self.countDigitOne(level-1) + self.countDigitOne(n-head*level) + level	
+		
+		
 

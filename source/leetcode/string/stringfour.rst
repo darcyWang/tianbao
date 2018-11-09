@@ -239,6 +239,23 @@ https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/6md.ht
 https://github.com/duteng/leetcode/tree/master/Algorithms/ZigZag%20Conversion
 
 
+.. code-block:: python
+
+    def convert(self, s, numRows):
+        if numRows == 1:
+            return s
+        res, gap = "", 2*(numRows-1)
+        for i in xrange(numRows):
+            tmp = i
+            while tmp < len(s):
+                res += s[tmp]
+                # special cases 
+                if i != 0 and i != numRows-1: 
+                    if tmp+gap-2*i < len(s):
+                        res += s[tmp+gap-2*i]
+                tmp += gap
+        return res
+
 556. Next Greater Element III
 -----------------------------
 

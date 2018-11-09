@@ -133,7 +133,21 @@ For example:
 
 这道题让我们求相同值子树的个数，就是所有节点值都相同的子树的个数，之前有道求最大BST子树的题Largest BST Subtree，感觉挺像的，都是关于子树的问题，解题思路也可以参考一下，我们可以用递归来做，第一种解法的思路是先序遍历树的所有的节点，然后对每一个节点调用判断以当前节点为根的字数的所有节点是否相同，判断方法可以参考之前那题Same Tree，用的是分治法的思想，分别对左右字数分别调用递归，参见代码如下：
 
+.. code-block:: python
 
+    # bottom-up, first check the leaf nodes and count them, 
+    # then go up, if both children are "True" and root.val is 
+    # equal to both children's values if exist, then root node
+    # is uniValue suntree node. 
+    def checkUni(self, root):
+        if not root:
+            return True
+        l, r = self.checkUni(root.left), self.checkUni(root.right)
+        if l and r and (not root.left or root.left.val == root.val) and \
+        (not root.right or root.right.val == root.val):
+            self.count += 1
+            return True
+        return False
 
 
 156. Binary Tree Upside Down
@@ -156,7 +170,35 @@ For example:
        3   1  
 
 
+.. code-block:: python
 
+    # suppose the root.left part has been upsideDowned,
+    # then connect the root node (not root) to the right 
+    # side of the right-most node of the already upsideDowned
+    # root.left part, root.right to the left side
+    def upsideDownBinaryTree(self, root):
+        if not root or (not root.left and not root.right):
+            return root
+        node = self.upsideDownBinaryTree(root.left)
+        tmp = node
+        while tmp.right:
+            tmp = tmp.right
+        tmp.right = TreeNode(root.val)
+        tmp.left = root.right
+        return node 
+        
+        
+    # Iteratively 
+    def upsideDownBinaryTree(self, root):
+        if not root:
+            return root
+        l, r = root.left, root.right
+        root.left, root.right = None, None
+        while l:
+            newL, newR = l.left, l.right
+            l.left, l.right = r, root
+            root, l, r = l, newL, newR
+        return root 
 
 
 236. Lowest Common Ancestor of a Binary Tree
