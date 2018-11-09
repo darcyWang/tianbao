@@ -542,7 +542,7 @@ The vowels does not include the letter "y".
 
 
 
-..code-block:: javascript
+.. code-block:: javascript
     
     var reverseVowels = function(s) {
         if(s === null || s.length === 0) {
