@@ -12,3 +12,4 @@
    partthree.rst
    partfour.rst
    partfive.rst
+   partsix.rst

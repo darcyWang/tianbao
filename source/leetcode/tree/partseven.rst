@@ -14,7 +14,27 @@ Calling next() will return the next smallest number in the BST.
 
 Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 
+.. code-block:: python
 
+    # @param root, a binary search tree's root node
+    def __init__(self, root):
+        self.stack = []
+        self.helper(root)
+        
+    def helper(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
+
+    # @return a boolean, whether we have a next smallest number
+    def hasNext(self):
+        return self.stack  # or self.stack != []
+
+    # @return an integer, the next smallest number
+    def next(self):
+        node = self.stack.pop()
+        self.helper(node.right)
+        return node.val
 
 .. code-block:: python
 
@@ -399,21 +419,54 @@ Note:
 
 For example,
 Given the following perfect binary tree,
+::
+             1
+           /  \
+          2    3
+         / \  / \
+        4  5  6  7
 
-         1
-       /  \
-      2    3
-     / \  / \
-    4  5  6  7
+    After calling your function, the tree should look like:
 
-After calling your function, the tree should look like:
+             1 -> NULL
+           /  \
+          2 -> 3 -> NULL
+         / \  / \
+        4->5->6->7 -> NULL
 
-         1 -> NULL
-       /  \
-      2 -> 3 -> NULL
-     / \  / \
-    4->5->6->7 -> NULL
 
+.. code-block:: python
+
+    def __init__(self):
+        self.stack = []
+        self.min = []
+        self.size = 0
+
+    # @param x, an integer
+    # @return nothing
+    def push(self, x):
+        if self.size == 0:
+            self.min.append(x)
+        else:
+            if x <= self.min[-1]:
+                self.min.append(x)
+        self.stack.append(x)
+        self.size += 1
+
+    # @return nothing
+    def pop(self):
+        tmp = self.stack.pop()
+        self.size -= 1
+        if tmp == self.min[-1]:
+            self.min.pop()
+
+    # @return an integer
+    def top(self):
+        return self.stack[-1]
+
+    # @return an integer
+    def getMin(self):
+        return self.min[-1]     
 
 
 
@@ -537,8 +590,45 @@ For example:
 Given inorder and postorder traversal of a tree, construct the binary tree.
 
 Note:
-You may assume that duplicates do not exist in the tree. 
+You may assume that duplicates do not exist in the tree.
 
+For example, given
+::
+    inorder = [9,3,15,20,7]
+    postorder = [9,15,7,20,3]
+    Return the following binary tree:
+
+        3
+       / \
+      9  20
+        /  \
+       15   7
+
+.. code-block:: python
+
+    def buildTree(self, inorder, postorder):
+        if inorder:
+            ind = inorder.index(postorder.pop())
+            root = TreeNode(inorder[ind])
+            root.right = self.buildTree(inorder[ind+1:], postorder)
+            root.left = self.buildTree(inorder[:ind], postorder)
+            return root 
+        
+    def buildTree(self, preorder, inorder):
+        if inorder:
+            ind = inorder.index(preorder.pop(0))
+            root = TreeNode(inorder[ind])
+            root.left = self.buildTree(preorder, inorder[0:ind])
+            root.right = self.buildTree(preorder, inorder[ind+1:])
+            return root
+
+    def buildTree(self, preorder, inorder):
+        if inorder:
+            ind = inorder.index(preorder.pop(0))
+            root = TreeNode(inorder[ind])
+            root.left = self.buildTree(preorder, inorder[0:ind])
+            root.right = self.buildTree(preorder, inorder[ind+1:])
+            return root
 
 
 105. Construct Binary Tree from Preorder and Inorder Traversal

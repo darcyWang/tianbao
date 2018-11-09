@@ -429,7 +429,28 @@ Given an array where elements are sorted in ascending order, convert it to a hei
             return node
             
 
-        
+ 
+.. code-block:: python
+
+    def sortedArrayToBST1(self, nums):
+        l, r = 0, len(nums)-1
+        if l <= r:
+            mid = l + (r-l)//2
+            root = TreeNode(nums[mid])
+            root.left = self.sortedArrayToBST(nums[:mid])
+            root.right = self.sortedArrayToBST(nums[mid+1:])
+            return root
+            
+    def sortedArrayToBST(self, nums):
+        return self.helper(nums, 0, len(nums)-1)
+
+    def helper(self, nums, l, r):
+        if l <= r:
+            mid = l + (r-l)//2
+            root = TreeNode(nums[mid])
+            root.left = self.helper(nums, l, mid-1)
+            root.right = self.helper(nums, mid+1, r )
+            return root        
 
 
 109. Convert Sorted List to Binary Search Tree

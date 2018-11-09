@@ -74,3 +74,115 @@ Example Task
         8
         >>> result.successful() # returns True if the task didn't end in failure.
         True
+
+.. code-block:: python
+
+    def deleteNode(self, node):
+        node.val = node.next.val
+        node.next = node.next.next          
+                
+    # use two queues
+    # initialize your data structure here.
+    def __init__(self):
+        self.queue1 = []
+        self.queue2 = []
+        self.size = 0
+
+    # @param x, an integer
+    # @return nothing
+    def push(self, x):
+        if not self.queue2:
+            self.queue1.append(x)
+        else:
+            self.queue2.append(x)
+        self.size += 1
+
+    # @return nothing
+    def pop(self):
+        if not self.queue2:
+            for _ in xrange(self.size-1):
+                self.queue2.append(self.queue1.pop(0))
+            self.queue1.pop(0)
+        else:
+            for _ in xrange(self.size-1):
+                self.queue1.append(self.queue2.pop(0))
+            self.queue2.pop(0)
+        self.size -= 1
+
+    # @return an integer
+    def top(self):
+        if not self.queue2:
+            for _ in xrange(self.size-1):
+                self.queue2.append(self.queue1.pop(0))
+            tmp = self.queue1.pop(0)
+            self.queue2.append(tmp)
+            return tmp
+        else:
+            for _ in xrange(self.size-1):
+                self.queue1.append(self.queue2.pop(0))
+            tmp = self.queue2.pop(0)
+            self.queue1.append(tmp)
+            return tmp
+
+    # @return an boolean
+    def empty(self):
+        return self.size == 0
+
+    # use one queue   
+    # initialize your data structure here.
+    def __init__(self):
+        self.queue = collections.deque()
+        self.size = 0
+
+    # @param x, an integer
+    # @return nothing
+    def push(self, x):
+        self.queue.append(x)
+        for _ in xrange(self.size):
+            self.queue.append(self.queue.popleft())
+        self.size += 1
+
+    # @return nothing
+    def pop(self):
+        self.queue.popleft()
+        self.size -= 1
+
+    # @return an integer
+    def top(self):
+        # queue peek operation
+        return self.queue[0]
+
+    # @return an boolean
+    def empty(self):
+        return self.size == 0
+                
+    A bit shorter and faster:
+
+    ans = reduce(operator.xor, (x for x in nums if x & xor & -xor))
+    The speed difference isn't noticeable with the given inputs, but you can see it like this (about 384 ms for the generator, about 504 ms for the filter+lambda)
+
+    for _ in range(100):
+        ans = reduce(operator.xor, (x for x in nums if x & xor & -xor))
+    More lines but actually fewer printable characters and even faster (about 293 ms):
+
+        ans = 0
+        for x in nums:
+            if x & xor & -xor:
+                ans ^= x    
+        
+    def number(self, l):
+        if l == 0:
+            return 0
+        if l % 2 == 0:
+            return 4*(5**(l/2-1))
+        elif l == 1:
+            return 3
+        else:
+            return 3*(5**(l/2-1))*4 
+        
+        
+    def titleToNumber(self, s):
+        res = 0
+        for i in s:
+            res = res*26 + ord(i)-ord('A')+1
+        return res  

@@ -97,26 +97,68 @@ Example 2:
 107. Binary Tree Level Order Traversal II
 -----------------------------------------
 
-
-
 Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
-::
+
 For example:
-Given binary tree [3,9,20,null,null,15,7],
+::
+    Given binary tree [3,9,20,null,null,15,7],
 
-    3
-   / \
-  9  20
-    /  \
-   15   7
+        3
+       / \
+      9  20
+        /  \
+       15   7
 
-return its bottom-up level order traversal as:
+    return its bottom-up level order traversal as:
 
-[
-  [15,7],
-  [9,20],
-  [3]
-]
+    [
+      [15,7],
+      [9,20],
+      [3]
+    ]
+
+.. code-block:: python
+
+    # dfs recursively
+    def levelOrderBottom1(self, root):
+        res = []
+        self.dfs(root, 0, res)
+        return res
+
+    def dfs(self, root, level, res):
+        if root:
+            if len(res) < level + 1:
+                res.insert(0, [])
+            res[-(level+1)].append(root.val)
+            self.dfs(root.left, level+1, res)
+            self.dfs(root.right, level+1, res)
+            
+    # dfs + stack
+    def levelOrderBottom2(self, root):
+        stack = [(root, 0)]
+        res = []
+        while stack:
+            node, level = stack.pop()
+            if node:
+                if len(res) < level+1:
+                    res.insert(0, [])
+                res[-(level+1)].append(node.val)
+                stack.append((node.right, level+1))
+                stack.append((node.left, level+1))
+        return res
+     
+    # bfs + queue   
+    def levelOrderBottom(self, root):
+        queue, res = collections.deque([(root, 0)]), []
+        while queue:
+            node, level = queue.popleft()
+            if node:
+                if len(res) < level+1:
+                    res.insert(0, [])
+                res[-(level+1)].append(node.val)
+                queue.append((node.left, level+1))
+                queue.append((node.right, level+1))
+        return res
 
 
 104. Maximum Depth of Binary Tree
@@ -173,7 +215,44 @@ The maximum depth is the number of nodes along the longest path from the root no
                 stack.append((node.left, level+1))
         return res  
             
+.. code-block:: python
 
+    # BFS + deque   
+    def maxDepth(self, root):
+        if not root:
+            return 0
+        from collections import deque
+        queue = deque([(root, 1)])
+        while queue:
+            curr, val = queue.popleft()
+            if not curr.left and not curr.right and not queue:
+                return val
+            if curr.left:
+                queue.append((curr.left, val+1))
+            if curr.right:
+                queue.append((curr.right, val+1))   
+        
+        
+    # Recursively
+    def maxDepth1(self, root):
+        if not root:
+            return 0
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+     
+    # DFS    
+    def maxDepth(self, root):
+        res = 0
+        stack = [(root, 0)]
+        while stack:
+            node, level = stack.pop()
+            if not node:
+                res = max(res, level)
+            else:
+                stack.append((node.right, level+1))
+                stack.append((node.left, level+1))
+        return res  
+        
+        
 
 101. Symmetric Tree
 -------------------

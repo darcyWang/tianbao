@@ -112,16 +112,106 @@ Special thanks to @ts for adding this problem and creating all test cases.
 153. Find Minimum in Rotated Sorted Array
 -----------------------------------------
 
-
 Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 
-(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+(i.e.,  [0,1,2,4,5,6,7] might become  [4,5,6,7,0,1,2]).
 
 Find the minimum element.
 
 You may assume no duplicate exists in the array.
 
+Example 1:
+:: 
+    Input: [3,4,5,1,2] 
+    Output: 1
 
+Example 2:
+::
+    Input: [4,5,6,7,0,1,2]
+    Output: 0
+
+.. code-block:: python
+
+    # Recursively 
+    def findMin(self, nums):
+        return self.helper(nums, 0, len(nums)-1)
+            
+    def helper(self, nums, l, r):
+        if l == r:
+            return nums[l]
+        mid = l + (r-l)//2
+        if nums[mid] > nums[r]:
+            return self.helper(nums, mid+1, r)
+        else:
+            return self.helper(nums, l, mid)    
+
+
+思路 1 ******- 时间复杂度: O(NlgN)******- 空间复杂度: O(1)******
+
+python大法好，一行sb AC, beats 100%，可能测试用例大多数都是基本有序的吧
+
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums.sort()
+        return nums[0]
+思路 2 ******- 时间复杂度: O(N)******- 空间复杂度: O(1)******
+
+一遍遍历看有没有降序的时候，有立马返回那个值，到最后都没有就返回nums[0]
+
+30秒钟 Bug free，一遍AC, beats 100%
+
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 1:
+            return nums[0]
+        pivot = nums[0]
+        for i in range(1, len(nums)):
+            if nums[i] < pivot:
+                return nums[i]
+            pivot = nums[i]
+        return nums[0]
+思路 3 ******- 时间复杂度: O(lgN)******- 空间复杂度: O(1)******
+
+二分法，思路看代码一目了然，leetcode第33题这道题很类似，我画了图的，可以看看
+
+beats 100%
+
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l, r = 0, len(nums) - 1
+        while l <= r:
+            mid = l + ((r-l) >> 1)
+            if nums[mid] < nums[mid-1]:
+                return nums[mid]
+            elif nums[mid] < nums[l]:
+                r = mid - 1
+            elif nums[mid] > nums[r]:
+                l = mid + 1
+            else:
+                return nums[l]
+.. code-block:: java
+
+    public int FindMin(int[] nums) {
+        int left = 0, right = nums.Length - 1, mid = 0;
+        while(left < right){
+            mid = (left + right) >> 1;
+            if(nums[mid] > nums[right]) left = mid + 1;
+            else right = mid;
+        }
+        return nums[right];
+    }
 
 81. Search in Rotated Sorted Array II
 -------------------------------------
@@ -381,11 +471,48 @@ You may assume no duplicate exists in the array.
 29. Divide Two Integers
 -----------------------
 
- Divide two integers without using multiplication, division and mod operator.
+Divide two integers without using multiplication, division and mod operator.
 
 If it is overflow, return MAX_INT. 
 
+.. code-block:: python
 
+    def divide(self, dividend, divisor):
+        intMax, intMin = 2147483647, -2147483648
+        sign = 1
+        if 0 in [dividend, divisor]:
+            return 0
+        elif dividend < 0 < divisor or divisor < 0 < dividend:
+            sign = -1
+            dividend, divisor = abs(dividend), abs(divisor)
+        else:
+            dividend, divisor = abs(dividend), abs(divisor)
+        res = 0
+        while dividend >= divisor:
+            tmp, val = divisor, 1
+            while dividend >= tmp:
+                res += val
+                dividend -= tmp
+                tmp += tmp
+                val += val
+        if sign == 1:
+            return min(intMax, res)
+        else:
+            return max(intMin, 0-res)
+        
+    btw, the sign checking part can be replaced as:
+
+    sign = (dividend < 0) == (divisor < 0)
+    dividend, divisor = abs(dividend), abs(divisor)
+    the whole while loop can be replaced as:
+
+    while dividend >= divisor:
+            tmp, val = divisor, 1
+            while dividend >= tmp + tmp:
+                tmp += tmp
+                val += val
+            res += val
+            dividend -= tmp 
 
 668. Kth Smallest Number in Multiplication Table
 ------------------------------------------------
@@ -396,27 +523,25 @@ If it is overflow, return MAX_INT.
 Given the height m and the length n of a m * n Multiplication Table, and a positive integer k, you need to return the k-th smallest number in this table.
 
 Example 1:
+::
+    Input: m = 3, n = 3, k = 5
+    Output: 
+    Explanation:  The Multiplication Table:
+                                    1 2 3
+                                    2 4 6
+                                    3 6 9
 
-Input: m = 3, n = 3, k = 5
-Output: 
-Explanation: 
-The Multiplication Table:
-1 2 3
-2 4 6
-3 6 9
-
-The 5-th smallest number is 3 (1, 2, 2, 3, 3).
+    The 5-th smallest number is 3 (1, 2, 2, 3, 3).
 
 Example 2:
+::
+    Input: m = 2, n = 3, k = 6
+    Output: 
+    Explanation: The Multiplication Table:
+                                    1 2 3
+                                    2 4 6
 
-Input: m = 2, n = 3, k = 6
-Output: 
-Explanation: 
-The Multiplication Table:
-1 2 3
-2 4 6
-
-The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
+    The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
 
 Note:
 

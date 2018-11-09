@@ -394,6 +394,24 @@ For example, given array S = {-1 2 1 -4}, and target = 1.
 
 The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
+.. code-block:: python
+
+    def threeSumClosest(self, nums, target):
+        nums.sort()
+        res = sum(nums[:3])
+        for i in xrange(len(nums)):
+            l, r = i+1, len(nums)-1
+            while l < r:
+                s = sum((nums[i], nums[l], nums[r]))
+                if abs(s-target) < abs(res-target):
+                    res = s
+                if s < target:
+                    l += 1
+                elif s > target:
+                    r -= 1
+                else: # break early 
+                    return res
+        return res  
 
 15. 3Sum
 --------

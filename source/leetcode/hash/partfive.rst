@@ -1,4 +1,4 @@
-题目序号 314、311、288、249、244、187、166、138、49、36、18、3
+题目序号 314、311、288、249、244、187、166、138、36、18、3
 ===================================================================
 
 
@@ -429,25 +429,6 @@ Return a deep copy of the list.
             cur = cur.next
         return dic[head]
 
-
-49. Group Anagrams
-------------------
-
-Given an array of strings, group anagrams together.
-
-For example, 
-::
-    given: ["eat", "tea", "tan", "ate", "nat", "bat"],
-    
-    Return:
-
-    [
-      ["ate", "eat","tea"],
-      ["nat","tan"],
-      ["bat"]
-    ]
-
-Note: All inputs will be in lower-case.
 
 
 

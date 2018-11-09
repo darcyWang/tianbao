@@ -118,7 +118,35 @@ You must not use any built-in BigInteger library or convert the inputs to intege
             return ''.join(ans)
 
 
+.. code-block:: python
 
+    # may overflow 
+    def multiply1(self, num1, num2):
+        return str(int(num1)*int(num2))
+
+    # may overflow    
+    def multiply2(self, num1, num2):
+        res = 0
+        for i, d1 in enumerate(num1[::-1]):
+            tmp = int(d1)*(10**i)
+            for j, d2 in enumerate(num2[::-1]):
+                res += tmp * (int(d2)*(10**j))
+        return str(res)
+        
+    # No overflow
+    def multiply(self, num1, num2):
+        res = [0] * (len(num1) + len(num2))
+        for i in xrange(len(num1)-1, -1, -1):
+            carry = 0
+            for j in xrange(len(num2)-1, -1, -1):
+                tmp = int(num1[i])*int(num2[j])+carry 
+                # take care of the order of the next two lines
+                carry = (res[i+j+1] + tmp) // 10  
+                res[i+j+1] = (res[i+j+1] + tmp) % 10
+                # or simply: carry, res[i+j+1] = divmod((res[i+j+1] + tmp), 10)
+            res[i] += carry
+        res = "".join(map(str, res))
+        return '0' if not res.lstrip("0") else res.lstrip("0")  
 
 616. Add Bold Tag in String
 ---------------------------
@@ -194,7 +222,24 @@ Note: All inputs will be in lower-case.
 判断两个词是否是变形词，最简单的方法是将两个词按字母排序，看结果是否相同。这题中我们要将所有同为一个变形词词根的词归到一起，最快的方法则是用哈希表。所以这题就是结合哈希表和排序。我们将每个词排序后，根据这个键值，找到哈希表中相应的列表，并添加进去。为了满足题目字母顺序的要求，我们输出之前还要将每个列表按照内部的词排序一下。可以直接用Java的Collections.sort()这个API。
 
 
+.. code-block:: python
 
+    """        
+    def anagrams(self, strs):
+        dic = {}
+        for s in strs:
+            dic[tuple(sorted(s))] = dic.get(tuple(sorted(s)),[]) + [s]
+        res = []
+        [res.extend(item) for item in dic.values() if len(item) > 1]
+        return res
+    """
+    # Here is an updated version, where the order in each inner group is maintained:
+    def groupAnagrams(self, strs):
+        dic = {}
+        for s in strs:
+            dic[tuple(sorted(s))] = dic.get(tuple(sorted(s)),[]) + [s]
+        return [sorted(item) for item in dic.values()]  
+        
 
 6. ZigZag Conversion
 --------------------
@@ -439,3 +484,12 @@ Return:
 
 既然可以任意移位，我们就通过移位把首字符都变成某个固定字母比如a或z，这样就可以将移位字符串聚类了。
 
+.. code-block:: python
+
+    def groupStrings(self, strings):
+        dic = {}
+        for s in strings:
+            # "abc"->(0,1,2), "az"->(0,25), etc 
+            tmp = tuple(map(lambda x:(ord(x)-ord(s[0]))%26, s))
+            dic[tmp] = dic.get(tmp, []) + [s]
+        return [sorted(x) for x in dic.values()]    

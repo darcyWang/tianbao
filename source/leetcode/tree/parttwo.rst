@@ -272,8 +272,7 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 235. Lowest Common Ancestor of a Binary Search Tree 
 ---------------------------------------------------
 
-
- Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
 
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
 ::
@@ -286,6 +285,25 @@ According to the definition of LCA on Wikipedia: “The lowest common ancestor i
          3   5
 
 For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
+
+
+.. code-block:: python
+
+    def lowestCommonAncestor(self, root, p, q):
+        if not root:
+            return 
+        # p and q are on the different side of root,
+        # or at least one of them is root
+        if (root.val-p.val)*(root.val-q.val)<=0:
+            return root
+        # both p and q are on the left side of root
+        elif root.val > p.val and root.val > q.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        # both p and q are on the right side of root
+        else:
+            return self.lowestCommonAncestor(root.right, p, q)  
+        
+
 
 
 226. Invert Binary Tree 
@@ -341,3 +359,34 @@ Example:
             self.invertTree(root.left)
             self.invertTree(root.right)
             return root
+
+
+.. code-block:: python
+
+    # recursively
+    def invertTree1(self, root):
+        if root:
+            root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+            return root
+            
+    # BFS
+    def invertTree2(self, root):
+        queue = collections.deque([(root)])
+        while queue:
+            node = queue.popleft()
+            if node:
+                node.left, node.right = node.right, node.left
+                queue.append(node.left)
+                queue.append(node.right)
+        return root
+        
+    # DFS
+    def invertTree(self, root):
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            if node:
+                node.left, node.right = node.right, node.left
+                stack.extend([node.right, node.left])
+        return root 
+        

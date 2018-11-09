@@ -436,14 +436,124 @@ In a complete binary tree every level, except possibly the last, is completely f
 
 Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
 
-For example, given the array [2,3,1,2,4,3] and s = 7,
-the subarray [4,3] has the minimal length under the problem constraint.
+Example: 
 
-click to show more practice.
-More practice:
+Input: s = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+Follow up:
+If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n). 
 
-If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n).
 
-Credits:
-Special thanks to @Freezen for adding this problem and creating all test cases.
+.. code-block:: python
 
+    # O(n) time
+    # we scan from left to right, "total" tracks the 
+    # sum of the subarray. If the sum is less than s,
+    # right moves forward one step, else left moves forward
+    # one step, left and right form a window.
+    def minSubArrayLen(self, s, nums):
+        total = left = right = 0
+        res = len(nums) + 1
+        while right < len(nums):
+            total += nums[right]
+            while total >= s:
+                res = min(res, right-left+1)
+                total -= nums[left]
+                left += 1
+            right += 1
+        return res if res <= len(nums) else 0   
+        
+        
+    Actually the first while loop can be replaced by a for loop:
+
+    def minSubArrayLen(self, s, nums):
+        l = sum = 0
+        res = len(nums)+1
+        for i in xrange(len(nums)):
+            sum += nums[i]
+            while sum >= s:
+                res = min(res, i-l+1)
+                sum -= nums[l]
+                l += 1
+        return res if res <= len(nums) else 0   
+
+.. code-block:: python
+
+    def minSubArrayLen(self, s, nums):
+        l = sum = 0
+        res = len(nums)+1
+        for i in xrange(len(nums)):
+            sum += nums[i]
+            while sum >= s:
+                res = min(res, i-l+1)
+                sum -= nums[l]
+                l += 1
+        return res if res <= len(nums) else 0       
+
+
+.. code-block:: python
+
+    class Solution(object):
+        def minSubArrayLen(self, s, nums):
+            """
+            :type s: int
+            :type nums: List[int]
+            :rtype: int
+            """
+            start, end, sums, res = 0, 0, 0, sys.maxsize
+            while end < len(nums):
+                sums += nums[end]
+                end += 1
+                while sums >= s:
+                    sums -= nums[start]
+                    start += 1
+                    res = min(res, end-start+1)
+            return res if res != sys.maxsize else 0
+
+*. 这里可以看到由于需要找连续的子数组，所以依旧可以设置两个指针，往同一方向移动。
+*. 如果两个指针中间的值加起来>sum的时候，记录此时数组的长度，接着左指针移动，减小sum的值 ；
+*. 如果< sum的话，右指针移动扩大范围。
+*. 最后返回最短的长度值。
+.. code-block:: javascript
+
+    /**
+     * @param {number} s
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var minSubArrayLen = function(s, nums) {
+      var left = 0;
+      var right = -1; // right 的起始位置很重要，这里选择-1 [left, right]这个区间刚开始是没有值的
+      var tmpSum = 0;
+      var minLength;
+
+      // 循环停止的条件是左指针小于长度
+      while (left < nums.length - 1) {
+        if(tmpSum < s) {
+          // 这里要注意边界的处理，当右指针移动到最后一个元素的时候结束
+          if(right >= nums.length -1) {
+            return minLength || 0;
+          }
+          right ++;
+          // 这里tmpSum的计算也很巧妙，直接用累加的方式，节省计算量
+          tmpSum = tmpSum + nums[right]
+        } else {
+          var tmp = right - left + 1;
+          if(minLength) {
+            if(tmp < minLength) {
+              minLength = tmp;
+            }
+          } else {
+            minLength = tmp;
+          }
+          // 左边指针移动减少sum的值
+          tmpSum = tmpSum - nums[left];
+          left ++;
+        } 
+      }
+      if(!minLength) {
+        return 0;
+      }
+      return minLength;
+    };

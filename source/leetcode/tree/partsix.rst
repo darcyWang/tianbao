@@ -135,6 +135,11 @@ For example:
 
 .. code-block:: python
 
+    def countUnivalSubtrees(self, root):
+        self.count = 0
+        self.checkUni(root)
+        return self.count
+
     # bottom-up, first check the leaf nodes and count them, 
     # then go up, if both children are "True" and root.val is 
     # equal to both children's values if exist, then root node

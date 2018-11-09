@@ -267,7 +267,23 @@ Hint:
             m = tuple(k for k, v in d.iteritems() if v % 2)
             p = ''.join(k*(v/2) for k, v in d.iteritems())
             return [''.join(i + m + i[::-1]) for i in set(itertools.permutations(p))] if len(m) < 2 else [] 
-        
+
+
+.. code-block:: python
+
+    def canPermutePalindrome(self, s):
+        dic = {}
+        for item in s:
+            dic[item] = dic.get(item, 0) + 1
+        # return sum(v % 2 for v in dic.values()) < 2
+        count1 = 0
+        for val in dic.values():
+            if val % 2 == 1:
+                count1 += 1
+            if count1 > 1:
+                return False
+        return True 
+
 
 242. Valid Anagram
 ------------------
@@ -286,7 +302,26 @@ Follow up:
 What if the inputs contain unicode characters? How would you adapt your solution to such case?
 
 
+.. code-block:: python
 
+    def isAnagram1(self, s, t):
+        dic1, dic2 = {}, {}
+        for item in s:
+            dic1[item] = dic1.get(item, 0) + 1
+        for item in t:
+            dic2[item] = dic2.get(item, 0) + 1
+        return dic1 == dic2
+        
+    def isAnagram2(self, s, t):
+        dic1, dic2 = [0]*26, [0]*26
+        for item in s:
+            dic1[ord(item)-ord('a')] += 1
+        for item in t:
+            dic2[ord(item)-ord('a')] += 1
+        return dic1 == dic2
+        
+    def isAnagram3(self, s, t):
+        return sorted(s) == sorted(t)   
 
 
 205. Isomorphic Strings
