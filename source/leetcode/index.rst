@@ -16,5 +16,6 @@ Leetcode
    array/index.rst
    math/index.rst
    dynamic/index.rst
-   other/index.rst
+   addition/index.rst
    hard/index.rst
+   other/index.rst
