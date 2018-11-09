@@ -400,27 +400,10 @@ They all begin with two periods and whitespace, the "explicit markup start".
 |new syntax. For a description of all standard directives, see reStructuredText Directives (http://is.gd/2Ecqh).              |
 |                                                                                                                             |
 +---------------------------------------------------------------+-------------------------------------------------------------+
-| ::                                                            |                                                             |
-|                                                               |                                                             |
-|   For instance:                                               |   For instance:                                             |
-|                                                               |                                                             |
-|   .. image:: magnetic-balls.jpg                               |   .. image:: magnetic-balls.jpg                             |
-|      :width: 40pt                                             |      :width: 40pt                                           |
-|                                                               |                                                             |
-+---------------------------------------------------------------+-------------------------------------------------------------+
 |                                                                                                                             |
 |                                                                                                                             |
 | Substitutions are like inline directives, allowing graphics and arbitrary constructs within text.                           |
 |                                                                                                                             |
-+---------------------------------------------------------------+-------------------------------------------------------------+
-| ::                                                            |                                                             |
-|                                                               |                                                             |
-|   The |biohazard| symbol must be used on containers used to   |   The |biohazard| symbol must be used on containers used to |
-|   dispose of medical waste.                                   |   dispose of medical waste.                                 |
-|                                                               |                                                             |
-|   .. |biohazard| image:: biohazard.png                        |   .. |biohazard| image:: biohazard.png                      |
-|      :align: middle                                           |      :align: middle                                         |
-|      :width: 12                                               |      :width: 12                                             |
 +---------------------------------------------------------------+-------------------------------------------------------------+
 |                                                                                                                             |
 | Any text which begins with an explicit markup start but doesn't use the syntax of any of the constructs above, is a comment.|
@@ -469,16 +452,18 @@ Credits
     | |copy| :small:`2009 Roberto Alsina <ralsina@netmanagers.com.ar>  /  Creative Commons Attribution-Noncommercial-Share Alike 2.5 Argentina License`     | |attrib| :small:`Based on quickref.txt from docutils`               | |noncomm| :small:`Non-Commercial`| |sharealike| :small:`Share Alike` |
     +-------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------+----------------------------------+-----------------------------------+
 
-.. |attrib| image:: attrib.png
-   :width: 8pt
-   :align: middle
+.. code-block:: python
 
-.. |noncomm| image:: noncomm.png
-   :width: 8pt
-   :align: middle
+	.. |attrib| image:: 
+	   :width: 8pt
+	   :align: middle
 
-.. |sharealike| image:: sharealike.png
-   :width: 8pt
-   :align: middle
+	.. |noncomm| image:: 
+	   :width: 8pt
+	   :align: middle
 
-.. |copy|   unicode:: U+000A9
+	.. |sharealike| image:: 
+	   :width: 8pt
+	   :align: middle
+
+	.. |copy|   unicode:: U+000A9

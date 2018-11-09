@@ -347,7 +347,7 @@ Example:
 
 
 
-.. code-block :: Javascript
+.. code-block:: javascript
 
     var twoSum = function(nums, target) {
 
