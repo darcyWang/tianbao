@@ -9,12 +9,12 @@
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
 
 Example:
+::
+    Given nums = [-2, 0, 3, -5, 2, -1]
 
-Given nums = [-2, 0, 3, -5, 2, -1]
-
-sumRange(0, 2) -> 1
-sumRange(2, 5) -> -1
-sumRange(0, 5) -> -3
+    sumRange(0, 2) -> 1
+    sumRange(2, 5) -> -1
+    sumRange(0, 5) -> -3
 
 Note:
 
@@ -54,41 +54,41 @@ Note: All costs are positive integers.
 
 .. code-block:: python
 
-	# O(n*3) space
-	def minCost1(self, costs):
-	    if not costs:
-	        return 0
-	    r, c = len(costs), len(costs[0])
-	    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
-	    dp[0] = costs[0]
-	    for i in xrange(1, r):
-	        dp[i][0] = costs[i][0] + min(dp[i-1][1:3])
-	        dp[i][1] = costs[i][1] + min(dp[i-1][0], dp[i-1][2])
-	        dp[i][2] = costs[i][2] + min(dp[i-1][:2])
-	    return min(dp[-1])
-	 
-	# change original matrix   
-	def minCost2(self, costs):
-	    if not costs:
-	        return 0
-	    for i in xrange(1, len(costs)):
-	        costs[i][0] += min(costs[i-1][1:3])
-	        costs[i][1] += min(costs[i-1][0], costs[i-1][2])
-	        costs[i][2] += min(costs[i-1][:2])
-	    return min(costs[-1])
+    # O(n*3) space
+    def minCost1(self, costs):
+        if not costs:
+            return 0
+        r, c = len(costs), len(costs[0])
+        dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
+        dp[0] = costs[0]
+        for i in xrange(1, r):
+            dp[i][0] = costs[i][0] + min(dp[i-1][1:3])
+            dp[i][1] = costs[i][1] + min(dp[i-1][0], dp[i-1][2])
+            dp[i][2] = costs[i][2] + min(dp[i-1][:2])
+        return min(dp[-1])
+     
+    # change original matrix   
+    def minCost2(self, costs):
+        if not costs:
+            return 0
+        for i in xrange(1, len(costs)):
+            costs[i][0] += min(costs[i-1][1:3])
+            costs[i][1] += min(costs[i-1][0], costs[i-1][2])
+            costs[i][2] += min(costs[i-1][:2])
+        return min(costs[-1])
 
-	# O(1) space    
-	def minCost3(self, costs):
-	    if not costs:
-	        return 0
-	    dp = costs[0]
-	    for i in xrange(1, len(costs)):
-	        pre = dp[:] # here should take care
-	        dp[0] = costs[i][0] + min(pre[1:3])
-	        dp[1] = costs[i][1] + min(pre[0], pre[2])
-	        dp[2] = costs[i][2] + min(pre[:2])
-	    return min(dp)	
-		
+    # O(1) space    
+    def minCost3(self, costs):
+        if not costs:
+            return 0
+        dp = costs[0]
+        for i in xrange(1, len(costs)):
+            pre = dp[:] # here should take care
+            dp[0] = costs[i][0] + min(pre[1:3])
+            dp[1] = costs[i][1] + min(pre[0], pre[2])
+            dp[2] = costs[i][2] + min(pre[:2])
+        return min(dp)  
+        
 
 
 265. Paint House II 
@@ -107,54 +107,54 @@ Follow up: Could you solve it in O(nk) runtime?
 
 .. code-block:: python
 
-	# dp, O(nk) space
-	def minCostII1(self, costs):
-	    if not costs:
-	        return 0
-	    r, c = len(costs), len(costs[0])
-	    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
-	    dp[0] = costs[0]
-	    for i in xrange(1, r):
-	        for j in xrange(c):
-	            dp[i][j] = costs[i][j] + min(dp[i-1][:j]+dp[i-1][j+1:])
-	    return min(dp[-1])
-	    
-	# dp, O(k) space
-	def minCostII(self, costs):
-	    if not costs:
-	        return 0
-	    r, c = len(costs), len(costs[0])
-	    cur = costs[0]
-	    for i in xrange(1, r):
-	        pre = cur[:]  # take care here
-	        for j in xrange(c):
-	            cur[j] = costs[i][j] + min(pre[:j]+pre[j+1:])
-	    return min(cur)	
-		
-		
-		
-	class Solution:
-	    # @param {integer[][]} costs
-	    # @return {integer}
-	    def minCostII(self, costs):
-	        return min(reduce(lambda x, y: self.combine(y, x), costs)) if costs else 0
+    # dp, O(nk) space
+    def minCostII1(self, costs):
+        if not costs:
+            return 0
+        r, c = len(costs), len(costs[0])
+        dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
+        dp[0] = costs[0]
+        for i in xrange(1, r):
+            for j in xrange(c):
+                dp[i][j] = costs[i][j] + min(dp[i-1][:j]+dp[i-1][j+1:])
+        return min(dp[-1])
+        
+    # dp, O(k) space
+    def minCostII(self, costs):
+        if not costs:
+            return 0
+        r, c = len(costs), len(costs[0])
+        cur = costs[0]
+        for i in xrange(1, r):
+            pre = cur[:]  # take care here
+            for j in xrange(c):
+                cur[j] = costs[i][j] + min(pre[:j]+pre[j+1:])
+        return min(cur) 
+        
+        
+        
+    class Solution:
+        # @param {integer[][]} costs
+        # @return {integer}
+        def minCostII(self, costs):
+            return min(reduce(lambda x, y: self.combine(y, x), costs)) if costs else 0
 
-	    def combine(self, house, tmp):
-	        m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
-	        tmp = [m]*i + [min(tmp[0:i]+tmp[i+1:])] + [m]*(n-i-1)
-	        return [sum(i) for i in zip(house, tmp)]	
-		
-		
-		
-	class Solution:
-	    def minCostII(self, costs):
-	        return min(reduce(self.combine, costs)) if costs else 0
+        def combine(self, house, tmp):
+            m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
+            tmp = [m]*i + [min(tmp[0:i]+tmp[i+1:])] + [m]*(n-i-1)
+            return [sum(i) for i in zip(house, tmp)]    
+        
+        
+        
+    class Solution:
+        def minCostII(self, costs):
+            return min(reduce(self.combine, costs)) if costs else 0
 
-	    def combine(self, tmp, house):
-	        m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
-	        tmp, tmp[i] = [m]*n, min(tmp[:i]+tmp[i+1:])
-	        return map(sum, zip(house, tmp))	
-		
+        def combine(self, tmp, house):
+            m, n, i = min(tmp), len(tmp), tmp.index(min(tmp))
+            tmp, tmp[i] = [m]*n, min(tmp[:i]+tmp[i+1:])
+            return map(sum, zip(house, tmp))    
+        
 
 
 70. Climbing Stairs 
@@ -167,11 +167,65 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 Note: Given n will be a positive integer. 
 
 
+.. code-block:: python
+
+    # Top down - TLE
+    def climbStairs1(self, n):
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        return self.climbStairs(n-1)+self.climbStairs(n-2)
+     
+    # Bottom up, O(n) space
+    def climbStairs2(self, n):
+        if n == 1:
+            return 1
+        res = [0 for i in xrange(n)]
+        res[0], res[1] = 1, 2
+        for i in xrange(2, n):
+            res[i] = res[i-1] + res[i-2]
+        return res[-1]
+
+    # Bottom up, constant space
+    def climbStairs3(self, n):
+        if n == 1:
+            return 1
+        a, b = 1, 2
+        for i in xrange(2, n):
+            tmp = b
+            b = a+b
+            a = tmp
+        return b
+        
+    # Top down + memorization (list)
+    def climbStairs4(self, n):
+        if n == 1:
+            return 1
+        dic = [-1 for i in xrange(n)]
+        dic[0], dic[1] = 1, 2
+        return self.helper(n-1, dic)
+        
+    def helper(self, n, dic):
+        if dic[n] < 0:
+            dic[n] = self.helper(n-1, dic)+self.helper(n-2, dic)
+        return dic[n]
+        
+    # Top down + memorization (dictionary)  
+    def __init__(self):
+        self.dic = {1:1, 2:2}
+        
+    def climbStairs(self, n):
+        if n not in self.dic:
+            self.dic[n] = self.climbStairs(n-1) + self.climbStairs(n-2)
+        return self.dic[n]      
+
+
 
 53. Maximum Subarray
 --------------------
 
- Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 
 For example, given the array [-2,1,-3,4,-1,2,1,-5,4],
 the contiguous subarray [4,-1,2,1] has the largest sum = 6.
@@ -181,6 +235,29 @@ More practice:
 
 If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 
+
+.. code-block:: python
+
+    # DP, O(n) space
+    def maxSubArray(self, nums):
+        if not nums:
+            return None
+        dp = [0] * len(nums)
+        res = dp[0] = nums[0]
+        for i in xrange(1, len(nums)):
+            dp[i] = max(dp[i-1]+nums[i], nums[i])
+            res = max(res, dp[i])
+        return res
+        
+    # DP, constant space
+    def maxSubArray2(self, nums):
+        if not nums:
+            return None
+        loc = glo= nums[0]
+        for i in xrange(1, len(nums)):
+            loc = max(loc+nums[i], nums[i])
+            glo = max(loc, glo)
+        return glo
 
 651. 4 Keys Keyboard
 --------------------

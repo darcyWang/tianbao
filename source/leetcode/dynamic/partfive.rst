@@ -1,5 +1,5 @@
-题目序号 213、152、139、120、96、95、91、64、62、63、664、518
-=====================================================================
+题目序号 213、152、139、120、91、664、518
+=========================================
 
 
 198. House Robber 
@@ -335,50 +335,71 @@ The wordDict parameter had been changed to a list of strings (instead of a set o
 Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 
 For example, given the following triangle
+::
+    [
+         [2],
+        [3,4],
+       [6,5,7],
+      [4,1,8,3]
+    ]
 
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]
-
-The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+    The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 
 Note:
 Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle. 
 
 
-96. Unique Binary Search Trees 
-------------------------------
+.. code-block:: python
 
+    # O(n*n/2) space, top-down 
+    def minimumTotal1(self, triangle):
+        if not triangle:
+            return 
+        res = [[0 for i in xrange(len(row))] for row in triangle]
+        res[0][0] = triangle[0][0]
+        for i in xrange(1, len(triangle)):
+            for j in xrange(len(triangle[i])):
+                if j == 0:
+                    res[i][j] = res[i-1][j] + triangle[i][j]
+                elif j == len(triangle[i])-1:
+                    res[i][j] = res[i-1][j-1] + triangle[i][j]
+                else:
+                    res[i][j] = min(res[i-1][j-1], res[i-1][j]) + triangle[i][j]
+        return min(res[-1])
+        
+    # Modify the original triangle, top-down
+    def minimumTotal2(self, triangle):
+        if not triangle:
+            return 
+        for i in xrange(1, len(triangle)):
+            for j in xrange(len(triangle[i])):
+                if j == 0:
+                    triangle[i][j] += triangle[i-1][j]
+                elif j == len(triangle[i])-1:
+                    triangle[i][j] += triangle[i-1][j-1]
+                else:
+                    triangle[i][j] += min(triangle[i-1][j-1], triangle[i-1][j])
+        return min(triangle[-1])
+        
+    # Modify the original triangle, bottom-up
+    def minimumTotal3(self, triangle):
+        if not triangle:
+            return 
+        for i in xrange(len(triangle)-2, -1, -1):
+            for j in xrange(len(triangle[i])):
+                triangle[i][j] += min(triangle[i+1][j], triangle[i+1][j+1])
+        return triangle[0][0]
 
-Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
-
-For example,
-Given n = 3, there are a total of 5 unique BST's.
-
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
-
-
-95. Unique Binary Search Trees II
----------------------------------
-
-Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1...n.
-
-For example,
-Given n = 3, your program should return all 5 unique BST's shown below.
-
-   1         3     3      2      1
-    \       /     /      / \      \
-     3     2     1      1   3      2
-    /     /       \                 \
-   2     1         2                 3
-
+    # bottom-up, O(n) space
+    def minimumTotal(self, triangle):
+        if not triangle:
+            return 
+        res = triangle[-1]
+        for i in xrange(len(triangle)-2, -1, -1):
+            for j in xrange(len(triangle[i])):
+                res[j] = min(res[j], res[j+1]) + triangle[i][j]
+        return res[0]
+        
 
 91. Decode Ways
 ---------------
@@ -397,56 +418,6 @@ For example,
 Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
 
 The number of ways decoding "12" is 2. 
-
-
-
-64. Minimum Path Sum 
---------------------
-
-Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
-
-Note: You can only move either down or right at any point in time.
-
-
-
-
-62. Unique Paths 
-----------------
-
-A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
-
-The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
-
-How many possible unique paths are there?
-
-
-Above is a 3 x 7 grid. How many possible unique paths are there?
-
-Note: m and n will be at most 100.
-
-63. Unique Paths II
--------------------
-
-
-Follow up for "Unique Paths":
-
-Now consider if some obstacles are added to the grids. How many unique paths would there be?
-
-An obstacle and empty space is marked as 1 and 0 respectively in the grid.
-
-For example,
-
-There is one obstacle in the middle of a 3x3 grid as illustrated below.
-
-[
-  [0,0,0],
-  [0,1,0],
-  [0,0,0]
-]
-
-The total number of unique paths is 2.
-
-Note: m and n will be at most 100.
 
 
 

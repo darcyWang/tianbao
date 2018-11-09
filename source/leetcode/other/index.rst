@@ -11,3 +11,4 @@
    parttwo.rst
    partthree.rst
    partfour.rst
+   partfive.rst

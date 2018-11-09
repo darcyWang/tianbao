@@ -278,3 +278,46 @@ Credits:
 Special thanks to @Freezen for adding this problem and creating all test cases.
 
 
+.. code-block:: python
+
+    # O((m+1)*(n+1)) space, one pass
+    def maximalSquare1(self, matrix):
+        if not matrix:
+            return 0
+        r, c = len(matrix), len(matrix[0])
+        dp = [[0 for i in xrange(c+1)] for j in xrange(r+1)]
+        res = 0
+        for i in xrange(r):
+            for j in xrange(c):
+                dp[i+1][j+1] = (min(dp[i][j], dp[i+1][j], dp[i][j+1])+1)*int(matrix[i][j])
+                res = max(res, dp[i+1][j+1]**2)
+        return res
+        
+    # O(m*n) space, one pass  
+    def maximalSquare2(self, matrix):
+        if not matrix:
+            return 0
+        r, c = len(matrix), len(matrix[0])
+        dp = [[int(matrix[i][j]) for j in xrange(c)] for i in xrange(r)]
+        res = max(max(dp))
+        for i in xrange(1, r):
+            for j in xrange(1, c):
+                dp[i][j] = (min(dp[i-1][j-1], dp[i][j-1], dp[i-1][j])+1)*int(matrix[i][j])
+                res = max(res, dp[i][j]**2)
+        return res
+        
+    # O(2*n) space    
+    def maximalSquare(self, matrix):
+        if not matrix:
+            return 0
+        r, c = len(matrix), len(matrix[0])
+        pre = cur = [0] * (c+1)
+        res = 0
+        for i in xrange(r):
+            for j in xrange(c):
+                cur[j+1] = (min(pre[j], pre[j+1], cur[j])+1)*int(matrix[i][j])
+                res = max(res, cur[j+1]**2)
+            pre = cur
+            cur = [0] * (c+1)
+        return res
+        

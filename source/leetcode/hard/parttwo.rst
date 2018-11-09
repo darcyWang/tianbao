@@ -155,3 +155,239 @@ https://leetcode.com/problems/recover-binary-search-tree/
 	        res.append(root)
 	        self.helper(root.right, res)	
 
+
+97. Interleaving String
+-----------------------
+
+Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+
+Example 1:
+
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+Output: true
+Example 2:
+
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+Output: false
+
+
+.. code-block:: python
+
+	# O(m*n) space
+	def isInterleave1(self, s1, s2, s3):
+	    r, c, l= len(s1), len(s2), len(s3)
+	    if r+c != l:
+	        return False
+	    dp = [[True for _ in xrange(c+1)] for _ in xrange(r+1)]
+	    for i in xrange(1, r+1):
+	        dp[i][0] = dp[i-1][0] and s1[i-1] == s3[i-1]
+	    for j in xrange(1, c+1):
+	        dp[0][j] = dp[0][j-1] and s2[j-1] == s3[j-1]
+	    for i in xrange(1, r+1):
+	        for j in xrange(1, c+1):
+	            dp[i][j] = (dp[i-1][j] and s1[i-1] == s3[i-1+j]) or \
+	               (dp[i][j-1] and s2[j-1] == s3[i-1+j])
+	    return dp[-1][-1]
+
+	# O(2*n) space
+	def isInterleave2(self, s1, s2, s3):
+	    l1, l2, l3 = len(s1)+1, len(s2)+1, len(s3)+1
+	    if l1+l2 != l3+1:
+	        return False
+	    pre = [True for _ in xrange(l2)]
+	    for j in xrange(1, l2):
+	        pre[j] = pre[j-1] and s2[j-1] == s3[j-1]
+	    for i in xrange(1, l1):
+	        cur = [pre[0] and s1[i-1] == s3[i-1]] * l2
+	        for j in xrange(1, l2):
+	            cur[j] = (cur[j-1] and s2[j-1] == s3[i+j-1]) or \
+	                     (pre[j] and s1[i-1] == s3[i+j-1])
+	        pre = cur[:]
+	    return pre[-1]
+
+	# O(n) space
+	def isInterleave3(self, s1, s2, s3):
+	    r, c, l= len(s1), len(s2), len(s3)
+	    if r+c != l:
+	        return False
+	    dp = [True for _ in xrange(c+1)] 
+	    for j in xrange(1, c+1):
+	        dp[j] = dp[j-1] and s2[j-1] == s3[j-1]
+	    for i in xrange(1, r+1):
+	        dp[0] = (dp[0] and s1[i-1] == s3[i-1])
+	        for j in xrange(1, c+1):
+	            dp[j] = (dp[j] and s1[i-1] == s3[i-1+j]) or (dp[j-1] and s2[j-1] == s3[i-1+j])
+	    return dp[-1]
+	    
+	# DFS 
+	def isInterleave4(self, s1, s2, s3):
+	    r, c, l= len(s1), len(s2), len(s3)
+	    if r+c != l:
+	        return False
+	    stack, visited = [(0, 0)], set((0, 0))
+	    while stack:
+	        x, y = stack.pop()
+	        if x+y == l:
+	            return True
+	        if x+1 <= r and s1[x] == s3[x+y] and (x+1, y) not in visited:
+	            stack.append((x+1, y)); visited.add((x+1, y))
+	        if y+1 <= c and s2[y] == s3[x+y] and (x, y+1) not in visited:
+	            stack.append((x, y+1)); visited.add((x, y+1))
+	    return False
+	            
+	# BFS 
+	def isInterleave(self, s1, s2, s3):
+	    r, c, l= len(s1), len(s2), len(s3)
+	    if r+c != l:
+	        return False
+	    queue, visited = [(0, 0)], set((0, 0))
+	    while queue:
+	        x, y = queue.pop(0)
+	        if x+y == l:
+	            return True
+	        if x+1 <= r and s1[x] == s3[x+y] and (x+1, y) not in visited:
+	            queue.append((x+1, y)); visited.add((x+1, y))
+	        if y+1 <= c and s2[y] == s3[x+y] and (x, y+1) not in visited:
+	            queue.append((x, y+1)); visited.add((x, y+1))
+	    return False
+
+
+174. Dungeon Game
+-----------------
+
+The demons had captured the princess (P) and imprisoned her in the bottom-right corner of a dungeon. The dungeon consists of M x N rooms laid out in a 2D grid. Our valiant knight (K) was initially positioned in the top-left room and must fight his way through the dungeon to rescue the princess.
+
+The knight has an initial health point represented by a positive integer. If at any point his health point drops to 0 or below, he dies immediately.
+
+Some of the rooms are guarded by demons, so the knight loses health (negative integers) upon entering these rooms; other rooms are either empty (0's) or contain magic orbs that increase the knight's health (positive integers).
+
+In order to reach the princess as quickly as possible, the knight decides to move only rightward or downward in each step.
+
+ 
+
+Write a function to determine the knight's minimum initial health so that he is able to rescue the princess.
+
+For example, given the dungeon below, the initial health of the knight must be at least 7 if he follows the optimal path RIGHT-> RIGHT -> DOWN -> DOWN.
+
+.. image:: 
+ 
+
+Note:
+
+The knight's health has no upper bound.
+Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.
+
+.. code-block:: python
+
+	# O(m*n) space
+	def calculateMinimumHP1(self, dungeon):
+	    if not dungeon:
+	        return 
+	    r, c = len(dungeon), len(dungeon[0])
+	    dp = [[0 for _ in xrange(c)] for _ in xrange(r)]
+	    dp[-1][-1] = max(1, 1-dungeon[-1][-1])
+	    for i in xrange(c-2, -1, -1):
+	        dp[-1][i] = max(1, dp[-1][i+1]-dungeon[-1][i])
+	    for i in xrange(r-2, -1, -1):
+	        dp[i][-1] = max(1, dp[i+1][-1]-dungeon[i][-1])
+	    for i in xrange(r-2, -1, -1):
+	        for j in xrange(c-2, -1, -1):
+	            dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1])-dungeon[i][j])
+	    return dp[0][0]
+	    
+	# O(n) space
+	def calculateMinimumHP(self, dungeon):
+	    if not dungeon:
+	        return 
+	    r, c = len(dungeon), len(dungeon[0])
+	    dp = [0 for _ in xrange(c)]
+	    dp[-1] = max(1, 1-dungeon[-1][-1])
+	    for i in xrange(c-2, -1, -1):
+	        dp[i] = max(1, dp[i+1]-dungeon[-1][i])
+	    for i in xrange(r-2, -1, -1):
+	        dp[-1] = max(1, dp[-1]-dungeon[i][-1])
+	        for j in xrange(c-2, -1, -1):
+	            dp[j] = max(1, min(dp[j], dp[j+1])-dungeon[i][j])
+	    return dp[0]
+
+	>>> from timeit import timeit
+	>>> c = 100
+	>>> timeit(lambda: [0 for _ in xrange(c)])
+	10.002701801200814
+	>>> timeit(lambda: [0] * c)
+	1.77059385744343
+
+
+115. Distinct Subsequences
+--------------------------
+
+
+Given a string S and a string T, count the number of distinct subsequences of S which equals T.
+
+A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+
+Example 1:
+
+Input: S = "rabbbit", T = "rabbit"
+Output: 3
+Explanation:
+
+As shown below, there are 3 ways you can generate "rabbit" from S.
+(The caret symbol ^ means the chosen letters)
+
+rabbbit
+^^^^ ^^
+rabbbit
+^^ ^^^^
+rabbbit
+^^^ ^^^
+Example 2:
+
+Input: S = "babgbag", T = "bag"
+Output: 5
+Explanation:
+
+As shown below, there are 5 ways you can generate "bag" from S.
+(The caret symbol ^ means the chosen letters)
+
+babgbag
+^^ ^
+babgbag
+^^    ^
+babgbag
+^    ^^
+babgbag
+  ^  ^^
+babgbag
+    ^^^
+
+
+.. code-block:: python
+
+	# O(m*n) space 
+	def numDistinct1(self, s, t):
+	    l1, l2 = len(s)+1, len(t)+1
+	    dp = [[1] * l2 for _ in xrange(l1)]
+	    for j in xrange(1, l2):
+	        dp[0][j] = 0
+	    for i in xrange(1, l1):
+	        for j in xrange(1, l2):
+	            dp[i][j] = dp[i-1][j] + dp[i-1][j-1]*(s[i-1] == t[j-1])
+	    return dp[-1][-1]
+	  
+	# O(n) space  
+	def numDistinct(self, s, t):
+	    l1, l2 = len(s)+1, len(t)+1
+	    cur = [0] * l2
+	    cur[0] = 1
+	    for i in xrange(1, l1):
+	        pre = cur[:]
+	        for j in xrange(1, l2):
+	            cur[j] = pre[j] + pre[j-1]*(s[i-1] == t[j-1])
+	    return cur[-1]
+
+
+
+
+
+

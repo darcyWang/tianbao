@@ -1,4 +1,4 @@
-题目序号 414、217、219、283、121、122、123、188、53、189、
+题目序号 414、217、219、283、121、122、123、188、53、189
 ============================================================
 
 
@@ -639,3 +639,56 @@ Related problem: Reverse Words in a String II
     #. BA=(A−1B−1)−1
     #. 相信到这里，你对三步反转法已经有了一个深刻的认识。
 
+
+.. code-block:: python
+
+    def rotate1(self, nums, k):
+        k %= len(nums)
+        self.reverse(nums, 0, len(nums)-1)
+        self.reverse(nums, 0, k-1)
+        self.reverse(nums, k, len(nums)-1)
+        
+    def reverse(self, nums, l, r):
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r -= 1
+            
+    def rotate2(self, nums, k):
+        k %= len(nums)
+        for _ in xrange(k):
+            nums.insert(0, nums.pop())
+     
+    # O(n) space       
+    def rotate(self, nums, k):
+        deque = collections.deque(nums)
+        k %= len(nums)
+        for _ in xrange(k):
+            deque.appendleft(deque.pop())
+        nums[:] = list(deque)   
+
+.. code-blcok:: python
+
+    class Solution(object):
+        def rotate(self, nums, k):
+            """
+            :type nums: List[int]
+            :type k: int
+            :rtype: void Do not return anything, modify nums in-place instead.
+            """
+            k = k % len(nums)
+            if k != 0:
+                tmp = nums[-k:]
+                for j in range(len(nums)-1, k-1, -1):
+                    nums[j] = nums[j-k]
+                nums[:k] = tmp
+                
+    class Solution(object):
+        def rotate(self, nums, k):
+            """
+            :type nums: List[int]
+            :type k: int
+            :rtype: void Do not return anything, modify nums in-place instead.
+            """
+            k %= len(nums)
+            nums[:] = nums[-k:] + nums[:-k]
